@@ -47,7 +47,7 @@ public class FormCreatorAppBackendApplication {//implements CommandLineRunner {
 
 			DefaultFormElement hidden = new DefaultFormElement();
 			hidden.setTitle("Title");
-			hidden.setType("hidden");
+			hidden.setType("Hidden");
 			hidden.setKey("Key");
 			hidden.setRequired("Required");
 			defaultElementsRepository.save(hidden);

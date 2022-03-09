@@ -33,12 +33,8 @@ const ListDefaultFormElementsComponent = () => {
             <tr key={default_form_element.id}>
               <td>{default_form_element.type}</td>
               <td>
-                <button className = "btn btn-primary mb-2 sm" onClick={() => {
-                  navigate("/build-element", {
-                    element_type: default_form_element.type});
-                    }} 
-                    >add
-                </button>
+              <Link className="btn btn-primary mb-2 sm" to={"/build-element/"+ JSON.stringify(default_form_element.id)} > Add </Link>
+
               </td>
             </tr>
           ))}
