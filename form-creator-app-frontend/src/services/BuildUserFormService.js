@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const USER_FORM_BASE_REST_API_URL = 'http://localhost:8080/api/v1/build-form'
+const USER_FORM_BASE_REST_API_URL = 'http://localhost:8080/api/v1/form-elements'
 
 class BuildUserFormService{
     getAllUserFormElements(){

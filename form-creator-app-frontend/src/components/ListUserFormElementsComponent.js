@@ -57,6 +57,7 @@ const ListUserFormElementsComponent = () => {
           )}
         </tbody>
       </table>
+      <Link className= "btn btn-success" to={"/manage-forms/"}>Submit Form</Link>
     </div>
   );
 };

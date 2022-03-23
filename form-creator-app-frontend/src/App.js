@@ -7,6 +7,8 @@ import ListDefaultFormElementsComponent from "./components/ListDefaultFormElemen
 import AddUserFormElementComponent from "./components/AddUserFormElementComponent";
 import UpdateUserElementComponent from "./components/UpdateUserElementComponent";
 import AddUserElementComponent from "./components/AddUserElementComponent";
+import ListUserFormsComponent from "./components/ListUserFormsComponent";
+import CreateFormComponent from "./components/CreateFormComponents";
 
 function App() {
   return (
@@ -17,11 +19,11 @@ function App() {
           <Routes>
           <Route exact path = "/user-form" element = {<ListUserFormElementsComponent/>}></Route>
             <Route path = "/add-element" element = {<ListDefaultFormElementsComponent/>}></Route>
-            <Route path = "/build-element" element = {<AddUserFormElementComponent/>}></Route>
-            //<Route path = "/update-form-element/:id" element = {<AddUserFormElementComponent/>}></Route>
             <Route path = "/update-form-element/:id" element = {<UpdateUserElementComponent/>}></Route>
-
             <Route path = "/build-element/:id" element = {<AddUserElementComponent/>}></Route>
+            <Route path = "/manage-forms/" element = {<ListUserFormsComponent/>}></Route>
+            <Route path = "/create-form/" element = {<CreateFormComponent/>}></Route>
+
 
 
 

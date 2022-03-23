@@ -50,7 +50,6 @@ return (
                                     value = {title}
                                     onChange = {(e) => setTitle(e.target.value)}
                                 >
-
                                 </input>
                             </div>
                             <div className="form-group mb-2">
@@ -63,7 +62,6 @@ return (
                                     value = {key}
                                     onChange = {(e) => setKey(e.target.value)}
                                 >
-
                                 </input>
                             </div>
                             <div className="form-group mb-2">

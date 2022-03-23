@@ -18,7 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "default_elements")
-public class DefaultFormElement {
+public class DefaultFormElement{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

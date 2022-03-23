@@ -1,10 +1,14 @@
 package com.CtrlAltDefeat.formcreatorappbackend.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -12,16 +16,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "user_elements")
-public class UserFormElement {
+public class UserFormElement {//extends AuditModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
 
     @Column(name = "title")
@@ -36,10 +38,14 @@ public class UserFormElement {
     @Column(name = "required")
     private String required;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_forms_id")
+    private UserForm form;
+
     public UserFormElement() {}
 
-    public UserFormElement(long id, String title, String type, String key ,String required) {
-        this.id = id;
+    public UserFormElement(String title, String type, String key ,String required, UserForm form) {
+        //this.id = id;
         this.title = title;
         this.type = type;
         this.key = key;
@@ -74,5 +80,11 @@ public class UserFormElement {
     }
     public void setRequired(String required){
         this.required = required;
+    }
+    public void setForm(UserForm form ){
+        this.form = form;
+    }
+    public UserForm getForm(){
+        return form;
     }
 }
