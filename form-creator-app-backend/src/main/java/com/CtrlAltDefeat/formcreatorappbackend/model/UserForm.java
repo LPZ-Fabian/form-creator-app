@@ -14,14 +14,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
-@Table(name = "user_forms")
+@Table(name = "forms")
 public class UserForm {//extends AuditModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    @Column(name = "form_id")
+    private long form_id;
 
     @Column(name = "title")
     private String title;
@@ -29,21 +31,23 @@ public class UserForm {//extends AuditModel{
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "form",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<UserFormElement> user_elements;
+    @OneToMany(targetEntity = UserFormElement.class,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@JsonIgnoreProperties("form")
+    private List<UserFormElement> formElements;
 
-    public UserForm() {}
+    /*public UserForm() {}
 
-    public UserForm(long id, String title, String description) {
-        this.id = id;
+    public UserForm(long form_id, String title, String description, List<UserFormElement> formElements) {
+        this.form_id = form_id;
         this.title = title;
         this.description = description;
-    }
+        this.formElements = formElements;
+    }*/
     public long getId() {
-        return id;
+        return form_id;
     }
     public void setId(long id) {
-        this.id = id;
+        this.form_id = id;
     }
     public String getTitle() {
         return title;
@@ -58,10 +62,14 @@ public class UserForm {//extends AuditModel{
         this.description = description;
     }
     public List<UserFormElement> getUserElements(){
-        return user_elements;
-    }
-    public void setUserElements(List<UserFormElement> user_elements){
-        this.user_elements = user_elements;
+        UserFormElement e = new UserFormElement("title", "type", "key", "required");
+        List<UserFormElement> list = new ArrayList<UserFormElement>();
+        list.add(e);
+        //list.add(e);
 
+        return list;
+    }
+    public void setUserElements(List<UserFormElement> formElements){
+        this.formElements = formElements;
     }
 }

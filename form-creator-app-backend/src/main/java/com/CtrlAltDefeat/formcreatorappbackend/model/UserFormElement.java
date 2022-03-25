@@ -11,6 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +29,8 @@ public class UserFormElement {//extends AuditModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    @Column(name = "element_id")
+    private long element_id;
 
     @Column(name = "title")
     private String title;
@@ -38,24 +44,30 @@ public class UserFormElement {//extends AuditModel{
     @Column(name = "required")
     private String required;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_forms_id")
-    private UserForm form;
+    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    //@JoinColumn(name = "user_form_id")
+    //@JsonIgnoreProperties("user_elements")
+    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    //@JoinColumn(name = "tutorial_id", nullable = false)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    //@JsonIgnore
+    //private UserForm form;
 
     public UserFormElement() {}
 
-    public UserFormElement(String title, String type, String key ,String required, UserForm form) {
-        //this.id = id;
+    public UserFormElement(String title, String type, String key ,String required) {
+        //this.element_id = id;
         this.title = title;
         this.type = type;
         this.key = key;
         this.required = required;
+       // this.form = form;
     }
     public long getId() {
-        return id;
+        return element_id;
     }
     public void setId(long id) {
-        this.id = id;
+        this.element_id = id;
     }
     public String getTitle() {
         return title;
@@ -81,10 +93,11 @@ public class UserFormElement {//extends AuditModel{
     public void setRequired(String required){
         this.required = required;
     }
+    /*
     public void setForm(UserForm form ){
         this.form = form;
     }
     public UserForm getForm(){
         return form;
-    }
+    }*/
 }

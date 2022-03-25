@@ -3,11 +3,14 @@ package com.CtrlAltDefeat.formcreatorappbackend.controller;
 import com.CtrlAltDefeat.formcreatorappbackend.repository.UserElementsRepository;
 import com.CtrlAltDefeat.formcreatorappbackend.repository.UserFormsRepository;
 import com.CtrlAltDefeat.formcreatorappbackend.exception.ResourceNotFoundException;
+import com.CtrlAltDefeat.formcreatorappbackend.model.UserForm;
 import com.CtrlAltDefeat.formcreatorappbackend.model.UserFormElement;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +20,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 @CrossOrigin("*")
 @RestController
 @RequestMapping("/api/v1/form-elements")
@@ -33,10 +39,26 @@ public class UserFormElementController {
     public List <UserFormElement> getAllUserFormElements(){
         return userElementsRepository.findAll();
     }
-    //Build create UserFormElement REST API
+    /*Build create UserFormElement REST API
     @PostMapping
     public UserFormElement createUserFormElement(@RequestBody UserFormElement element){
         return userElementsRepository.save(element);
+    }*/
+    //Build new save User Element REST API
+    @PostMapping
+    public ResponseEntity<UserFormElement> createUserFormElement(@RequestBody @Validated UserFormElement formElement){
+        Optional<UserForm> optionalUserForm = userFormsRepository.findById(formElement.getForm().getId());
+        if(!optionalUserForm.isPresent()){
+            return ResponseEntity.unprocessableEntity().build();
+        }
+        //formElement.setForm(optionalUserForm.get());
+        
+        UserFormElement savedUserFormElement = userElementsRepository.save(formElement);
+        URI location =  ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+        .buildAndExpand(savedUserFormElement.getId()).toUri();
+
+        return ResponseEntity.created(location).body(savedUserFormElement);
+
     }
     //Build get User Element by ID Rest API
     @GetMapping("{id}")
