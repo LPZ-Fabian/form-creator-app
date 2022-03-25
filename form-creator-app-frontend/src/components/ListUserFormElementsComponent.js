@@ -1,16 +1,17 @@
 import React, { useState, useEffect,} from "react";
 import BuildUserFormService from "../services/BuildUserFormService";
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 const ListUserFormElementsComponent = () => {
   const [UserFormElements, setUserFormElements] = useState([]);
+  const {id} = useParams();
 
   useEffect(() => {
     getAllUserFormElements();
   }, [])
 
   const getAllUserFormElements = () =>{
-    BuildUserFormService.getAllUserFormElements().then((response) => {
+    BuildUserFormService.getAllFormElementsByFormId(id).then((response) => {
       setUserFormElements(response.data)
       console.log(response.data)
     }).catch(error =>{

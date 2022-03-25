@@ -22,6 +22,7 @@ function App() {
             <Route path = "/update-form-element/:id" element = {<UpdateUserElementComponent/>}></Route>
             <Route path = "/build-element/:id" element = {<AddUserElementComponent/>}></Route>
             <Route path = "/manage-forms/" element = {<ListUserFormsComponent/>}></Route>
+            <Route path = "/update-form/:id" element = {<ListUserFormElementsComponent/>}></Route>
             <Route path = "/create-form/" element = {<CreateFormComponent/>}></Route>
 
 

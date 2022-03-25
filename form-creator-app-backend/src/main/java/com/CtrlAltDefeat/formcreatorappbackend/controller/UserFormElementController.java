@@ -39,13 +39,13 @@ public class UserFormElementController {
     public List <UserFormElement> getAllUserFormElements(){
         return userElementsRepository.findAll();
     }
-    /*Build create UserFormElement REST API
+    //Build create UserFormElement REST API
     @PostMapping
     public UserFormElement createUserFormElement(@RequestBody UserFormElement element){
         return userElementsRepository.save(element);
-    }*/
+    }
     //Build new save User Element REST API
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<UserFormElement> createUserFormElement(@RequestBody @Validated UserFormElement formElement){
         Optional<UserForm> optionalUserForm = userFormsRepository.findById(formElement.getForm().getId());
         if(!optionalUserForm.isPresent()){
@@ -59,7 +59,7 @@ public class UserFormElementController {
 
         return ResponseEntity.created(location).body(savedUserFormElement);
 
-    }
+    }*/
     //Build get User Element by ID Rest API
     @GetMapping("{id}")
     public ResponseEntity<UserFormElement> getDefaultFormElementById(@PathVariable long id){
@@ -67,15 +67,15 @@ public class UserFormElementController {
             .orElseThrow(() -> new ResourceNotFoundException("User form element does not exist with id: " + id));
         return ResponseEntity.ok(element);
     }
-    //Build get User Element by form Rest APi
-    /*@GetMapping("/user-forms/{formId}")
-    public ResponseEntity<List<UserFormElement>> getAllFormElementByFormId(@PathVariable long formId){
+    //Build get User Elements by form Rest APi
+    @GetMapping("/form/{formId}")
+    public ResponseEntity<List<UserFormElement>> getAllFormElementsByFormId(@PathVariable long formId){
         if(!userFormsRepository.existsById(formId)){
             throw new ResourceNotFoundException("Form not found with id: " + formId);
         }
         List <UserFormElement> elements = userElementsRepository.findByFormId(formId);
         return ResponseEntity.ok(elements);
-    }*/
+    }
 
     //Build update employeeRest API
     @PutMapping("{id}")

@@ -41,20 +41,20 @@ public class UserFormController {
     public List <UserForm> getAllUserForms(){
         return userFormRepository.findAll();
     }
-    /**
-     * Create Create REST API
-     */
-    @PostMapping("/create")
+   /* @PostMapping("/create")
     public ResponseEntity<Object> createUserForm(@RequestBody UserForm form){
         return userFormService.createUserForm(form);
-    }
-    /*Build create UserForm REST API
+    }*/
+    /**
+     * Build Create Form Functionality
+     */
     @PostMapping("/create")
     public UserForm createUserForm(@RequestBody UserForm form){
         UserForm formResponse = userFormRepository.save(form);
         return formResponse;
     }
-    //New create UserForm REST API
+
+    /*New create UserForm REST API
     @PostMapping
     public ResponseEntity<UserForm> createUserForm(@Validated @RequestBody UserForm form){
         UserForm savedUserForm = userFormRepository.save(form);
@@ -63,30 +63,29 @@ public class UserFormController {
         return ResponseEntity.created(location).body(savedUserForm);
     }*/
 
-    //Build get User Element by ID Rest API
-    @GetMapping("{id}")
+    //Build get User Form by ID Rest API
+    @GetMapping("/{id}")
     public ResponseEntity<UserForm> getUserFormById(@PathVariable long id){
         UserForm form = userFormRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("User form does not exist with id: " + id));
         return ResponseEntity.ok(form);
     }
-    //Build update employeeRest API
-    @PutMapping("{id}")
-    public ResponseEntity<UserForm> updateUserForm(@PathVariable long id,@RequestBody UserForm formDetails){
-        UserForm updateUserElement = userFormRepository.findById(id)
+    //Build update Form Rest API
+    @PutMapping("/update/{id}")
+    public ResponseEntity<UserForm> updateUserForm(@PathVariable long id,@RequestBody UserForm updatedForm){
+        UserForm updatedUserForm = userFormRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("User form does not exist with id:" + id));
 
-        updateUserElement.setTitle(formDetails.getTitle());
-        //updateUserElement.setType(userElementDetails.getType());
-        updateUserElement.setDescription(formDetails.getDescription());
-       // updateUserElement.setRequired(userElementDetails.getRequired());
+        updatedUserForm.setTitle(updatedForm.getTitle());
+        updatedUserForm.setDescription(updatedForm.getDescription());
+        updatedUserForm.setUserElements(updatedForm.getUserElements());
 
-        userFormRepository.save(updateUserElement);
-        return ResponseEntity.ok(updateUserElement);
+        userFormRepository.save(updatedUserForm);
+        return ResponseEntity.ok(updatedUserForm);
     }
     //Build delete Element REST API
-    @DeleteMapping("{id}")
-    public ResponseEntity<HttpStatus> deleteForm(@PathVariable long id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<HttpStatus> deleteUserForm(@PathVariable long id){
         UserForm form = userFormRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("User form does not exist with id: " + id));
             

@@ -44,7 +44,8 @@ public class UserFormElement {//extends AuditModel{
     @Column(name = "required")
     private String required;
 
-    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private UserForm form;
     //@JoinColumn(name = "user_form_id")
     //@JsonIgnoreProperties("user_elements")
     //@ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -55,13 +56,13 @@ public class UserFormElement {//extends AuditModel{
 
     public UserFormElement() {}
 
-    public UserFormElement(String title, String type, String key ,String required) {
-        //this.element_id = id;
+    public UserFormElement(long id, String title, String type, String key, String required, UserForm form) {
+        this.element_id = id;
         this.title = title;
         this.type = type;
         this.key = key;
         this.required = required;
-       // this.form = form;
+        this.form = form;
     }
     public long getId() {
         return element_id;

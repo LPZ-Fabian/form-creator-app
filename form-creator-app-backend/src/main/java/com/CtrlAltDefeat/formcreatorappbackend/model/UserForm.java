@@ -22,8 +22,8 @@ public class UserForm {//extends AuditModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "form_id")
-    private long form_id;
+    @Column(name = "id")
+    private long id;
 
     @Column(name = "title")
     private String title;
@@ -31,8 +31,7 @@ public class UserForm {//extends AuditModel{
     @Column(name = "description")
     private String description;
 
-    @OneToMany(targetEntity = UserFormElement.class,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@JsonIgnoreProperties("form")
+    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL)
     private List<UserFormElement> formElements;
 
     /*public UserForm() {}
@@ -44,10 +43,10 @@ public class UserForm {//extends AuditModel{
         this.formElements = formElements;
     }*/
     public long getId() {
-        return form_id;
+        return id;
     }
     public void setId(long id) {
-        this.form_id = id;
+        this.id = id;
     }
     public String getTitle() {
         return title;
@@ -62,12 +61,12 @@ public class UserForm {//extends AuditModel{
         this.description = description;
     }
     public List<UserFormElement> getUserElements(){
-        UserFormElement e = new UserFormElement("title", "type", "key", "required");
+        //UserFormElement e = new UserFormElement("title", "type", "key", "required");
         List<UserFormElement> list = new ArrayList<UserFormElement>();
-        list.add(e);
+       // list.add(e);
         //list.add(e);
 
-        return list;
+        return formElements;
     }
     public void setUserElements(List<UserFormElement> formElements){
         this.formElements = formElements;

@@ -6,6 +6,9 @@ class BuildUserFormService{
     getAllUserFormElements(){
         return axios.get(USER_FORM_BASE_REST_API_URL)
     }
+    getAllFormElementsByFormId(formId){
+        return axios.get(USER_FORM_BASE_REST_API_URL + "/form/" + formId)
+    }
     createUserFormElement(element){
         return axios.post(USER_FORM_BASE_REST_API_URL, element)
     }
