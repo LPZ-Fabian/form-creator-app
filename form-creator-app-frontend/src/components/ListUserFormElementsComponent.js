@@ -1,5 +1,5 @@
 import React, { useState, useEffect,} from "react";
-import BuildUserFormService from "../services/BuildUserFormService";
+import BuildUserFormService from "../services/BuildUserElementService";
 import { Link, useParams } from 'react-router-dom'
 
 const ListUserFormElementsComponent = () => {
@@ -29,7 +29,7 @@ const ListUserFormElementsComponent = () => {
   return (
     <div className="container">
       <h2 className="text-center"> User Form </h2>
-      <Link to = "/add-element" className = "btn btn-primary mb-2"> Add Element </Link>
+      <Link to = {"/add-element/" + id} className = "btn btn-primary mb-2"> Add Element </Link>
       <table className="table table-bordered table-striped">
         <thead>
           <th>Title</th>
@@ -58,7 +58,7 @@ const ListUserFormElementsComponent = () => {
           )}
         </tbody>
       </table>
-      <Link className= "btn btn-success" to={"/manage-forms/"}>Submit Form</Link>
+      <Link className= "btn btn-success" to={"/manage-forms/"}>Done</Link>
     </div>
   );
 };

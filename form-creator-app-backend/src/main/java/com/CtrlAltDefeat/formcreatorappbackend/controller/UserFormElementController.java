@@ -35,39 +35,25 @@ public class UserFormElementController {
     @Autowired
     private UserFormsRepository userFormsRepository;
     
+    /**
+     * GET method to return all user form elements
+     */
     @GetMapping
     public List <UserFormElement> getAllUserFormElements(){
         return userElementsRepository.findAll();
     }
-    //Build create UserFormElement REST API
-    @PostMapping
-    public UserFormElement createUserFormElement(@RequestBody UserFormElement element){
-        return userElementsRepository.save(element);
-    }
-    //Build new save User Element REST API
-    /*@PostMapping
-    public ResponseEntity<UserFormElement> createUserFormElement(@RequestBody @Validated UserFormElement formElement){
-        Optional<UserForm> optionalUserForm = userFormsRepository.findById(formElement.getForm().getId());
-        if(!optionalUserForm.isPresent()){
-            return ResponseEntity.unprocessableEntity().build();
-        }
-        //formElement.setForm(optionalUserForm.get());
-        
-        UserFormElement savedUserFormElement = userElementsRepository.save(formElement);
-        URI location =  ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-        .buildAndExpand(savedUserFormElement.getId()).toUri();
-
-        return ResponseEntity.created(location).body(savedUserFormElement);
-
-    }*/
-    //Build get User Element by ID Rest API
+    /**
+     * GET method used to return default form element type and map to user form element
+     */
     @GetMapping("{id}")
     public ResponseEntity<UserFormElement> getDefaultFormElementById(@PathVariable long id){
         UserFormElement element = userElementsRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("User form element does not exist with id: " + id));
         return ResponseEntity.ok(element);
     }
-    //Build get User Elements by form Rest APi
+    /**
+     * GET method used to return all the elements contained within a form
+     */
     @GetMapping("/form/{formId}")
     public ResponseEntity<List<UserFormElement>> getAllFormElementsByFormId(@PathVariable long formId){
         if(!userFormsRepository.existsById(formId)){
@@ -76,8 +62,24 @@ public class UserFormElementController {
         List <UserFormElement> elements = userElementsRepository.findByFormId(formId);
         return ResponseEntity.ok(elements);
     }
-
-    //Build update  API
+    /**
+    * POST method used to create a new user element
+    */
+    @PostMapping("/create/{formId}")
+    public UserFormElement createUserFormElement(@PathVariable long formId, @RequestBody UserFormElement element){
+        if (userFormsRepository.existsById(formId)) {
+            UserForm testForm = new UserForm();
+            Optional<UserForm> form = userFormsRepository.findById(formId);
+            testForm = form.get();
+            element.setForm(testForm);
+            testForm.addUserFormElement(element);
+            userElementsRepository.save(element);
+        }
+        return element;
+    }
+    /**
+     * POST method used to update a form element
+     */
     @PutMapping("{id}")
     public ResponseEntity<UserFormElement> updateUserFormElement(@PathVariable long id,@RequestBody UserFormElement userElementDetails){
         UserFormElement updateUserElement = userElementsRepository.findById(id)
@@ -91,7 +93,9 @@ public class UserFormElementController {
         userElementsRepository.save(updateUserElement);
         return ResponseEntity.ok(updateUserElement);
     }
-    //Build delete employee REST API
+    /**
+     * DELETE method used to delete a user element
+     */
     @DeleteMapping("{id}")
     public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable long id){
         UserFormElement element = userElementsRepository.findById(id)

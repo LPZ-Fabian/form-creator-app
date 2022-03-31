@@ -1,8 +1,8 @@
 import React, { useState, useEffect,} from "react";
-import CreateFormService from "../services/CreateFormService";
 import { Link, useParams } from 'react-router-dom'
+import BuildFormService from "../services/BuildFormService";
 
-const ListUserFormsComponent = () => {
+const ManageFormComponent = () => {
   const [UserForms, setUserForms] = useState([]);
   //const {formId} = useParams();
 
@@ -11,7 +11,7 @@ const ListUserFormsComponent = () => {
   }, [])
 
   const getAllUserForms = () =>{
-    CreateFormService.getAllUserForms().then((response) => {
+    BuildFormService.getAllUserForms().then((response) => {
       setUserForms(response.data)
       console.log(response.data)
     }).catch(error =>{
@@ -19,7 +19,7 @@ const ListUserFormsComponent = () => {
     })
   }
   const deleteUserForm = (formId) =>{
-        CreateFormService.deleteUserForm(formId).then((response) =>{
+        BuildFormService.deleteUserForm(formId).then((response) =>{
         getAllUserForms();
         }).catch(error =>{
           console.log(error)
@@ -28,8 +28,8 @@ const ListUserFormsComponent = () => {
 
   return (
     <div className="container">
-      <h2 className="text-center"> User Forms </h2>
-      <Link to = "/user-form" className = "btn btn-primary mb-2"> Create New Form </Link>
+      <h2 className="text-center"> Manage User Forms </h2>
+      <Link to = "/build-form" className = "btn btn-primary mb-2"> Create New Form </Link>
       <table className="table table-bordered table-striped">
         <thead>
           <th>Title</th>
@@ -57,4 +57,4 @@ const ListUserFormsComponent = () => {
   );
 };
 
-export default ListUserFormsComponent;
+export default ManageFormComponent;

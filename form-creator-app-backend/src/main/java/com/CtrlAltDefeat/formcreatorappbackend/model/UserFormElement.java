@@ -1,26 +1,13 @@
 package com.CtrlAltDefeat.formcreatorappbackend.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 
 @Entity
@@ -46,14 +33,8 @@ public class UserFormElement {//extends AuditModel{
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private UserForm form;
-    //@JoinColumn(name = "user_form_id")
-    //@JsonIgnoreProperties("user_elements")
-    //@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    //@JoinColumn(name = "tutorial_id", nullable = false)
-    //@OnDelete(action = OnDeleteAction.CASCADE)
-    //@JsonIgnore
-    //private UserForm form;
 
+    /*
     public UserFormElement() {}
 
     public UserFormElement(long id, String title, String type, String key, String required, UserForm form) {
@@ -63,7 +44,7 @@ public class UserFormElement {//extends AuditModel{
         this.key = key;
         this.required = required;
         this.form = form;
-    }
+    }*/
     public long getId() {
         return element_id;
     }
@@ -94,11 +75,10 @@ public class UserFormElement {//extends AuditModel{
     public void setRequired(String required){
         this.required = required;
     }
-    /*
     public void setForm(UserForm form ){
         this.form = form;
     }
-    public UserForm getForm(){
+   /* public UserForm getForm(){
         return form;
     }*/
 }

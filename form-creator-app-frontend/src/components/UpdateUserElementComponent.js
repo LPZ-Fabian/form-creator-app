@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import {useNavigate, Link, useParams} from 'react-router-dom';
+import {useNavigate, Link, useParams,use} from 'react-router-dom';
 //import AddDefaultFormElementService from '../services/AddDefaultFormElementService';
-import BuildUserFormService from '../services/BuildUserFormService'
+import BuildUserElementService from '../services/BuildUserElementService'
 
 const UpdateUserElementComponent = () => {
     //const{type} = useParams();
@@ -12,20 +12,21 @@ const UpdateUserElementComponent = () => {
     const navigate = useNavigate();
     const {id} = useParams();
 
+
     const UpdateUserFormElement = (e) => {
         e.preventDefault();
         const UserFormElement = {title, type, key,required}
 
         if(id){
-            BuildUserFormService.updateUserFormElement(id, UserFormElement).then((response) =>{
-                navigate('/user-form')
+            BuildUserElementService.updateUserFormElement(id, UserFormElement).then((response) =>{
+                navigate(-1)
             }).catch(error =>{
                 console.log(error)
             })
         }
     }
     useEffect(() => {
-        BuildUserFormService.getUserFormElementByID(id).then((response) =>{
+        BuildUserElementService.getUserFormElementByID(id).then((response) =>{
             setTitle(response.data.title)
             setType(response.data.type)
             setKey(response.data.key)
@@ -81,8 +82,8 @@ const UpdateUserElementComponent = () => {
                                 >
                                 </input>
                             </div>
-                            <button className = "btn btn-success" onClick = {(e) => UpdateUserFormElement(e) }> Submit </button>
-                            <Link to="/user-form" className="btn btn-danger"> Cancel </Link>
+                            <button className = "btn btn-success" onClick = {(e) => UpdateUserFormElement(e) }> Update </button>
+                            <Link to={-1} className="btn btn-danger"> Cancel </Link>
                         </form>
                     </div>                
                 </div>

@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {useNavigate, Link, useParams} from 'react-router-dom';
-import BuildUserFormService from '../services/BuildUserFormService'
+import BuildUserElementService from '../services/BuildUserElementService'
+//import DefaultFormElementService from '../services/DefaultForm'
+
 
 const AddUserFormElementComponent = () => {
     //const{type} = useParams();
@@ -16,7 +18,7 @@ const AddUserFormElementComponent = () => {
         const UserFormElement = {title, type, key,required}
 
         if(id){
-            BuildUserFormService.updateUserFormElement(id, UserFormElement).then((response) =>{
+            BuildUserElementService.updateUserFormElement(id, UserFormElement).then((response) =>{
                 navigate('/user-form')
             }).catch(error =>{
                 console.log(error)
@@ -55,6 +57,14 @@ const AddUserFormElementComponent = () => {
         }else{
             return <Link to="/add-element" className="btn btn-danger"> Cancel </Link>
         } 
+    }
+    const createOrUpdateButton = () =>{
+        if(id){
+
+        }else{
+            <button className = "btn btn-success" onClick = {(e) => saveOrUpdateUserFormElement(e) }> Create </button>
+
+        }
     }
 
   return (
@@ -105,7 +115,7 @@ const AddUserFormElementComponent = () => {
                                 >
                                 </input>
                             </div>
-                            <button className = "btn btn-success" onClick = {(e) => saveOrUpdateUserFormElement(e) }> Submit </button>
+                            <button className = "btn btn-success" onClick = {(e) => saveOrUpdateUserFormElement(e) }> Create </button>
                             {
                                 pageButton()
                             }

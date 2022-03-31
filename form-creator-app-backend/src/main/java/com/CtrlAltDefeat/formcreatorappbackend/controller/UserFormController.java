@@ -28,49 +28,36 @@ import java.util.List;
 @RequestMapping("/api/v1/forms")
 @RestController
 public class UserFormController {
-
-    private UserFormService userFormService;
-
-    public UserFormController(UserFormService userFormService){
-        this.userFormService = userFormService;
-    }
+    
     @Autowired
     private UserFormsRepository userFormRepository;
-    
+    /**
+     * GET method to return all of a user's forms
+     */
     @GetMapping()
     public List <UserForm> getAllUserForms(){
         return userFormRepository.findAll();
     }
-   /* @PostMapping("/create")
-    public ResponseEntity<Object> createUserForm(@RequestBody UserForm form){
-        return userFormService.createUserForm(form);
-    }*/
     /**
-     * Build Create Form Functionality
+     * GET method to return user form by id
      */
-    @PostMapping("/create")
-    public UserForm createUserForm(@RequestBody UserForm form){
-        UserForm formResponse = userFormRepository.save(form);
-        return formResponse;
-    }
-
-    /*New create UserForm REST API
-    @PostMapping
-    public ResponseEntity<UserForm> createUserForm(@Validated @RequestBody UserForm form){
-        UserForm savedUserForm = userFormRepository.save(form);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-            .buildAndExpand(savedUserForm.getId()).toUri();
-        return ResponseEntity.created(location).body(savedUserForm);
-    }*/
-
-    //Build get User Form by ID Rest API
     @GetMapping("/{id}")
     public ResponseEntity<UserForm> getUserFormById(@PathVariable long id){
         UserForm form = userFormRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("User form does not exist with id: " + id));
         return ResponseEntity.ok(form);
     }
-    //Build update Form Rest API
+    /**
+     * POST method to create a new Userform
+     */
+    @PostMapping("/create")
+    public UserForm createUserForm(@RequestBody UserForm form){
+        UserForm formResponse = userFormRepository.save(form);
+        return formResponse;
+    }
+    /**
+     * PUT method to update a user form
+     */
     @PutMapping("/update/{id}")
     public ResponseEntity<UserForm> updateUserForm(@PathVariable long id,@RequestBody UserForm updatedForm){
         UserForm updatedUserForm = userFormRepository.findById(id)
@@ -83,7 +70,9 @@ public class UserFormController {
         userFormRepository.save(updatedUserForm);
         return ResponseEntity.ok(updatedUserForm);
     }
-    //Build delete Element REST API
+    /**
+     * DELETE method to delete an existing user form
+     */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<HttpStatus> deleteUserForm(@PathVariable long id){
         UserForm form = userFormRepository.findById(id)

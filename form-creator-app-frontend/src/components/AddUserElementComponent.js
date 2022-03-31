@@ -1,43 +1,56 @@
 import React, {useState, useEffect} from 'react'
 import {useNavigate, Link, useParams} from 'react-router-dom';
-import AddFormElementService from '../services/AddFormElementService';
-import BuildUserFormService from '../services/BuildUserFormService'
+import BuildUserElementService from '../services/BuildUserElementService';
+import DefaultFormElementService from '../services/DefaultFormElementService'
 
 const AddUserElementComponent = () => {
-    //const{type} = useParams();
     const [title, setTitle] = useState('')
     const [type, setType] = useState('')
     const [key, setKey] = useState('')
     const [required, setRequired] = useState('')
     const navigate = useNavigate();
-    const {id} = useParams();
+    const {defaultId} = useParams();
+    const {formId} = useParams();
 
     const addElementToForm = (e) => {
         e.preventDefault();
         const UserFormElement = {title, type, key,required}
 
-        BuildUserFormService.createUserFormElement(UserFormElement).then((response) =>{
+        BuildUserElementService.createUserFormElement(formId,UserFormElement).then((response) =>{
             console.log(response.data)
-            navigate('/user-form');
-    
+            navigate('/user-form/' + formId );
             }).catch(error => {
                 console.log(error)
             })
         }
     useEffect(() => {
-        AddFormElementService.getDefaultFormElementById(id).then((response) =>{
+       DefaultFormElementService.getDefaultFormElementById(defaultId).then((response) =>{
             setType(response.data.type)
         }).catch(error =>{
             console.log(error)
         })
     }, [])
 
+    const pageTitle = () => {
+        let titleType;
+        if (defaultId == 1) {
+            titleType = "Checkbox";
+        } else if (defaultId == 2) {
+            titleType = "Text Field";
+        } else if (defaultId == 3) {
+            titleType = "Text Area";
+        } else {
+            titleType = "Hidden";
+        }
+        return <h2>Create {titleType}</h2>;
+    };
+
 return (
     <div>
         <div className = "container">
             <div className = "row">
                 <div className = "card col-md-6 offset-md-3 offset-md-3">
-                <h2> Create Element</h2>
+                {pageTitle()}
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-2">
@@ -77,7 +90,7 @@ return (
                                 </input>
                             </div>
                             <button className = "btn btn-success" onClick = {(e) => addElementToForm(e) }> Submit </button>
-                            <Link to="/add-element" className="btn btn-danger"> Cancel </Link>
+                            <Link to= {"/add-element/" + formId} className="btn btn-danger"> Cancel </Link>
 
                         </form>
                     </div>                

@@ -34,14 +34,14 @@ public class UserForm {//extends AuditModel{
     @OneToMany(mappedBy = "form", cascade = CascadeType.ALL)
     private List<UserFormElement> formElements;
 
-    /*public UserForm() {}
+    public UserForm() {}
 
-    public UserForm(long form_id, String title, String description, List<UserFormElement> formElements) {
-        this.form_id = form_id;
+    public UserForm(long id, String title, String description, List<UserFormElement> formElements) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.formElements = formElements;
-    }*/
+    }
     public long getId() {
         return id;
     }
@@ -61,14 +61,12 @@ public class UserForm {//extends AuditModel{
         this.description = description;
     }
     public List<UserFormElement> getUserElements(){
-        //UserFormElement e = new UserFormElement("title", "type", "key", "required");
-        List<UserFormElement> list = new ArrayList<UserFormElement>();
-       // list.add(e);
-        //list.add(e);
-
         return formElements;
     }
     public void setUserElements(List<UserFormElement> formElements){
         this.formElements = formElements;
+    }
+    public void addUserFormElement(UserFormElement element){
+        formElements.add(element);
     }
 }
