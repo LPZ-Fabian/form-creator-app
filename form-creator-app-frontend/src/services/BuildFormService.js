@@ -9,8 +9,8 @@ class CreateFormService{
     createForm(form){
         return axios.post(USER_FORM_BASE_REST_API_URL + "/create", form)
     }
-    getUserFormElementByID(elementId){
-        return axios.get(USER_FORM_BASE_REST_API_URL + '/' + elementId);
+    getUserFormById(formId){
+        return axios.get(USER_FORM_BASE_REST_API_URL + '/' + formId);
     }
     updateUserFormElement(elementId, element){
         return axios.put(USER_FORM_BASE_REST_API_URL + "/" + elementId, element)

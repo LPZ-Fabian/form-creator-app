@@ -38,7 +38,12 @@ public class UserForm {//extends AuditModel{
 
     public UserForm(long id, String title, String description, List<UserFormElement> formElements) {
         this.id = id;
-        this.title = title;
+        //Find a better was to check if string is blank
+        if(title == ""){
+            this.title = "Untitled Form";
+        }else{
+            this.title = title;
+        }
         this.description = description;
         this.formElements = formElements;
     }

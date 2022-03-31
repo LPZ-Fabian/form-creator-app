@@ -1,17 +1,30 @@
 import React, { useState, useEffect,} from "react";
-import BuildUserFormService from "../services/BuildUserElementService";
+import BuildUserElementService from "../services/BuildUserElementService";
+import BuildFormService from "../services/BuildFormService";
 import { Link, useParams } from 'react-router-dom'
 
 const ListUserFormElementsComponent = () => {
   const [UserFormElements, setUserFormElements] = useState([]);
   const {id} = useParams();
+  const [UserFormTitle, setUserFormTitle] = useState("");
+
+  //create const to store title
 
   useEffect(() => {
     getAllUserFormElements();
+    getFormTitle();
   }, [])
-
+  const getFormTitle = () =>{
+    if(id){
+    BuildFormService.getUserFormById(id).then((response) => {
+      setUserFormTitle(response.data.title)
+    })
+    }else{
+      setUserFormTitle('untitled form');
+    }
+  }
   const getAllUserFormElements = () =>{
-    BuildUserFormService.getAllFormElementsByFormId(id).then((response) => {
+    BuildUserElementService.getAllFormElementsByFormId(id).then((response) => {
       setUserFormElements(response.data)
       console.log(response.data)
     }).catch(error =>{
@@ -19,7 +32,7 @@ const ListUserFormElementsComponent = () => {
     })
   }
   const deleteUserFormElement = (elementId) =>{
-        BuildUserFormService.deleteUserFormElement(elementId).then((response) =>{
+        BuildUserElementService.deleteUserFormElement(elementId).then((response) =>{
         getAllUserFormElements();
         }).catch(error =>{
           console.log(error)
@@ -28,7 +41,7 @@ const ListUserFormElementsComponent = () => {
 
   return (
     <div className="container">
-      <h2 className="text-center"> User Form </h2>
+      <h2 className="text-center"> {UserFormTitle} </h2>
       <Link to = {"/add-element/" + id} className = "btn btn-primary mb-2"> Add Element </Link>
       <table className="table table-bordered table-striped">
         <thead>
