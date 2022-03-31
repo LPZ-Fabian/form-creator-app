@@ -77,7 +77,7 @@ public class UserFormElementController {
         return ResponseEntity.ok(elements);
     }
 
-    //Build update employeeRest API
+    //Build update  API
     @PutMapping("{id}")
     public ResponseEntity<UserFormElement> updateUserFormElement(@PathVariable long id,@RequestBody UserFormElement userElementDetails){
         UserFormElement updateUserElement = userElementsRepository.findById(id)
