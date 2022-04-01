@@ -46,6 +46,12 @@ public class UserFormController {
      */
     @PostMapping("/create")
     public UserForm createUserForm(@RequestBody UserForm form){
+        if(form.getTitle().isBlank()){
+            form.setTitle("Untitled Form");
+        }
+        if(form.getDescription().isBlank()){
+            form.setDescription("None");
+        }
         UserForm formResponse = userFormRepository.save(form);
         return formResponse;
     }
