@@ -11,7 +11,6 @@ const ListUserFormElementsComponent = () => {
     const navigate = useNavigate();
 
     //create const to store title
-
     useEffect(() => {
         getAllUserFormElements();
         getFormTitleAndDescription();
@@ -40,14 +39,16 @@ const ListUserFormElementsComponent = () => {
                 console.log(error);
             });
     };
-    const submitForm = () => {
+    const submitForm = (redirect) => {
         const form = {
             title: UserFormTitle,
             description: Description,
         };
         BuildFormService.updateUserForm(id, form)
             .then((response) => {
-                navigate("/manage-forms");
+                if (redirect) {
+                    navigate("/manage-forms");
+                }
             })
             .catch((error) => {
                 console.log(error);
@@ -71,7 +72,11 @@ const ListUserFormElementsComponent = () => {
                     id="description"
                 ></textarea>{" "}
             </div>
-            <Link to={"/add-element/" + id} className="btn btn-primary mb-2">
+            <Link
+                to={"/add-element/" + id}
+                onClick={() => submitForm(false)}
+                className="btn btn-primary mb-2"
+            >
                 {" "}
                 Add Element{" "}
             </Link>
@@ -99,6 +104,7 @@ const ListUserFormElementsComponent = () => {
                                         "/update-form-element/" +
                                         JSON.stringify(form_element.id)
                                     }
+                                    onClick={() => submitForm(false)}
                                 >
                                     {" "}
                                     Update{" "}
@@ -118,7 +124,7 @@ const ListUserFormElementsComponent = () => {
                     ))}
                 </tbody>
             </table>
-            <button onClick={() => submitForm()}>Done</button>
+            <button onClick={() => submitForm(true)}>Done</button>
         </div>
     );
 };
