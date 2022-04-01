@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 import BuildUserElementService from "../services/BuildUserElementService";
 import BuildFormService from "../services/BuildFormService";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 const ListUserFormElementsComponent = () => {
     const [UserFormElements, setUserFormElements] = useState([]);
-    const { id } = useParams();
     const [UserFormTitle, setUserFormTitle] = useState("");
     const [Description, setDescription] = useState("");
+    const { id } = useParams();
+    const navigate = useNavigate();
 
     //create const to store title
 
     useEffect(() => {
         getAllUserFormElements();
-        getFormTitle();
+        getFormTitleAndDescription();
     }, []);
-    const getFormTitle = () => {
+    const getFormTitleAndDescription = () => {
         BuildFormService.getUserFormById(id).then((response) => {
             setUserFormTitle(response.data.title);
             setDescription(response.data.description);
@@ -39,30 +40,33 @@ const ListUserFormElementsComponent = () => {
                 console.log(error);
             });
     };
-    const handleClick = (e) => {
-        console.log("click");
-    };
-    const handleChange = () => {
-        console.log("change");
-    };
-    const handleBlur = () => {
-        console.log("blur");
+    const submitForm = () => {
+        const form = {
+            title: UserFormTitle,
+            description: Description,
+        };
+        BuildFormService.updateUserForm(id, form)
+            .then((response) => {
+                navigate("/manage-forms");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     return (
         <div className="container">
-            {/* <h2 className="text-center"> {UserFormTitle} </h2> */}
             <div className="info">
                 <input
                     type="text"
-                    defaultValue={UserFormTitle}
-                    onChange={handleChange}
+                    value={UserFormTitle}
+                    onChange={(e) => setUserFormTitle(e.target.value)}
                     className="not-active"
+                    id="title"
                 ></input>{" "}
                 <textarea
-                    // type="text"
-                    defaultValue={Description}
-                    onChange={handleChange}
+                    value={Description}
+                    onChange={(e) => setDescription(e.target.value)}
                     className="not-active"
                     id="description"
                 ></textarea>{" "}
@@ -73,16 +77,17 @@ const ListUserFormElementsComponent = () => {
             </Link>
             <table className="table table-bordered table-striped">
                 <thead>
-                    <th>Title</th>
-                    <th>Key</th>
-                    <th>Type</th>
-                    <th>Required</th>
-                    <th>Actions</th>
+                    <tr>
+                        <th>Title</th>
+                        <th>Key</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {UserFormElements.map((form_element) => (
                         <tr key={form_element.id}>
-                            {console.log(form_element.id)}
                             <td>{form_element.title}</td>
                             <td>{form_element.key}</td>
                             <td>{form_element.type}</td>
@@ -113,9 +118,7 @@ const ListUserFormElementsComponent = () => {
                     ))}
                 </tbody>
             </table>
-            <Link className="btn btn-success" to={"/manage-forms/"}>
-                Done
-            </Link>
+            <button onClick={() => submitForm()}>Done</button>
         </div>
     );
 };

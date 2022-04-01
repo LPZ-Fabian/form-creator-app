@@ -58,7 +58,7 @@ public class UserFormController {
     /**
      * PUT method to update a user form
      */
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<UserForm> updateUserForm(@PathVariable long id,@RequestBody UserForm updatedForm){
         UserForm updatedUserForm = userFormRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("User form does not exist with id:" + id));

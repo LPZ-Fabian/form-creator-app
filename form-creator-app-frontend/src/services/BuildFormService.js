@@ -12,8 +12,8 @@ class CreateFormService{
     getUserFormById(formId){
         return axios.get(USER_FORM_BASE_REST_API_URL + '/' + formId);
     }
-    updateUserFormElement(elementId, element){
-        return axios.put(USER_FORM_BASE_REST_API_URL + "/" + elementId, element)
+    updateUserForm(formId, form){
+        return axios.put(USER_FORM_BASE_REST_API_URL + "/" + formId, form)
     }
     deleteUserForm(formId){
         return axios.delete(USER_FORM_BASE_REST_API_URL + "/delete/" + formId)
