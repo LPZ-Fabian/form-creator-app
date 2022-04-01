@@ -11,20 +11,19 @@ const ManageFormComponent = () => {
     }, []);
 
     const createForm = () => {
-      const form = {
-        title: "",
-        description: ""
-      }
-      BuildFormService.createForm(form).then((response) => {
-        navigate("/user-form/" + response.data.id);
-      })
+        const form = {
+            title: "",
+            description: "",
+        };
+        BuildFormService.createForm(form).then((response) => {
+            navigate("/user-form/" + response.data.id);
+        });
     };
 
     const getAllUserForms = () => {
         BuildFormService.getAllUserForms()
             .then((response) => {
                 setUserForms(response.data);
-                console.log(response.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -43,17 +42,19 @@ const ManageFormComponent = () => {
     return (
         <div className="container">
             <h2 className="text-center"> Manage User Forms </h2>
-            <button onClick={(e) => createForm()}>Create New Form</button>
+            <button onClick={() => createForm()}>Create New Form</button>
             <table className="table table-bordered table-striped">
                 <thead>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Actions</th>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {UserForms.map((form) => (
                         <tr key={form.id}>
-                            {console.log(form.id)}
                             <td>{form.id}</td>
                             <td>{form.title}</td>
                             <td>{form.description}</td>
