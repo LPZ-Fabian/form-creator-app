@@ -46,7 +46,6 @@ const ManageFormComponent = () => {
             <table className="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Title</th>
                         <th>Description</th>
                         <th>Actions</th>
@@ -55,7 +54,6 @@ const ManageFormComponent = () => {
                 <tbody>
                     {UserForms.map((form) => (
                         <tr key={form.id}>
-                            <td>{form.id}</td>
                             <td>{form.title}</td>
                             <td>{form.description}</td>
                             <td>

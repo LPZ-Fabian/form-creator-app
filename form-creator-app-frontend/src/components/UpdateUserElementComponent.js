@@ -34,14 +34,24 @@ const UpdateUserElementComponent = () => {
         }).catch(error =>{
             console.log(error)
         })
+        setPageTitle();
     }, [])
+    const setPageTitle = () => {
+            const element = { 
+                type: type,
+                title: title
+            };
+        let elementType = element.type
+        console.log(element.type)
+        return <h2>Update {elementType}</h2>
+    };
 
   return (
     <div>
         <div className = "container">
             <div className = "row">
                 <div className = "card col-md-6 offset-md-3 offset-md-3">
-                <h2> Update Form Element</h2>
+                {setPageTitle()}
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-2">
