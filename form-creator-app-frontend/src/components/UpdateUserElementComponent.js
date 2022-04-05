@@ -37,12 +37,22 @@ const UpdateUserElementComponent = () => {
       .catch((error) => {
         console.log(error);
       });
+    setPageTitle();
   }, []);
+  const setPageTitle = () => {
+    const element = {
+      type: type,
+      title: title,
+    };
+    let elementType = element.type;
+    console.log(element.type);
+    return elementType;
+  };
 
   return (
     <section class="update-element">
       <div className="inner-column">
-        <h1 class="overlay-heading">Update Form Element</h1>
+        <h1 class="overlay-heading">Update {setPageTitle()}</h1>
         <div className="overlay">
           <form>
             <div className="field">
