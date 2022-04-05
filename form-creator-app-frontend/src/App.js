@@ -2,7 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import UpdateForm from "./components/UpdateForm";
+import CreateForm from "./components/CreateForm";
 import SelectElements from "./components/SelectElements";
 import UpdateUserElementComponent from "./components/UpdateUserElementComponent";
 import CreateElement from "./components/CreateElement";
@@ -23,8 +23,8 @@ function App() {
         <Route path="/add-element/:id" element={<SelectElements />}></Route>
         <Route path="/update-form-element/:id" element={<UpdateUserElementComponent />}></Route>
         <Route path="/build-element/:defaultId/:formId" element={<CreateElement />}></Route>
-        <Route path="/update-form/:id" element={<UpdateForm />}></Route>
-        <Route path="/user-form/:id" element={<UpdateForm />}></Route>
+        <Route path="/update-form/:id" element={<CreateForm />}></Route>
+        <Route path="/user-form/:id" element={<CreateForm />}></Route>
         <Route path="/build-form/" element={<CreateFormComponent />}></Route>
       </Routes>
       <Footer />

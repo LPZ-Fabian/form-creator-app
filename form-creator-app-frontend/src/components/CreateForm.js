@@ -3,7 +3,7 @@ import BuildUserElementService from "../services/BuildUserElementService";
 import BuildFormService from "../services/BuildFormService";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
-const UpdateForm = () => {
+const CreateForm = () => {
   const [UserFormElements, setUserFormElements] = useState([]);
   const [UserFormTitle, setUserFormTitle] = useState("");
   const [Description, setDescription] = useState("");
@@ -131,7 +131,7 @@ const UpdateForm = () => {
           </table>
           <div className="create-form">
             <button className="solid-button" onClick={() => submitForm(true)}>
-              Update Form
+              Create Form
             </button>
           </div>
         </div>
@@ -140,4 +140,4 @@ const UpdateForm = () => {
   );
 };
 
-export default UpdateForm;
+export default CreateForm;

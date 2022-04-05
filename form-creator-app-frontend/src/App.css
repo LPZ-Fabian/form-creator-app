@@ -278,7 +278,8 @@ table + .create-form {
 .create-element .field {
 }
 
-.create-element input {
+.create-element input,
+.update-element input {
   background-color: #f4f4f4;
   border: 1px solid #cfcfcf;
   padding: 8px;
@@ -286,7 +287,8 @@ table + .create-form {
   max-width: none;
 }
 
-.create-element .inner-column {
+.create-element .inner-column,
+.update-element .inner-column {
   max-width: 450px;
 }
 
