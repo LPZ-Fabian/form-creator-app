@@ -264,7 +264,7 @@ table + .actions {
 }
 
 .select-elements table + .actions {
-  margin-top: 60px;
+  margin-top: 30px;
 }
 
 .field + .form-actions {
