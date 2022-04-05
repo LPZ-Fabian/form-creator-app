@@ -22,8 +22,6 @@ const SelectElements = () => {
     <section className="select-elements">
       <div className="inner-column">
         <h2 className="text-center">Select an Element to Add</h2>
-        <Link to={"/user-form/" + id}>Done</Link>
-
         <table className="select-element-table">
           <thead>
             <tr>
@@ -47,6 +45,14 @@ const SelectElements = () => {
             ))}
           </tbody>
         </table>
+        <div className="actions">
+          <Link to={"/user-form/" + id} class="secondary-action ">
+            Cancel
+          </Link>
+          <Link to={"/user-form/" + id} class="solid-button confirm-action">
+            Confirm
+          </Link>
+        </div>
       </div>
     </section>
   );

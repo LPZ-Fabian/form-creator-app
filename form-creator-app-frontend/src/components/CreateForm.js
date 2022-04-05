@@ -129,7 +129,7 @@ const CreateForm = () => {
               </tr>
             </tbody>
           </table>
-          <div className="create-form">
+          <div className="actions">
             <button className="solid-button" onClick={() => submitForm(true)}>
               Create Form
             </button>

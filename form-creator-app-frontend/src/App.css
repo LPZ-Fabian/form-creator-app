@@ -54,6 +54,18 @@ button {
 button.solid-button {
   display: block;
 }
+
+.select-elements .actions {
+  max-width: 700px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+}
+
 .footer {
   padding-top: 20px;
   padding-bottom: 20px;
@@ -247,12 +259,12 @@ table + button {
   margin-top: 20px;
 }
 
-table + .create-form {
+table + .actions {
   margin-top: 20px;
 }
 
-.create-form .solid-button {
-  margin-left: auto;
+.select-elements table + .actions {
+  margin-top: 60px;
 }
 
 .field + .form-actions {
