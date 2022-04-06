@@ -15,7 +15,7 @@ const CreateElement = () => {
   const addElementToForm = (e) => {
     e.preventDefault();
     const UserFormElement = { title, type, key, required };
-
+    
     BuildUserElementService.createUserFormElement(formId, UserFormElement)
       .then((response) => {
         console.log(response.data);
@@ -26,6 +26,7 @@ const CreateElement = () => {
       });
   };
   useEffect(() => {
+    enableSubmit();
     DefaultFormElementService.getDefaultFormElementById(defaultId)
       .then((response) => {
         setType(response.data.type);
@@ -34,14 +35,21 @@ const CreateElement = () => {
         console.log(error);
       });
   }, []);
-
+  const enableSubmit = () =>{
+    let button = document.getElementById("toggle");
+    if(title != "" && key !="" && required != ""){
+      button.disabled = false
+    }else{
+      button.disabled = true
+    }
+  }
   const pageTitle = () => {
     let titleType;
-    if (defaultId === 1) {
+    if (defaultId == 1) {
       titleType = "Checkbox";
-    } else if (defaultId === 2) {
+    } else if (defaultId == 2) {
       titleType = "Text Field";
-    } else if (defaultId === 3) {
+    } else if (defaultId == 3) {
       titleType = "Text Area";
     } else {
       titleType = "Hidden";
@@ -52,18 +60,18 @@ const CreateElement = () => {
   return (
     <section className="create-element">
       <div className="inner-column">
-        <h1 class="overlay-heading">Create New Form Element</h1>
+        <h1 className="overlay-heading">Create New Form Element</h1>
         <div className="overlay">
           <h2 className="page-title">{pageTitle()}</h2>
           <form>
             <div className="field">
               <label className="form-label">Title:</label>
-              <input
+              <input required
                 type="text"
                 name="title"
                 className="form-control"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => (setTitle(e.target.value), enableSubmit())}
               ></input>
             </div>
             <div className="field">
@@ -73,7 +81,7 @@ const CreateElement = () => {
                 name="key"
                 className="form-control"
                 value={key}
-                onChange={(e) => setKey(e.target.value)}
+                onChange={(e) => (setKey(e.target.value), enableSubmit())}
               ></input>
             </div>
             <div className="field">
@@ -83,11 +91,11 @@ const CreateElement = () => {
                 name="required"
                 className="form-control"
                 value={required}
-                onChange={(e) => setRequired(e.target.value)}
+                onChange={(e) => (setRequired(e.target.value), enableSubmit())}
               ></input>
             </div>
             <div className="form-actions">
-              <button className="solid-button" onClick={(e) => addElementToForm(e)}>
+              <button className="solid-button" id= "toggle" onClick={(e) => addElementToForm(e)}>
                 Submit
               </button>
               <Link to={"/add-element/" + formId} className="secondary-action">

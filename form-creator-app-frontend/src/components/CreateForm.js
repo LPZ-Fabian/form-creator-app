@@ -9,6 +9,8 @@ const CreateForm = () => {
   const [Description, setDescription] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
+  const pathName = window.location.pathname;
+
 
   //create const to store title
   useEffect(() => {
@@ -39,6 +41,13 @@ const CreateForm = () => {
         console.log(error);
       });
   };
+  const buttonType = () => {
+    if (pathName.includes("/user-form")) {
+      return "Create Form";
+    } else {
+      return "Update Form";
+    }
+  }
   const submitForm = (redirect) => {
     const form = {
       title: UserFormTitle,
@@ -131,7 +140,7 @@ const CreateForm = () => {
           </table>
           <div className="actions">
             <button className="solid-button" onClick={() => submitForm(true)}>
-              Create Form
+              {buttonType()}
             </button>
           </div>
         </div>

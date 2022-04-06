@@ -50,7 +50,14 @@ button {
   font-size: 13px;
   cursor: pointer;
 }
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
 
+button:enabled {
+  opacity: 1;
+}
 button.solid-button {
   display: block;
 }
