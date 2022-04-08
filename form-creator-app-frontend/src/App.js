@@ -8,6 +8,8 @@ import UpdateUserElementComponent from "./components/UpdateUserElementComponent"
 import CreateElement from "./components/CreateElement";
 import ManageForms from "./components/ManageForms";
 import CreateFormComponent from "./components/CreateFormComponents";
+//import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   const redirect = true;

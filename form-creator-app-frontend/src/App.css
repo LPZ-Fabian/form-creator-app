@@ -1,3 +1,4 @@
+
 :root {
   --primary-color: #4e89b7;
   --primary-dark: #003756;
@@ -13,6 +14,12 @@
 .inner-column {
   max-width: 1000px;
   width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.preview-table {
+  max-width: 1000px;
+  width: 30%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -163,6 +170,7 @@ tbody tr {
 tr {
   border-bottom: 1px solid #e6e4df;
 }
+
 thead th {
   text-transform: uppercase;
   color: #333;
