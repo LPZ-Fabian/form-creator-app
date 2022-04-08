@@ -98,7 +98,8 @@ const CreateForm = () => {
     };
 
     return (
-        <div>
+        <div class="row">
+          <div class= "column left">
             <div className="inner-column">
                 <div className="form-info">
                     <div className="field">
@@ -130,8 +131,8 @@ const CreateForm = () => {
                         + Add Element
                     </Link>
                 </div>
-            </div>
-            <section className="list-form-elements">
+              </div>
+              <section className="list-form-elements">
                 <div className="form-table">
                     <table>
                         <thead>
@@ -188,7 +189,11 @@ const CreateForm = () => {
                         </button>
                     </div>
                 </div>
-                <div className="preview-table">
+            </section>
+          </div>
+          <div class= "column right">
+            <div class= "inner-column">
+              <div className="preview-table">
                     <h1 className="overlay-heading">{UserFormTitle} Preview</h1>
                     <div className="preview-container overlay">
                         <form id="preview-form">
@@ -197,27 +202,9 @@ const CreateForm = () => {
                             )}
                         </form>
                     </div>
-                    {/* <table>
-                            <thead>
-                                <tr>
-                                    <th>{UserFormTitle} form preview</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {UserFormElements.map((form_element) => (
-                                    <tr key={form_element.id}>
-                                        <td>{form_element.title}</td>
-                                        <tr>
-                                            {createWebformElements(
-                                                form_element.type
-                                            )}
-                                        </tr>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table> */}
-                </div>
-            </section>
+              </div>
+            </div>
+          </div>
         </div>
     );
 };
