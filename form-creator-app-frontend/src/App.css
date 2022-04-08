@@ -17,11 +17,26 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.list-form-elements {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
 .preview-table {
   max-width: 1000px;
   width: 30%;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+.preview-table .overlay-heading {
+  margin-top: 0;
+}
+
+#preview-form, .inputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .site {
@@ -334,4 +349,14 @@ table + .actions {
   display: flex;
   align-items: center;
   gap: 15px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #c5c3c3;
+  text-align: center;
+  color: white;
 }
