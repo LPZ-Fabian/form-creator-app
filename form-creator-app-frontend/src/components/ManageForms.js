@@ -76,6 +76,9 @@ const ManageForms = () => {
                   <button className="secondary-action" onClick={() => deleteUserForm(form.id)}>
                     Delete
                   </button>
+                  <Link className="secondary-action" to={"/view-form/" + JSON.stringify(form.id)}>
+                    View
+                  </Link>
                 </td>
               </tr>
             ))}

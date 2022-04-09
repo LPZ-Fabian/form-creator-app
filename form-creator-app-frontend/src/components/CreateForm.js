@@ -196,7 +196,7 @@ const CreateForm = () => {
               <div className="preview-table">
                     <h1 className="overlay-heading">{UserFormTitle} Preview</h1>
                     <div className="preview-container overlay">
-                        <form id="preview-form">
+                        <form className="form">
                             {UserFormElements.map((element) =>
                                 createWebformElements(element)
                             )}
