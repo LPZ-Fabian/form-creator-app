@@ -74,17 +74,54 @@ const ViewForm = () => {
         }
     };
     return (
-        <div className="final-form">
-            <h1 className="overlay-heading">{UserFormTitle}</h1>
-            <div className="preview-container overlay">
-                <form className="form">
-                    {UserFormElements.map((element) =>
-                        createWebformElements(element)
-                    )}
-                    <input type="submit" value="Submit"></input>
-                </form>
+        <div>
+            <div className="row top">
+                <div className="final-form">
+                    <h1 className="overlay-heading">{UserFormTitle}</h1>
+                    <div className="preview-container overlay">
+
+                        <form className="form">
+                            {UserFormElements.map((element) =>
+                                createWebformElements(element)
+                            )}
+                            <input type="submit" value="Submit"></input>
+                        </form>
+                    </div>
+                </div> 
+            </div>
+            <div className="row bottom">
+                <div className="inner column">
+                    <h1>{UserFormTitle} Form Responses</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                            <th>Response #</th>
+                            {UserFormElements.map((element) =>
+                             <th key={element.id}>
+                                {element.title}
+                            </th>
+                            )}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>15</td>
+                                <td>College has been good So far</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>17</td>
+                                <td>I haven't seen the sun in 3 days</td>
+                                <td>No</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+                
     );
 };
 
