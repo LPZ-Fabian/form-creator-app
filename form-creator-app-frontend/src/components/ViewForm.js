@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import BuildUserElementService from "../services/BuildUserElementService";
 import BuildFormService from "../services/BuildFormService";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import FormSubmissionService from "../services/FormSubmissionService";
 
 const ViewForm = () => {
     const [UserFormElements, setUserFormElements] = useState([]);
@@ -13,7 +14,7 @@ const ViewForm = () => {
     useEffect(() => {
         getAllUserFormElements();
         getFormTitle();
-    }, [Responses]);
+    }, []);
 
     const getFormTitle = () => {
         BuildFormService.getUserFormById(id).then((response) => {
@@ -30,14 +31,14 @@ const ViewForm = () => {
                 console.log(error);
             });
     };
-    const showTable = () => {
-        return (
-            <tr>
-                {Responses.map((test) => {
-                    <td>{test}</td>;
-                })}
-            </tr>
-        );
+    const submitFormResponse = () => {
+        FormSubmissionService.createFormResponse(id, Responses)
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     };
     const createWebformElements = (element) => {
         const placeHolder = element.title;
@@ -109,12 +110,12 @@ const ViewForm = () => {
                                                 ).value;
                                             }
                                             Responses.push({
-                                                elementId: element.id,
-                                                key: element.key,
                                                 response: resp,
                                             });
                                         });
                                         console.table(Responses);
+                                        submitFormResponse();
+
                                     }
                                 }}
                             >
@@ -140,7 +141,6 @@ const ViewForm = () => {
                             {
                                 <tr>
                                     {Responses.map((test) => {
-                                        console.log(test);
                                         <td>{test.response}</td>;
                                     })}
                                 </tr>
