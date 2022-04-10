@@ -6,18 +6,18 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 const ViewForm = () => {
     const [UserFormElements, setUserFormElements] = useState([]);
     const [UserFormTitle, setUserFormTitle] = useState("");
-    const [Description, setDescription] = useState("");
+    let testAr = [];
+    const [Responses, setResponses] = useState([]);
     const { id } = useParams();
 
     useEffect(() => {
         getAllUserFormElements();
-        getFormTitleAndDescription();
+        getFormTitle();
     }, []);
 
-    const getFormTitleAndDescription = () => {
+    const getFormTitle = () => {
         BuildFormService.getUserFormById(id).then((response) => {
             setUserFormTitle(response.data.title);
-            setDescription(response.data.description);
         });
     };
 
@@ -33,12 +33,12 @@ const ViewForm = () => {
     const createWebformElements = (element) => {
         const placeHolder = element.title;
         const required = element.required.toLowerCase() == "yes" ? true : false;
-        const name = element.key;
+        const id = element.key;
         if (element.type == "Checkbox") {
             return (
                 <div className="inputs">
                     <label>{element.title}</label>
-                    <input name={name} required={required} type="checkbox" />
+                    <input id={id} required={required} type="checkbox" />
                 </div>
             );
         }
@@ -48,7 +48,7 @@ const ViewForm = () => {
                     <label>{element.title}</label>
 
                     <input
-                        name={name}
+                        id={id}
                         required={required}
                         placeholder={placeHolder}
                         type="text"
@@ -60,7 +60,7 @@ const ViewForm = () => {
             return (
                 <div className="inputs">
                     <label>{element.title}</label>
-                    <textarea name={name} required={required} />
+                    <textarea id={id} required={required} />
                 </div>
             );
         }
@@ -68,7 +68,7 @@ const ViewForm = () => {
             return (
                 <div className="inputs">
                     <label>{element.title}</label>
-                    <input name={name} type="text" />
+                    <input id={id} type="text" />
                 </div>
             );
         }
@@ -79,15 +79,42 @@ const ViewForm = () => {
                 <div className="final-form">
                     <h1 className="overlay-heading">{UserFormTitle}</h1>
                     <div className="preview-container overlay">
-
                         <form className="form">
                             {UserFormElements.map((element) =>
                                 createWebformElements(element)
                             )}
-                            <input type="submit" value="Submit"></input>
+                            {/* <input type="submit" value="Submit"></input> */}
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    {
+                                        let resp;
+                                        UserFormElements.map((element) => {
+                                            if (element.type == "Checkbox") {
+                                                resp = document.getElementById(
+                                                    element.key
+                                                ).checked;
+                                            } else {
+                                                resp = document.getElementById(
+                                                    element.key
+                                                ).value;
+                                            }
+                                            testAr.push({
+                                                keyName: element.key,
+                                                response: resp,
+                                            });
+                                        });
+                                        // setResponses(testAr);
+                                        console.log(testAr);
+                                        // console.log(Responses)
+                                    }
+                                }}
+                            >
+                                test
+                            </button>
                         </form>
                     </div>
-                </div> 
+                </div>
             </div>
             <div className="row bottom">
                 <div className="inner column">
@@ -95,15 +122,18 @@ const ViewForm = () => {
                     <table>
                         <thead>
                             <tr>
-                            <th>Response #</th>
-                            {UserFormElements.map((element) =>
-                             <th key={element.id}>
-                                {element.title}
-                            </th>
-                            )}
+                                <th>Response #</th>
+                                {UserFormElements.map((element) => (
+                                    <th key={element.id}>{element.title}</th>
+                                ))}
                             </tr>
                         </thead>
                         <tbody>
+                            <tr>
+                                {/* {Responses.map((response) => {
+                                    <td>{response}</td>
+                                })}  */}
+                            </tr>
                             <tr>
                                 <td>1</td>
                                 <td>15</td>
@@ -121,7 +151,6 @@ const ViewForm = () => {
                 </div>
             </div>
         </div>
-                
     );
 };
 
