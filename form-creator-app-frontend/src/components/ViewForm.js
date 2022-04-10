@@ -13,6 +13,7 @@ const ViewForm = () => {
     useEffect(() => {
         getAllUserFormElements();
         getFormTitle();
+        showTable();
     }, []);
 
     const getFormTitle = () => {
@@ -29,6 +30,12 @@ const ViewForm = () => {
             .catch((error) => {
                 console.log(error);
             });
+    };
+    const showTable = () => {
+        return (<tr>{Responses.map((test) => {
+            <td>{test}</td>
+        })}
+        </tr>)
     };
     const createWebformElements = (element) => {
         const placeHolder = element.title;
@@ -99,14 +106,12 @@ const ViewForm = () => {
                                                     element.key
                                                 ).value;
                                             }
-                                            testAr.push({
+                                            Responses.push({
                                                 keyName: element.key,
                                                 response: resp,
                                             });
                                         });
-                                        // setResponses(testAr);
-                                        console.log(testAr);
-                                        // console.log(Responses)
+                                        console.log(Responses);
                                     }
                                 }}
                             >
@@ -129,11 +134,7 @@ const ViewForm = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                {/* {Responses.map((response) => {
-                                    <td>{response}</td>
-                                })}  */}
-                            </tr>
+                            {showTable()}
                             <tr>
                                 <td>1</td>
                                 <td>15</td>
