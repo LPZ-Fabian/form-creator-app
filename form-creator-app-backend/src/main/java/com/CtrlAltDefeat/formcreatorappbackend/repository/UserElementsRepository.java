@@ -10,6 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserElementsRepository extends JpaRepository<UserFormElement, Long>{
     //all crud database methods
-    List <UserFormElement> findByFormId(Long formId);
-
+    List<UserFormElement> findByFormId(Long formId);
 }

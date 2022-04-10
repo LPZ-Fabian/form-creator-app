@@ -62,7 +62,7 @@ public class UserFormElementController {
     * POST method used to create a new user element
     */
     @PostMapping("/create/{formId}")
-    public UserFormElement createUserFormElement(@PathVariable long formId, @RequestBody UserFormElement element){
+    public UserFormElement createUserFormElement(@PathVariable Long formId, @RequestBody UserFormElement element){
         if (userFormsRepository.existsById(formId)) {
             UserForm testForm = new UserForm();
             Optional<UserForm> form = userFormsRepository.findById(formId);

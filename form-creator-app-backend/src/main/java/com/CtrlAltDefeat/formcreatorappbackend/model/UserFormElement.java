@@ -1,5 +1,8 @@
 package com.CtrlAltDefeat.formcreatorappbackend.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,7 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -17,7 +23,7 @@ public class UserFormElement {//extends AuditModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "element_id")
-    private long element_id;
+    private Long element_id;
 
     @Column(name = "title")
     private String title;
@@ -31,13 +37,17 @@ public class UserFormElement {//extends AuditModel{
     @Column(name = "required")
     private String required;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private UserForm form;
+
+    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL)
+    private List<UserFormResponse> formResponses;
 
     /*
     public UserFormElement() {}
 
-    public UserFormElement(long id, String title, String type, String key, String required, UserForm form) {
+    public UserFormElement(Long id, String title, String type, String key, String required, UserForm form) {
         this.element_id = id;
         this.title = title;
         this.type = type;
@@ -45,10 +55,10 @@ public class UserFormElement {//extends AuditModel{
         this.required = required;
         this.form = form;
     }*/
-    public long getId() {
+    public Long getId() {
         return element_id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.element_id = id;
     }
     public String getTitle() {
@@ -72,13 +82,23 @@ public class UserFormElement {//extends AuditModel{
     public String getRequired(){
         return required;
     }
-    public void setRequired(String required){
+    public void setRequired(String required) {
         this.required = required;
     }
-    public void setForm(UserForm form ){
+    public void setForm(UserForm form) {
         this.form = form;
     }
-   /* public UserForm getForm(){
+    
+    public UserForm getForm() {
         return form;
-    }*/
+    }
+    
+    public void addUserFormResponse(UserFormResponse response) {
+        this.formResponses.add(response);
+    }
+
+    public void addUserFormResponses(List<UserFormResponse> responses) {
+        this.formResponses.addAll(responses);
+    }
+    
 }
