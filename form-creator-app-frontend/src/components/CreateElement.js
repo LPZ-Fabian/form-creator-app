@@ -7,7 +7,7 @@ const CreateElement = () => {
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
   const [key, setKey] = useState("");
-  const [required, setRequired] = useState("");
+  const [required, setRequired] = useState();
   const navigate = useNavigate();
   const { defaultId } = useParams();
   const { formId } = useParams();
