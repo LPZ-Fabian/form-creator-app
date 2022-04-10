@@ -13,8 +13,7 @@ const ViewForm = () => {
     useEffect(() => {
         getAllUserFormElements();
         getFormTitle();
-        showTable();
-    }, []);
+    }, [Responses]);
 
     const getFormTitle = () => {
         BuildFormService.getUserFormById(id).then((response) => {
@@ -32,14 +31,17 @@ const ViewForm = () => {
             });
     };
     const showTable = () => {
-        return (<tr>{Responses.map((test) => {
-            <td>{test}</td>
-        })}
-        </tr>)
+        return (
+            <tr>
+                {Responses.map((test) => {
+                    <td>{test}</td>;
+                })}
+            </tr>
+        );
     };
     const createWebformElements = (element) => {
         const placeHolder = element.title;
-        const required = element.required.toLowerCase() == "yes" ? true : false;
+        const required = element.required;
         const id = element.key;
         if (element.type == "Checkbox") {
             return (
@@ -107,11 +109,12 @@ const ViewForm = () => {
                                                 ).value;
                                             }
                                             Responses.push({
-                                                keyName: element.key,
+                                                elementId: element.id,
+                                                key: element.key,
                                                 response: resp,
                                             });
                                         });
-                                        console.log(Responses);
+                                        console.table(Responses);
                                     }
                                 }}
                             >
@@ -127,26 +130,21 @@ const ViewForm = () => {
                     <table>
                         <thead>
                             <tr>
-                                <th>Response #</th>
+                                {/* <th>Response #</th> */}
                                 {UserFormElements.map((element) => (
                                     <th key={element.id}>{element.title}</th>
                                 ))}
                             </tr>
                         </thead>
                         <tbody>
-                            {showTable()}
-                            <tr>
-                                <td>1</td>
-                                <td>15</td>
-                                <td>College has been good So far</td>
-                                <td>Yes</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>17</td>
-                                <td>I haven't seen the sun in 3 days</td>
-                                <td>No</td>
-                            </tr>
+                            {
+                                <tr>
+                                    {Responses.map((test) => {
+                                        console.log(test);
+                                        <td>{test.response}</td>;
+                                    })}
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
