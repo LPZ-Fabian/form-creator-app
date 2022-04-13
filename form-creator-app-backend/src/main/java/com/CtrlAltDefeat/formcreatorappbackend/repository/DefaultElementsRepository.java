@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DefaultElementsRepository extends JpaRepository<DefaultFormElement, Long>{
-    //all crud database methods
-    
+public interface DefaultElementsRepository extends JpaRepository<DefaultFormElement, Long> {
+
 }

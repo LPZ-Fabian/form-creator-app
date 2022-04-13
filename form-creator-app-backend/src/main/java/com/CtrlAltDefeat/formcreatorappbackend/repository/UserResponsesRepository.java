@@ -1,9 +1,10 @@
 package com.CtrlAltDefeat.formcreatorappbackend.repository;
 
-import com.CtrlAltDefeat.formcreatorappbackend.model.UserForm;
+import com.CtrlAltDefeat.formcreatorappbackend.model.UserFormResponse;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserFormsRepository extends JpaRepository<UserForm, Long> {
+public interface UserResponsesRepository extends JpaRepository<UserFormResponse, Long> {
 }
