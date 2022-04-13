@@ -94,14 +94,8 @@ const ViewForm = () => {
                 <div className="final-form">
                     <h1 className="overlay-heading">{UserFormTitle}</h1>
                     <div className="preview-container overlay">
-                        <form className="form">
-                            {UserFormElements.map((element) =>
-                                createWebformElements(element)
-                            )}
-                            {/* <input type="submit" value="Submit"></input> */}
-                            <button
-                                type="button"
-                                onClick={() => {
+                        <form className="form"
+                        onSubmit={() => {
                                     {
                                         let resp;
                                         UserFormElements.map((element) => {
@@ -121,7 +115,13 @@ const ViewForm = () => {
                                         console.table(Responses);
                                         createFormSubmission();
                                     }
-                                }}
+                                }}>
+                            {UserFormElements.map((element) =>
+                                createWebformElements(element)
+                            )}
+                            {/* <input type="submit" value="Submit"></input> */}
+                            <button
+                                type="submit"
                             >
                                 test
                             </button>
