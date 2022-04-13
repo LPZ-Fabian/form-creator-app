@@ -9,6 +9,7 @@ const ViewForm = () => {
     const [UserFormTitle, setUserFormTitle] = useState("");
     let testAr = [];
     const [Responses, setResponses] = useState([]);
+    const [RefreshResponses, setRefreshResponses] = useState([]);
     const { id } = useParams();
 
     useEffect(() => {
@@ -31,15 +32,19 @@ const ViewForm = () => {
                 console.log(error);
             });
     };
-    const submitFormResponse = () => {
-        FormSubmissionService.createFormResponse(id, Responses)
+    const createFormSubmission = () => {
+        FormSubmissionService.createFormSubmission(id, Responses)
             .then((response) => {
                 console.log(response.data);
             })
             .catch((error) => {
                 console.log(error)
             })
+            refreshPage();
     };
+    const refreshPage = () =>{
+        window.location.reload();
+    }
     const createWebformElements = (element) => {
         const placeHolder = element.title;
         const required = element.required;
@@ -114,8 +119,7 @@ const ViewForm = () => {
                                             });
                                         });
                                         console.table(Responses);
-                                        submitFormResponse();
-
+                                        createFormSubmission();
                                     }
                                 }}
                             >
