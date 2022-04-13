@@ -296,5 +296,9 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,intellij,gradle,node
 
+# form-creator-app-frontend
 form-creator-app-frontend/node_modules/
 form-creator-app-frontend/build/
+
+# .DS_Store
+.DS_Store
