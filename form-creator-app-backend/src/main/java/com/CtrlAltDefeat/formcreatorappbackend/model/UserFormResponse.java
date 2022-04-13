@@ -28,10 +28,7 @@ public class UserFormResponse {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private UserForm form;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private UserFormElement userFormElement;
+    private UserFormSubmission userFormSubmission;
 
     public long getResponseId() {
         return this.responseId;
@@ -41,22 +38,6 @@ public class UserFormResponse {
         this.responseId = id;
     }
 
-    public UserForm getForm() {
-        return this.form;
-    }
-
-    public void setForm(UserForm form) {
-        this.form = form;
-    }
-
-    public UserFormElement getUserFormElement() {
-        return this.userFormElement;
-    }
-
-    public void setUserFormElement(UserFormElement userFormElement) {
-        this.userFormElement = userFormElement;
-    }
-
     public String getKey() {
         return this.key;
     }
@@ -64,15 +45,21 @@ public class UserFormResponse {
     public void setKey(String key) {
         this.key = key;
     }
-
     
     public String getResponse() {
         return this.response;
     }
-    
 
     public void setResponse(String response) {
         this.response = response;
+    }
+
+    public UserFormSubmission getUserFormSubmission() {
+        return userFormSubmission;
+    }
+
+    public void setUserFormSubmission(UserFormSubmission userFormSubmission) {
+        this.userFormSubmission = userFormSubmission;
     }
 
 }

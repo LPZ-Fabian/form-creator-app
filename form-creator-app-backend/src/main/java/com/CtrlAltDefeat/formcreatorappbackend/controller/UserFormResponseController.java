@@ -38,33 +38,34 @@ public class UserFormResponseController {
         return userResponsesRepository.findAll();
     }
 
-    // TODO: Revisit, the for-loop might map data incorrectly.
-    @PostMapping("/record/responses/{formId}")
-    public List<UserFormResponse> recordUserFormResponse(@PathVariable Long formId, @RequestBody List<UserFormResponse> responses) {
-        
-        // Check if the form exists.
-        if (userFormsRepository.existsById(formId)) {
-
-            // Get the form.
-            var userForm = userFormsRepository.findById(formId).get();
-
-            // Retrieve all of the user form elements.
-            List<UserFormElement> userFormElements = userForm.getUserElements(); // userElementsRepository.findByFormId(formId);
-
-            for (int i = 0; i < responses.size(); i++) {
-
-                var response = responses.get(i);
-                var userFormElement = userFormElements.get(i);
-
-                response.setUserFormElement(userFormElement);
-                response.setKey(userFormElement.getKey());
-                response.setForm(userForm);
-
-                userResponsesRepository.save(response);
-            }
-        }
-
-        return responses;
-    }
+//    // TODO: Revisit, the for-loop might map data incorrectly.
+//    @PostMapping("/record/responses/{formId}")
+//    public List<UserFormResponse> recordUserFormResponse(@PathVariable Long formId, @RequestBody List<UserFormResponse> responses) {
+//
+//        // Check if the form exists.
+//        if (userFormsRepository.existsById(formId)) {
+//
+//            // Get the form.
+//            var userForm = userFormsRepository.findById(formId).get();
+//
+//            // Retrieve all of the user form elements.
+//            List<UserFormElement> userFormElements = userForm.getUserElements(); // userElementsRepository.findByFormId(formId);
+//
+//            for (int i = 0; i < responses.size(); i++) {
+//
+//                var response = responses.get(i);
+//                var userFormElement = userFormElements.get(i);
+//
+//                response.setUserFormElement(userFormElement);
+//                response.setKey(userFormElement.getKey());
+//                response.setForm(userForm);
+////                response.setUserFormSubmission(response.getUserFormSubmission());
+//
+//                userResponsesRepository.save(response);
+//            }
+//        }
+//
+//        return responses;
+//    }
 
 }

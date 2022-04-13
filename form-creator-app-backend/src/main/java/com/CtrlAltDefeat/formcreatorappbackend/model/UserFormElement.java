@@ -41,9 +41,6 @@ public class UserFormElement {//extends AuditModel{
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private UserForm form;
 
-    @OneToMany(mappedBy = "form", cascade = CascadeType.ALL)
-    private List<UserFormResponse> formResponses;
-
     /*
     public UserFormElement() {}
 
@@ -88,17 +85,7 @@ public class UserFormElement {//extends AuditModel{
     public void setForm(UserForm form) {
         this.form = form;
     }
-    
     public UserForm getForm() {
         return form;
     }
-    
-    public void addUserFormResponse(UserFormResponse response) {
-        this.formResponses.add(response);
-    }
-
-    public void addUserFormResponses(List<UserFormResponse> responses) {
-        this.formResponses.addAll(responses);
-    }
-    
 }
