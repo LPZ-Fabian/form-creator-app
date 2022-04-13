@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "user_responses")
 public class UserFormResponse {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "response_id")
@@ -45,7 +45,7 @@ public class UserFormResponse {
     public void setKey(String key) {
         this.key = key;
     }
-    
+
     public String getResponse() {
         return this.response;
     }

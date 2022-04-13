@@ -1,9 +1,19 @@
 package com.CtrlAltDefeat.formcreatorappbackend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "form_submissions")
@@ -12,7 +22,7 @@ public class UserFormSubmission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "submission_id")
-    private long submissionId;
+    private Long submissionId;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -21,11 +31,13 @@ public class UserFormSubmission {
     @OneToMany(mappedBy = "userFormSubmission", cascade = CascadeType.ALL)
     private List<UserFormResponse> formResponses;
 
-    public UserFormSubmission() {}
+    public UserFormSubmission() {
+    }
 
     public Long getId() {
         return submissionId;
     }
+
     public void setId(Long id) {
         this.submissionId = id;
     }
@@ -42,7 +54,7 @@ public class UserFormSubmission {
         return formResponses;
     }
 
-    public void setFormResponses (List<UserFormResponse> formResponses) {
+    public void setFormResponses(List<UserFormResponse> formResponses) {
         this.formResponses = formResponses;
     }
 }
