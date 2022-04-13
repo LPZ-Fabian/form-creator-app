@@ -50,6 +50,7 @@ public class UserFormSubmissionController {
         var form = userFormsRepository.findById(formId).get();
         List<UserFormResponse> formResponses = responses;
         submission.setForm(form);
+        userFormSubmissionRepository.save(submission);
         for (int i = 0; i < formResponses.size(); i++) {
                 var response = responses.get(i);
                 formResponses.get(i).setUserFormSubmission(submission);
@@ -57,22 +58,6 @@ public class UserFormSubmissionController {
                 userResponsesRepository.save(response);
             }
         submission.setFormResponses(formResponses);
-        userFormSubmissionRepository.save(submission);
-//        UserFormSubmission submission = new UserFormSubmission();
-//        if (userFormSubmissionRepository.existsById(formId)) {
-//            var form = userFormsRepository.findById(formId).get();
-//
-//            submission.setForm(form);
-//            form.addUserFormSubmssion(submission);
-//            for (int i = 0; i < responses.size(); i++) {
-//                var response = responses.get(i);
-//                responses.get(i).setUserFormSubmission(submission);
-//                responses.get(i).setKey(form.getUserElements().get(i).getKey());
-//                userResponsesRepository.save(response);
-//            }
-//            submission.setFormResponses(responses);
-//            userFormSubmissionRepository.save(submission);
-//        }
         return submission;
     }
 }
