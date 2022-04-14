@@ -7,9 +7,7 @@ import FormSubmissionService from "../services/FormSubmissionService";
 const ViewForm = () => {
     const [UserFormElements, setUserFormElements] = useState([]);
     const [UserFormTitle, setUserFormTitle] = useState("");
-    let testAr = [];
     const [Responses, setResponses] = useState([]);
-    const [RefreshResponses, setRefreshResponses] = useState([]);
     const { id } = useParams();
 
     useEffect(() => {
@@ -40,14 +38,10 @@ const ViewForm = () => {
             .catch((error) => {
                 console.log(error)
             })
-            refreshPage();
     };
-    const refreshPage = () =>{
-        window.location.reload();
-    }
     const createWebformElements = (element) => {
         const placeHolder = element.title;
-        const required = element.required;
+        const required = JSON.parse(element.required);
         const id = element.key;
         if (element.type == "Checkbox") {
             return (
@@ -119,7 +113,6 @@ const ViewForm = () => {
                             {UserFormElements.map((element) =>
                                 createWebformElements(element)
                             )}
-                            {/* <input type="submit" value="Submit"></input> */}
                             <button
                                 type="submit"
                             >

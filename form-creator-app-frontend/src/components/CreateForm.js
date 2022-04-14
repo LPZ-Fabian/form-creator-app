@@ -98,8 +98,8 @@ const CreateForm = () => {
     };
 
     return (
-        <div class="row">
-          <div class= "column left">
+        <div className="row">
+          <div className="column left">
             <div className="inner-column">
                 <div className="form-info">
                     <div className="field">
@@ -114,7 +114,6 @@ const CreateForm = () => {
                     </div>
                     <div className="field">
                         <label>Description:</label>
-
                         <textarea
                             value={Description}
                             onChange={(e) => setDescription(e.target.value)}
@@ -125,8 +124,8 @@ const CreateForm = () => {
                     </div>
                     <Link
                         to={"/add-element/" + id}
-                        //onClick={() => submitForm(false)}
                         className="solid-button"
+                        onClick={() => submitForm(false)}
                     >
                         + Add Element
                     </Link>
@@ -191,8 +190,8 @@ const CreateForm = () => {
                 </div>
             </section>
           </div>
-          <div class= "column right">
-            <div class= "inner-column">
+          <div className="column right">
+            <div className="inner-column">
               <div className="preview-table">
                     <h1 className="overlay-heading">{UserFormTitle} Preview</h1>
                     <div className="preview-container overlay">
