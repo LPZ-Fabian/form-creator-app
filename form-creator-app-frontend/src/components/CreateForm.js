@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import BuildUserElementService from "../services/BuildUserElementService";
 import BuildFormService from "../services/BuildFormService";
+import FormSubmissionService from "../services/FormSubmissionService";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
 const CreateForm = () => {
     const [UserFormElements, setUserFormElements] = useState([]);
     const [UserFormTitle, setUserFormTitle] = useState("");
     const [Description, setDescription] = useState("");
+    const [Submissions, setSubmissions] = useState([]);
     const { id } = useParams();
     const navigate = useNavigate();
     const pathName = window.location.pathname;
@@ -15,6 +17,7 @@ const CreateForm = () => {
     useEffect(() => {
         getAllUserFormElements();
         getFormTitleAndDescription();
+      //  getAllFormSubmissions();
     }, []);
     const getFormTitleAndDescription = () => {
         BuildFormService.getUserFormById(id).then((response) => {

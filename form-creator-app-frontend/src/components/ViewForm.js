@@ -11,6 +11,7 @@ const ViewForm = () => {
     const [Responses, setReponses] = useState([])
     const [Submissions, setSubmissions] = useState([]);
     const { id } = useParams();
+    let SubmissionNumber = 0;
 
     useEffect(() => {
         getAllUserFormElements();
@@ -42,17 +43,34 @@ const ViewForm = () => {
             .catch((error) => {
                 console.log(error);
             });
-            console.log(Submissions)
     }
     const createFormSubmission = () => {
         FormSubmissionService.createFormSubmission(id, Responses)
             .then((response) => {
                 console.log(response.data);
+                getAllFormSubmissions();
+                setReponses([]);
+                const form = document.getElementById("form");
+                form.reset();
             })
             .catch((error) => {
                 console.log(error)
             })
     };
+    const deleteFormSubmission = (submissionId) =>{
+        FormSubmissionService.deleteFormSubmission(submissionId)
+            .then((response) => {
+                console.log(response.data);
+                getAllFormSubmissions();
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+    const incrementCounter = () =>{
+        SubmissionNumber++
+        //return counter
+    }
     const createWebformElements = (element) => {
         const placeHolder = element.title;
         const required = JSON.parse(element.required);
@@ -103,8 +121,13 @@ const ViewForm = () => {
                 <div className="final-form">
                     <h1 className="overlay-heading">{UserFormTitle}</h1>
                     <div className="preview-container overlay">
-                        <form className="form"
-                        onSubmit={() => {
+                        <form id="form" className="form">
+                            {UserFormElements.map((element) =>
+                                createWebformElements(element)
+                            )}
+                            <button
+                                type="button"
+                                onClick={() => {
                                     {
                                         let resp;
                                         UserFormElements.map((element) => {
@@ -124,12 +147,7 @@ const ViewForm = () => {
                                         console.table(Submissions);
                                         createFormSubmission();
                                     }
-                                }}>
-                            {UserFormElements.map((element) =>
-                                createWebformElements(element)
-                            )}
-                            <button
-                                type="submit"
+                                }}
                             >
                                 test
                             </button>
@@ -143,20 +161,27 @@ const ViewForm = () => {
                     <table>
                         <thead>
                             <tr>
-                                <th>Response #</th>
+    
                                 {UserFormElements.map((element) => (
                                     <th key={element.id}>{element.title}</th>
                                 ))}
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
+            
                             {Submissions.map((submission) => (
                                 <tr key={submission.id}>
-                                {Submissions.map((submission) => (
-                                    <td>
-                                    
+                                
+                                
+                                {submission.formResponses.map((response) => (
+                                    <td key={response.id}>
+                                        {response.response}
                                     </td>
+
+
                                 ))}
+                                <button onClick={() => deleteFormSubmission(submission.id)}> Delete</button>
                                 </tr>
                             ))}
                         </tbody>
