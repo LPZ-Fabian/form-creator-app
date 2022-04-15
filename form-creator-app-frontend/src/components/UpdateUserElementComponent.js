@@ -11,6 +11,7 @@ const UpdateUserElementComponent = () => {
     const [required, setRequired] = useState("");
     const navigate = useNavigate();
     const { id } = useParams();
+    let req;
 
     const UpdateUserFormElement = (e) => {
         e.preventDefault();
@@ -45,14 +46,16 @@ const UpdateUserElementComponent = () => {
             title: title,
         };
         let elementType = element.type;
-        console.log(element.type);
         return elementType;
     };
+    const check = () => {
+        return (required == "true") ? true : false;
+    }
 
     return (
-        <section class="update-element">
+        <section className="update-element">
             <div className="inner-column">
-                <h1 class="overlay-heading">Update {setPageTitle()}</h1>
+                <h1 className="overlay-heading">Update {setPageTitle()}</h1>
                 <div className="overlay">
                     <form onSubmit={(e) => {UpdateUserFormElement(e)}}>
                         <div className="field">
@@ -80,6 +83,7 @@ const UpdateUserElementComponent = () => {
                         <div className="field">
                             <label className="form-label"> Required: </label>
                             <input
+                                checked={check()}
                                 type="checkbox"
                                 name="required"
                                 className="form-control"

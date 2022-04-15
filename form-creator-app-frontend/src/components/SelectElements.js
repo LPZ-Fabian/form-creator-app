@@ -46,7 +46,7 @@ const SelectElements = () => {
           </tbody>
         </table>
         <div className="actions">
-          <Link to={"/user-form/" + id} class="solid-button confirm-action">
+          <Link to={"/user-form/" + id} className="solid-button confirm-action">
             Done
           </Link>
         </div>

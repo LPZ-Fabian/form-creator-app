@@ -68,7 +68,7 @@ const CreateForm = () => {
     const createWebformElements = (element) => {
         if (element.type == "Checkbox") {
             return (
-                <div className="inputs">
+                <div className="inputs" key={element.id}>
                     <div>{element.title}</div>
                     <input type="checkbox" />
                 </div>
@@ -76,7 +76,7 @@ const CreateForm = () => {
         }
         if (element.type == "Text Field") {
             return (
-                <div className="inputs">
+                <div className="inputs" key={element.id}>
                     <div>{element.title}</div>
                     <input type="text" />
                 </div>
@@ -84,7 +84,7 @@ const CreateForm = () => {
         }
         if (element.type == "Text Area") {
             return (
-                <div className="inputs">
+                <div className="inputs" key={element.id}>
                     <div>{element.title}</div>
                     <textarea />
                 </div>
@@ -92,7 +92,7 @@ const CreateForm = () => {
         }
         if (element.type == "Text Field") {
             return (
-                <div className="inputs">
+                <div className="inputs" key={element.id}>
                     <div>{element.title}</div>
                     <input type="text" />
                 </div>
