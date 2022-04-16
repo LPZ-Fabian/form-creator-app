@@ -38,6 +38,9 @@ const ManageForms = () => {
         console.log(error);
       });
   };
+  const showDropDown = (formId) => {
+    document.getElementById("myDropdown" + formId).classList.toggle("show");
+  }
 
   return (
     <section>
@@ -79,6 +82,17 @@ const ManageForms = () => {
                   <Link className="secondary-action" to={"/view-form/" + JSON.stringify(form.id)}>
                     View
                   </Link>
+                  <div className="dropdown">
+  <button className="dropbtn" onClick={() => showDropDown(form.id)}>View</button>
+  <div  id={"myDropdown" + form.id} className="dropdown-content">
+  <Link className="secondary-action" to={"/view-form/" + JSON.stringify(form.id)}>
+                    View Form
+                  </Link>
+                  <Link className="secondary-action" to={"/view-form/" + JSON.stringify(form.id)}>
+                    View Responses
+                  </Link>
+  </div>
+</div>
                 </td>
               </tr>
             ))}
