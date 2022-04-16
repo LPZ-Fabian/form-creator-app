@@ -109,17 +109,14 @@ const ViewForm = () => {
             );
         }
     };
-    const submit = () => {
+    const submit = (e) => {
+        e.preventDefault();
         let resp;
         UserFormElements.map((element) => {
             if (element.type == "Checkbox") {
-                resp = document.getElementById(
-                    element.key
-                ).checked;
+                resp = document.getElementById(element.key).checked;
             } else {
-                resp = document.getElementById(
-                    element.key
-                ).value;
+                resp = document.getElementById(element.key).value;
             }
             Responses.push({
                 response: resp,
@@ -127,7 +124,7 @@ const ViewForm = () => {
         });
         console.table(Submissions);
         createFormSubmission();
-    }
+    };
     return (
         <div>
             <div className="row top">
@@ -137,13 +134,12 @@ const ViewForm = () => {
                         <form
                             id="form"
                             className="form"
-                            onSubmit={() => submit()}
-                            action="#"
+                            onSubmit={(e) => submit(e)}
                         >
                             {UserFormElements.map((element) =>
                                 createWebformElements(element)
                             )}
-                            <button type="submit">Submit Response</button>
+                            <button>Submit Response</button>
                         </form>
                     </div>
                 </div>
