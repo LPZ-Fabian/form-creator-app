@@ -8,10 +8,9 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 const ViewForm = () => {
     const [UserFormElements, setUserFormElements] = useState([]);
     const [UserFormTitle, setUserFormTitle] = useState("");
-    const [Responses, setReponses] = useState([])
+    const [Responses, setReponses] = useState([]);
     const [Submissions, setSubmissions] = useState([]);
     const { id } = useParams();
-    let SubmissionNumber = 0;
 
     useEffect(() => {
         getAllUserFormElements();
@@ -33,9 +32,9 @@ const ViewForm = () => {
             .catch((error) => {
                 console.log(error);
             });
-            //console.log(UserFormElements)
+        //console.log(UserFormElements)
     };
-    const getAllFormSubmissions = () =>{
+    const getAllFormSubmissions = () => {
         FormSubmissionService.getSubmissionsByFormID(id)
             .then((response) => {
                 setSubmissions(response.data);
@@ -43,7 +42,7 @@ const ViewForm = () => {
             .catch((error) => {
                 console.log(error);
             });
-    }
+    };
     const createFormSubmission = () => {
         FormSubmissionService.createFormSubmission(id, Responses)
             .then((response) => {
@@ -54,31 +53,26 @@ const ViewForm = () => {
                 form.reset();
             })
             .catch((error) => {
-                console.log(error)
-            })
+                console.log(error);
+            });
     };
-    const deleteFormSubmission = (submissionId) =>{
+    const deleteFormSubmission = (submissionId) => {
         FormSubmissionService.deleteFormSubmission(submissionId)
             .then((response) => {
                 console.log(response.data);
                 getAllFormSubmissions();
             })
             .catch((error) => {
-                console.log(error)
-            })
-    }
-    const incrementCounter = () =>{
-        SubmissionNumber++
-        //return counter
-    }
+                console.log(error);
+            });
+    };
     const createWebformElements = (element) => {
         const placeHolder = element.title;
         const required = JSON.parse(element.required);
-        //console.log(required + " " + element.title)
         const id = element.key;
         if (element.type == "Checkbox") {
             return (
-                <div className="inputs">
+                <div className="inputs" key={element.id}>
                     <label>{element.title}</label>
                     <input id={id} required={required} type="checkbox" />
                 </div>
@@ -86,7 +80,7 @@ const ViewForm = () => {
         }
         if (element.type == "Text Field") {
             return (
-                <div className="inputs">
+                <div className="inputs" key={element.id}>
                     <label>{element.title}</label>
 
                     <input
@@ -100,7 +94,7 @@ const ViewForm = () => {
         }
         if (element.type == "Text Area") {
             return (
-                <div className="inputs">
+                <div className="inputs" key={element.id}>
                     <label>{element.title}</label>
                     <textarea id={id} required={required} />
                 </div>
@@ -108,49 +102,48 @@ const ViewForm = () => {
         }
         if (element.type == "Text Field") {
             return (
-                <div className="inputs">
+                <div className="inputs" key={element.id}>
                     <label>{element.title}</label>
                     <input id={id} type="text" />
                 </div>
             );
         }
     };
+    const submit = () => {
+        let resp;
+        UserFormElements.map((element) => {
+            if (element.type == "Checkbox") {
+                resp = document.getElementById(
+                    element.key
+                ).checked;
+            } else {
+                resp = document.getElementById(
+                    element.key
+                ).value;
+            }
+            Responses.push({
+                response: resp,
+            });
+        });
+        console.table(Submissions);
+        createFormSubmission();
+    }
     return (
         <div>
             <div className="row top">
                 <div className="final-form">
                     <h1 className="overlay-heading">{UserFormTitle}</h1>
                     <div className="preview-container overlay">
-                        <form id="form" className="form">
+                        <form
+                            id="form"
+                            className="form"
+                            onSubmit={() => submit()}
+                            action="#"
+                        >
                             {UserFormElements.map((element) =>
                                 createWebformElements(element)
                             )}
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    {
-                                        let resp;
-                                        UserFormElements.map((element) => {
-                                            if (element.type == "Checkbox") {
-                                                resp = document.getElementById(
-                                                    element.key
-                                                ).checked;
-                                            } else {
-                                                resp = document.getElementById(
-                                                    element.key
-                                                ).value;
-                                            }
-                                            Responses.push({
-                                            response: resp,
-                                            });
-                                        });
-                                        console.table(Submissions);
-                                        createFormSubmission();
-                                    }
-                                }}
-                            >
-                                test
-                            </button>
+                            <button type="submit">Submit Response</button>
                         </form>
                     </div>
                 </div>
@@ -161,7 +154,6 @@ const ViewForm = () => {
                     <table>
                         <thead>
                             <tr>
-    
                                 {UserFormElements.map((element) => (
                                     <th key={element.id}>{element.title}</th>
                                 ))}
@@ -169,19 +161,27 @@ const ViewForm = () => {
                             </tr>
                         </thead>
                         <tbody>
-            
                             {Submissions.map((submission) => (
                                 <tr key={submission.id}>
-                                
-                                
-                                {submission.formResponses.map((response) => (
-                                    <td key={response.id}>
-                                        {response.response}
+                                    {submission.formResponses.map(
+                                        (response) => (
+                                            <td key={response.responseId}>
+                                                {response.response}
+                                            </td>
+                                        )
+                                    )}
+                                    <td>
+                                        <button
+                                            onClick={() =>
+                                                deleteFormSubmission(
+                                                    submission.id
+                                                )
+                                            }
+                                        >
+                                            {" "}
+                                            Delete
+                                        </button>
                                     </td>
-
-
-                                ))}
-                                <button onClick={() => deleteFormSubmission(submission.id)}> Delete</button>
                                 </tr>
                             ))}
                         </tbody>
