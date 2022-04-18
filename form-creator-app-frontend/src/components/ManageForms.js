@@ -40,22 +40,26 @@ const ManageForms = () => {
             });
     };
     const showDropDown = (formId) => {
-        const dropDown = document.getElementById("myDropdown" + formId);
-        dropDown.classList.toggle("show")
+        const dropDown = document.getElementById("drop-container" + formId);
+        dropDown.classList.toggle("show");
         // If onclick event fails to close, this if statement will close the active drop down
         if (activeBtnId != null && activeBtnId != formId) {
-          document.getElementById("myDropdown" + activeBtnId).classList.remove("show")
+            document
+                .getElementById("drop-container" + activeBtnId)
+                .classList.remove("show");
         }
         // Keeps track of button that is currently active by ID
         activeBtnId = formId;
     };
-    window.onclick = function(event) {
-      if (!event.target.matches('.dropbtn')) {
-        try {
-        document.getElementById("myDropdown" + activeBtnId).classList.remove("show")
-        } catch(e){}
-      }
-    }
+    window.onclick = function (event) {
+        if (!event.target.matches(".dropbtn")) {
+            try {
+                document
+                    .getElementById("drop-container" + activeBtnId)
+                    .classList.remove("show");
+            } catch (e) {}
+        }
+    };
     return (
         <section>
             <div className="inner-column">
@@ -128,45 +132,56 @@ const ManageForms = () => {
                                 </td>
                                 <td>{form.description}</td>
                                 <td>
-                                    <Link
-                                        className="primary-action"
-                                        to={
-                                            "/update-form/" +
-                                            JSON.stringify(form.id)
-                                        }
-                                    >
-                                        Update
-                                    </Link>
-                                    <button
-                                        className="secondary-action"
-                                        onClick={() => deleteUserForm(form.id)}
-                                    >
-                                        Delete
-                                    </button>
-                                    <Link
-                                        className="secondary-action"
-                                        to={
-                                            "/view-form/" +
-                                            JSON.stringify(form.id)
-                                        }
-                                    >
-                                        View
-                                    </Link>
                                     <div className="dropdown">
                                         <button
                                             id={"dropbtn" + form.id}
                                             className="dropbtn"
                                             onClick={() =>
-                                                showDropDown(form.id, true)
+                                                showDropDown(form.id)
+                                            }
+                                        >
+                                            Edit
+                                        </button>
+                                        <div
+                                            tabIndex={0}
+                                            id={"drop-container" + form.id}
+                                            className="dropdown-content"
+                                            onBlur={() => showDropDown(form.id)}
+                                        >
+                                            <Link
+                                                className="primary-action"
+                                                to={
+                                                    "/update-form/" +
+                                                    JSON.stringify(form.id)
+                                                }
+                                            >
+                                                Update
+                                            </Link>
+                                            <button
+                                                className="secondary-action"
+                                                onClick={() =>
+                                                    deleteUserForm(form.id)
+                                                }
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="dropdown">
+                                        <button
+                                            id={"dropbtn" + form.id}
+                                            className="dropbtn"
+                                            onClick={() =>
+                                                showDropDown(form.id)
                                             }
                                         >
                                             View
                                         </button>
                                         <div
                                             tabIndex={0}
-                                            id={"myDropdown" + form.id}
+                                            id={"drop-container" + form.id}
                                             className="dropdown-content"
-                                            onBlur={() => showDropDown(form.id, false)}
+                                            onBlur={() => showDropDown(form.id)}
                                         >
                                             <Link
                                                 className="secondary-action"
