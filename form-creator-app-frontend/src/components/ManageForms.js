@@ -39,13 +39,13 @@ const ManageForms = () => {
                 console.log(error);
             });
     };
-    const showDropDown = (formId) => {
-        const dropDown = document.getElementById("drop-container" + formId);
+    const showDropDown = (formId, containerName) => {
+        const dropDown = document.getElementById(containerName + formId);
         dropDown.classList.toggle("show");
         // If onclick event fails to close, this if statement will close the active drop down
         if (activeBtnId != null && activeBtnId != formId) {
             document
-                .getElementById("drop-container" + activeBtnId)
+                .getElementById(containerName + activeBtnId)
                 .classList.remove("show");
         }
         // Keeps track of button that is currently active by ID
@@ -55,7 +55,10 @@ const ManageForms = () => {
         if (!event.target.matches(".dropbtn")) {
             try {
                 document
-                    .getElementById("drop-container" + activeBtnId)
+                    .getElementById("drop-edit" + activeBtnId)
+                    .classList.remove("show");
+                document
+                    .getElementById("drop-view" + activeBtnId)
                     .classList.remove("show");
             } catch (e) {}
         }
@@ -134,19 +137,27 @@ const ManageForms = () => {
                                 <td>
                                     <div className="dropdown">
                                         <button
-                                            id={"dropbtn" + form.id}
+                                            id={"dropbtn-edit" + form.id}
                                             className="dropbtn"
                                             onClick={() =>
-                                                showDropDown(form.id)
+                                                showDropDown(
+                                                    form.id,
+                                                    "drop-edit"
+                                                )
                                             }
                                         >
                                             Edit
                                         </button>
                                         <div
                                             tabIndex={0}
-                                            id={"drop-container" + form.id}
+                                            id={"drop-edit" + form.id}
                                             className="dropdown-content"
-                                            onBlur={() => showDropDown(form.id)}
+                                            onBlur={() =>
+                                                showDropDown(
+                                                    form.id,
+                                                    "drop-edit"
+                                                )
+                                            }
                                         >
                                             <Link
                                                 className="primary-action"
@@ -172,16 +183,24 @@ const ManageForms = () => {
                                             id={"dropbtn" + form.id}
                                             className="dropbtn"
                                             onClick={() =>
-                                                showDropDown(form.id)
+                                                showDropDown(
+                                                    form.id,
+                                                    "drop-view"
+                                                )
                                             }
                                         >
                                             View
                                         </button>
                                         <div
                                             tabIndex={0}
-                                            id={"drop-container" + form.id}
+                                            id={"drop-view" + form.id}
                                             className="dropdown-content"
-                                            onBlur={() => showDropDown(form.id)}
+                                            onBlur={() =>
+                                                showDropDown(
+                                                    form.id,
+                                                    "drop-view"
+                                                )
+                                            }
                                         >
                                             <Link
                                                 className="secondary-action"
