@@ -278,8 +278,14 @@ tbody td:nth-child(1) {
   align-items: center;
 }
 
+tbody td:nth-child(3) {
+  display: flex;
+  gap: 10px;
+  min-width: 180px;
+}
+
 td {
-  padding: 12px 12px;
+  padding: 20px 20px;
   height: 26px;
   text-align: left;
 }
@@ -437,16 +443,6 @@ table + .actions {
   background-color: #4e8ab7ac;
 }
 
-.hidden {
-  display: none;
-  visibility: hidden;
-}
-
-.show {
-  visibility: visible;
-  position: static;
-}
-
 /* Dropdown Button */
 .dropbtn {
   color: #fff;
@@ -462,8 +458,8 @@ table + .actions {
 }
 
 /* Dropdown button on hover & focus */
-.dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
+.dropbtn:hover {
+  background-color: #195c8b;
 }
 
 /* The container <div> - needed to position the dropdown content */
