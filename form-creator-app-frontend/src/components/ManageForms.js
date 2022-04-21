@@ -5,7 +5,6 @@ import BuildFormService from "../services/BuildFormService";
 const ManageForms = () => {
     const [UserForms, setUserForms] = useState([]);
     const navigate = useNavigate();
-    let activeBtnId;
 
     useEffect(() => {
         getAllUserForms();
@@ -39,30 +38,7 @@ const ManageForms = () => {
                 console.log(error);
             });
     };
-    const showDropDown = (formId, containerName) => {
-        const dropDown = document.getElementById(containerName + formId);
-        dropDown.classList.toggle("show");
-        // If onclick event fails to close, this if statement will close the active drop down
-        if (activeBtnId != null && activeBtnId != formId) {
-            document
-                .getElementById(containerName + activeBtnId)
-                .classList.remove("show");
-        }
-        // Keeps track of button that is currently active by ID
-        activeBtnId = formId;
-    };
-    window.onclick = function (event) {
-        if (!event.target.matches(".dropbtn")) {
-            try {
-                document
-                    .getElementById("drop-edit" + activeBtnId)
-                    .classList.remove("show");
-                document
-                    .getElementById("drop-view" + activeBtnId)
-                    .classList.remove("show");
-            } catch (e) {}
-        }
-    };
+
     return (
         <section>
             <div className="inner-column">
@@ -137,30 +113,16 @@ const ManageForms = () => {
                                 <td>
                                     <div className="dropdown">
                                         <button
-                                            id={"dropbtn-edit" + form.id}
-                                            className="dropbtn"
-                                            onClick={() =>
-                                                showDropDown(
-                                                    form.id,
-                                                    "drop-edit"
-                                                )
-                                            }
+                                            className="solid-button"
                                         >
                                             Edit
                                         </button>
                                         <div
-                                            tabIndex={0}
-                                            id={"drop-edit" + form.id}
                                             className="dropdown-content"
-                                            onBlur={() =>
-                                                showDropDown(
-                                                    form.id,
-                                                    "drop-edit"
-                                                )
-                                            }
+                                   
                                         >
                                             <Link
-                                                className="primary-action"
+                                                className="secondary-action"
                                                 to={
                                                     "/update-form/" +
                                                     JSON.stringify(form.id)
@@ -180,27 +142,12 @@ const ManageForms = () => {
                                     </div>
                                     <div className="dropdown">
                                         <button
-                                            id={"dropbtn" + form.id}
-                                            className="dropbtn"
-                                            onClick={() =>
-                                                showDropDown(
-                                                    form.id,
-                                                    "drop-view"
-                                                )
-                                            }
+                                            className="solid-button"
                                         >
                                             View
                                         </button>
                                         <div
-                                            tabIndex={0}
-                                            id={"drop-view" + form.id}
                                             className="dropdown-content"
-                                            onBlur={() =>
-                                                showDropDown(
-                                                    form.id,
-                                                    "drop-view"
-                                                )
-                                            }
                                         >
                                             <Link
                                                 className="secondary-action"
