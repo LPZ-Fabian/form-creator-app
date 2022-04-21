@@ -1,4 +1,3 @@
-
 :root {
   --primary-color: #4e89b7;
   --primary-dark: #003756;
@@ -11,18 +10,18 @@
 .column {
   float: left;
   padding: 10px;
-  height:100%;
+  height: 100%;
 }
-.top{
+.top {
   height: 40%;
   width: 100%;
   background-color: #c7cdd15a;
   border-bottom-style: solid;
-  border-bottom-color:#939ca161;
+  border-bottom-color: #939ca161;
   box-shadow: inset -5px -10px 20px #9eaeb95a;
   max-width: 100%;
 }
-.bottom{
+.bottom {
   /* height: 60%; */
   margin-bottom: 100px;
   width: 100%;
@@ -35,7 +34,7 @@
   width: 40%;
   background-color: #c7cdd15a;
   border-left-style: solid;
-  border-left-color:#939ca1be;
+  border-left-color: #939ca1be;
   box-shadow: 5px 10px 20px #9eaeb95a inset;
   height: 10000px;
   max-height: 100%;
@@ -60,9 +59,8 @@
   max-width: 1000px;
   width: 95%;
   margin-left: auto;
-  margin-right: auto;  
+  margin-right: auto;
   gap: 30px;
-  
 }
 
 .preview-table {
@@ -73,7 +71,6 @@
   margin-left: auto;
   margin-right: auto;
   background-color: #ffffff;
-
 }
 
 .preview-table .overlay-heading {
@@ -94,7 +91,6 @@
   flex-direction: column;
   align-items: left;
   padding-bottom: 10px;
-
 }
 
 .site {
@@ -430,12 +426,12 @@ table + .actions {
   margin-right: auto;
   background-color: #ffffff;
 }
-.response-table{
+.response-table {
   display: flex;
   max-width: 2000px;
   margin-top: 3%;
   margin-bottom: 3%;
-  
+
   background-color: #a3a3a3;
 }
 .final-form .overlay-heading {
@@ -474,7 +470,7 @@ table + .actions {
   position: absolute;
   background-color: #f1f1f1;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -487,7 +483,15 @@ table + .actions {
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd}
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:block;}
+.show {
+  display: block;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
