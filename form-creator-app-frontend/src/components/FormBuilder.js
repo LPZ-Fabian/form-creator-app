@@ -50,7 +50,7 @@ const CreateForm = () => {
             return "Update Form";
         }
     };
-    const submitForm = (redirect) => {
+    const updateForm = (redirect) => {
         const form = {
             title: UserFormTitle,
             description: Description,
@@ -128,7 +128,7 @@ const CreateForm = () => {
                     <Link
                         to={"/add-element/" + id}
                         className="solid-button"
-                        onClick={() => submitForm(false)}
+                        onClick={() => updateForm(false)}
                     >
                         + Add Element
                     </Link>
@@ -160,7 +160,7 @@ const CreateForm = () => {
                                                 "/update-form-element/" +
                                                 JSON.stringify(form_element.id)
                                             }
-                                            onClick={() => submitForm(false)}
+                                            onClick={() => updateForm(false)}
                                         >
                                             Update
                                         </Link>
@@ -185,7 +185,7 @@ const CreateForm = () => {
                     <div className="actions">
                         <button
                             className="solid-button"
-                            onClick={() => submitForm(true)}
+                            onClick={() => updateForm(true)}
                         >
                             {buttonType()}
                         </button>
@@ -202,6 +202,7 @@ const CreateForm = () => {
                             {UserFormElements.map((element) =>
                                 createWebformElements(element)
                             )}
+                            <button type="button" className="solid-button">Submit</button>
                         </form>
                     </div>
               </div>
