@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
+import ElementCard from "./ElementCard";
 import BuildUserElementService from "../services/BuildUserElementService";
 import DefaultFormElementService from "../services/DefaultFormElementService";
 
@@ -11,6 +12,22 @@ const CreateElement = () => {
     const navigate = useNavigate();
     const { defaultId } = useParams();
     const { formId } = useParams();
+    const [Cards, setCards] = useState([]);
+    const [Elements, setElements] = useState([]);
+    const parentObj = {
+        title: "parentObj",
+        type: "check",
+        key: "key",
+        required: "req",
+        hasHidden: true
+    }
+    const childObj = {
+        title: "childObj",
+        type: "check",
+        key: "key",
+        required: "req",
+        hiddenById: 1
+    }
 
     const addElementToForm = (e) => {
         e.preventDefault();
@@ -19,13 +36,16 @@ const CreateElement = () => {
         BuildUserElementService.createUserFormElement(formId, UserFormElement)
             .then((response) => {
                 console.log(response.data);
-                navigate("/user-form/" + formId);
+                // navigate("/user-form/" + formId);
             })
             .catch((error) => {
                 console.log(error);
             });
     };
     useEffect(() => {
+        Elements.push(parentObj);
+        Elements.push(childObj);
+        console.log(Elements);
         DefaultFormElementService.getDefaultFormElementById(defaultId)
             .then((response) => {
                 setType(response.data.type);
@@ -47,9 +67,12 @@ const CreateElement = () => {
         }
         return titleType;
     };
+    const createCard = () => {
+        return <ElementCard />;
+    };
 
     return (
-        <section className="create-element">
+        <section id="sectiontest" className="create-element">
             <div className="inner-column">
                 <h1 className="overlay-heading">Create New Form Element</h1>
                 <div className="overlay">
@@ -67,9 +90,7 @@ const CreateElement = () => {
                                 name="title"
                                 className="form-control"
                                 value={title}
-                                onChange={(e) => (
-                                    setTitle(e.target.value)
-                                )}
+                                onChange={(e) => setTitle(e.target.value)}
                             ></input>
                         </div>
                         <div className="field">
@@ -80,9 +101,7 @@ const CreateElement = () => {
                                 name="key"
                                 className="form-control"
                                 value={key}
-                                onChange={(e) => (
-                                    setKey(e.target.value)
-                                )}
+                                onChange={(e) => setKey(e.target.value)}
                             ></input>
                         </div>
                         <div className="field">
@@ -91,14 +110,20 @@ const CreateElement = () => {
                                 type="checkbox"
                                 name="required"
                                 className="form-control"
-                                onChange={
-                                    (e) => setRequired(e.target.checked)
-                                }
+                                onChange={(e) => setRequired(e.target.checked)}
                             ></input>
                         </div>
                         <div className="form-actions">
                             <button type="submit" className="solid-button">
                                 Add Element
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setCards([...Cards, <ElementCard />]);
+                                }}
+                            >
+                                T
                             </button>
                             <Link
                                 to={"/add-element/" + formId}
@@ -109,7 +134,9 @@ const CreateElement = () => {
                         </div>
                     </form>
                 </div>
+                
             </div>
+            {Cards}
         </section>
     );
 };
