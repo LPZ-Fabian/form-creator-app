@@ -161,7 +161,7 @@ const ManageForms = () => {
                                             <Link
                                                 className="secondary-action"
                                                 to={
-                                                    "/view-form/" +
+                                                    "/view-submissions/" +
                                                     JSON.stringify(form.id)
                                                 }
                                             >

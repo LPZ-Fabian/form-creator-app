@@ -8,6 +8,7 @@ import UpdateUserElementComponent from "./components/UpdateUserElementComponent"
 import CreateElement from "./components/CreateElement";
 import ManageForms from "./components/ManageForms";
 import ViewForm from "./components/ViewForm";
+import ViewSubmissions from "./components/ViewSubmissions";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/update-form/:id" element={<CreateForm />}></Route>
         <Route path="/user-form/:id" element={<CreateForm />}></Route>
         <Route path="/view-form/:id" element={<ViewForm/>}></Route>
+        <Route path="/view-submissions/:id" element={<ViewSubmissions/>}></Route>
       </Routes>
       <Footer />
     </Router>

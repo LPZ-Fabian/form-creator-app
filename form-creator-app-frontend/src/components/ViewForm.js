@@ -8,7 +8,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 const ViewForm = () => {
     const [UserFormElements, setUserFormElements] = useState([]);
     const [UserFormTitle, setUserFormTitle] = useState("");
-    const [Responses, setReponses] = useState([]);
+    const [Responses, setResponses] = useState([]);
     const [Submissions, setSubmissions] = useState([]);
     const { id } = useParams();
 
@@ -48,7 +48,7 @@ const ViewForm = () => {
             .then((response) => {
                 console.log(response.data);
                 getAllFormSubmissions();
-                setReponses([]);
+                setResponses([]);
                 const form = document.getElementById("form");
                 form.reset();
             })
