@@ -89,7 +89,7 @@ public class UserFormElementController {
 
     // DELETE method used to delete a user element
     @DeleteMapping("{id}")
-    public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable long id) {
+    public ResponseEntity<HttpStatus> deleteUserFormElement(@PathVariable long id) {
         UserFormElement element = userElementsRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User form element does not exist with id: " + id));
 
