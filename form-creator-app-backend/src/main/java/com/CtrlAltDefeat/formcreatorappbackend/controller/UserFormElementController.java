@@ -6,7 +6,9 @@ import java.util.Optional;
 import com.CtrlAltDefeat.formcreatorappbackend.exception.ResourceNotFoundException;
 import com.CtrlAltDefeat.formcreatorappbackend.model.UserForm;
 import com.CtrlAltDefeat.formcreatorappbackend.model.UserFormElement;
+import com.CtrlAltDefeat.formcreatorappbackend.model.UserFormHiddenElement;
 import com.CtrlAltDefeat.formcreatorappbackend.repository.UserElementsRepository;
+import com.CtrlAltDefeat.formcreatorappbackend.repository.UserFormHiddenElementsRepository;
 import com.CtrlAltDefeat.formcreatorappbackend.repository.UserFormsRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class UserFormElementController {
 
     @Autowired
     private UserFormsRepository userFormsRepository;
+
+    @Autowired
+    private UserFormHiddenElementsRepository userFormHiddenElementsRepository;
 
     // GET method to return all user form elements
     @GetMapping
@@ -67,6 +72,13 @@ public class UserFormElementController {
             element.setForm(testForm);
             testForm.addUserFormElement(element);
             userElementsRepository.save(element);
+        }
+        if (element.getHiddenElementList() != null) {
+        for (int i = 0; i < element.getHiddenElementList().size(); i++) {
+            element.getHiddenElementList().get(i).setHiddenBy(element);
+            userFormHiddenElementsRepository.save(element.getHiddenElementList().get(i));
+        }
+        element.setHiddenElementList(element.getHiddenElementList());
         }
         return element;
     }

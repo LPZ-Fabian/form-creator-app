@@ -24,7 +24,7 @@ const CreateElement = () => {
         hasHidden: "true",
         hiddenById: 0,
     };
-    const addHiddenElements = (hiddenById) => {
+    const addHiddenElements = () => {
         const titles = document.querySelectorAll(".element-title");
         const types = document.querySelectorAll(".element-type");
         const keys = document.querySelectorAll(".element-key");
@@ -34,36 +34,31 @@ const CreateElement = () => {
             const type = types[i].value;
             const key = keys[i].value;
             const required = reqs[i].checked;
-            const hasHidden = false;
             const hiddenElement = {
                 title,
                 type,
                 key,
                 required,
-                hasHidden,
-                hiddenById,
             };
-            console.log(hiddenElement)
-            BuildUserElementService.createUserFormElement(formId, hiddenElement)
-            .then((response) => {
-                console.log(response.data)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+            console.log(hiddenElement);
+            Elements.push(hiddenElement);
         }
         console.table(Elements);
     };
 
     const addElementToForm = (e) => {
         e.preventDefault();
-        const UserFormElement = { title, type, key, required, hasHidden};
+        const UserFormElement = { title, type, key, required };
+        console.log(UserFormElement)
+        addHiddenElements();
 
-        BuildUserElementService.createUserFormElement(formId, UserFormElement)
+        BuildUserElementService.createUserFormElement(
+            formId,
+            UserFormElement,
+            Elements
+        )
             .then((response) => {
                 console.log(response.data);
-                addHiddenElements(response.data.id);
-                // BuildUserElementService.setHiddenTest(response.data.id, true)
                 // navigate("/user-form/" + formId);
             })
             .catch((error) => {
@@ -151,7 +146,7 @@ const CreateElement = () => {
                         type="button"
                         className="solid-button"
                         onClick={() => {
-                            setHasHidden(true)
+                            setHasHidden(true);
                             setCards([...Cards, <ElementCard />]);
                         }}
                     >

@@ -1,20 +1,25 @@
 package com.CtrlAltDefeat.formcreatorappbackend.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 @Entity
-@Table(name = "user_elements")
-public class UserFormElement {// extends AuditModel{
+@Table(name = "hidden_elements")
+public class UserFormHiddenElement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "element_id")
-    private Long element_id;
+    @Column(name = "hidden_id")
+    private Long hidden_id;
 
     @Column(name = "title")
     private String title;
@@ -30,19 +35,16 @@ public class UserFormElement {// extends AuditModel{
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private UserForm form;
+    private UserFormElement hiddenBy;
 
-    @OneToMany(mappedBy = "hiddenBy", cascade = CascadeType.ALL)
-    private List<UserFormHiddenElement> hiddenElementList;
-
-    public UserFormElement() {}
+    public UserFormHiddenElement() {}
 
     public Long getId() {
-        return element_id;
+        return hidden_id;
     }
 
     public void setId(Long id) {
-        this.element_id = id;
+        this.hidden_id = id;
     }
 
     public String getTitle() {
@@ -77,19 +79,7 @@ public class UserFormElement {// extends AuditModel{
         this.required = required;
     }
 
-    public void setForm(UserForm form) {
-        this.form = form;
-    }
-
-    public UserForm getForm() {
-        return form;
-    }
-
-    public void setHiddenElementList(List<UserFormHiddenElement> hiddenElementList) {
-        this.hiddenElementList = hiddenElementList;
-    }
-
-    public List<UserFormHiddenElement> getHiddenElementList() {
-        return hiddenElementList;
+    public void setHiddenBy(UserFormElement hiddenBy) {
+        this.hiddenBy = hiddenBy;
     }
 }
