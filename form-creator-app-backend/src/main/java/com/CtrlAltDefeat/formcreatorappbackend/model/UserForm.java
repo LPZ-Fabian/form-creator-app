@@ -86,7 +86,7 @@ public class UserForm {
         this.userFormSubmissions = userFormSubmissions;
     }
 
-    public void addUserFormSubmssion(UserFormSubmission userFormSubmission) {
+    public void addUserFormSubmission(UserFormSubmission userFormSubmission) {
         userFormSubmissions.add(userFormSubmission);
     }
 }
