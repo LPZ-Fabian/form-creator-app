@@ -43,9 +43,9 @@ const ElementCard = () => {
 
     return (
         <div id="tester">
-            <h1 className="overlay-heading">Create New Form Element</h1>
+            <h1 className="overlay-heading">Create New Hidden Form Element</h1>
             <div className="overlay">
-                <h2 className="page-title">{cardTitle}</h2>
+                {/* <h2 className="page-title">{cardTitle}</h2> */}
                 <form
                     onSubmit={(e) => {
                         addElementToForm(e);
@@ -99,7 +99,7 @@ const ElementCard = () => {
                             onChange={(e) => setRequired(e.target.checked)}
                         ></input>
                     </div>
-                    <div className="form-actions">
+                    {/* <div className="form-actions">
                         <button type="submit" className="solid-button">
                             Add Element
                         </button>
@@ -109,7 +109,7 @@ const ElementCard = () => {
                         >
                             Cancel
                         </Link>
-                    </div>
+                    </div> */}
                 </form>
             </div>
         </div>

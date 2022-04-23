@@ -14,6 +14,8 @@ const CreateElement = () => {
     const { formId } = useParams();
     const [Cards, setCards] = useState([]);
     const [Elements, setElements] = useState([]);
+    const [hasHidden, setHasHidden] = useState(false);
+
     const parentObj = {
         title: "parentObj",
         type: "check",
@@ -22,21 +24,45 @@ const CreateElement = () => {
         hasHidden: "true",
         hiddenById: 0,
     };
-    const childObj = {
-        title: "childObj",
-        type: "check",
-        key: "key",
-        required: "req",
-        hiddenById: 1,
+    const addHiddenElements = (hiddenById) => {
+        const titles = document.querySelectorAll(".element-title");
+        const types = document.querySelectorAll(".element-type");
+        const keys = document.querySelectorAll(".element-key");
+        const reqs = document.querySelectorAll(".element-req");
+        for (let i = 0; i < titles.length; i++) {
+            const title = titles[i].value;
+            const type = types[i].value;
+            const key = keys[i].value;
+            const required = reqs[i].checked;
+            const hasHidden = false;
+            const hiddenElement = {
+                title,
+                type,
+                key,
+                required,
+                hasHidden,
+                hiddenById,
+            };
+            console.log(hiddenElement)
+            BuildUserElementService.createUserFormElement(formId, hiddenElement)
+            .then((response) => {
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
+        console.table(Elements);
     };
 
     const addElementToForm = (e) => {
         e.preventDefault();
-        const UserFormElement = { title, type, key, required };
+        const UserFormElement = { title, type, key, required, hasHidden};
 
-        BuildUserElementService.createUserFormElement(formId, parentObj)
+        BuildUserElementService.createUserFormElement(formId, UserFormElement)
             .then((response) => {
                 console.log(response.data);
+                addHiddenElements(response.data.id);
                 // BuildUserElementService.setHiddenTest(response.data.id, true)
                 // navigate("/user-form/" + formId);
             })
@@ -125,34 +151,11 @@ const CreateElement = () => {
                         type="button"
                         className="solid-button"
                         onClick={() => {
+                            setHasHidden(true)
                             setCards([...Cards, <ElementCard />]);
                         }}
                     >
                         Add Hidden Element
-                    </button>
-                    <button
-                        type="button"
-                        className="solid-button"
-                        onClick={() => {
-                            const titles = document.querySelectorAll(".element-title");
-                            titles.forEach((titleField) => {
-                                console.log(titleField.value);
-                            })
-                            const types = document.querySelectorAll(".element-type")
-                            types.forEach((typeField) => {
-                                console.log(typeField.value)
-                            })
-                            const keys = document.querySelectorAll(".element-key")
-                            keys.forEach((keyField) => {
-                                console.log(keyField.value)
-                            })
-                            const reqs = document.querySelectorAll(".element-req")
-                            reqs.forEach((reqField) => {
-                                console.log(reqField.checked)
-                            })
-                        }}
-                    >
-                        Test get inputs{" "}
                     </button>
                 </div>
             </div>
