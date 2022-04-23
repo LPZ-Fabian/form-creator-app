@@ -65,25 +65,25 @@ public class UserFormElementController {
     // POST method used to create a new user element
     @PostMapping("/create/{formId}")
     public UserFormElement createUserFormElement(@PathVariable Long formId, @RequestBody UserFormElement element) {
+        List<UserFormHiddenElement> hiddenElementList = element.getHiddenElementList();
+        if (hiddenElementList != null) {
+            for (UserFormHiddenElement userFormHiddenElement : hiddenElementList) {
+                userFormHiddenElement.setHiddenBy(element);
+            }
+        }
         if (userFormsRepository.existsById(formId)) {
             UserForm testForm = new UserForm();
             Optional<UserForm> form = userFormsRepository.findById(formId);
             testForm = form.get();
             element.setForm(testForm);
             testForm.addUserFormElement(element);
+            element.setHiddenElementList(hiddenElementList);
             userElementsRepository.save(element);
-        }
-        if (element.getHiddenElementList() != null) {
-        for (int i = 0; i < element.getHiddenElementList().size(); i++) {
-            element.getHiddenElementList().get(i).setHiddenBy(element);
-            userFormHiddenElementsRepository.save(element.getHiddenElementList().get(i));
-        }
-        element.setHiddenElementList(element.getHiddenElementList());
         }
         return element;
     }
 
-    // POST method used to update a form element
+    // PUT method used to update a form element
     @PutMapping("{id}")
     public ResponseEntity<UserFormElement> updateUserFormElement(@PathVariable long id,
             @RequestBody UserFormElement userElementDetails) {
