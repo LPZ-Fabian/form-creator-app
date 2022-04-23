@@ -20,15 +20,15 @@ const CreateElement = () => {
         key: "key",
         required: "req",
         hasHidden: "true",
-        hiddenById: 0
-    }
+        hiddenById: 0,
+    };
     const childObj = {
         title: "childObj",
         type: "check",
         key: "key",
         required: "req",
-        hiddenById: 1
-    }
+        hiddenById: 1,
+    };
 
     const addElementToForm = (e) => {
         e.preventDefault();
@@ -45,17 +45,6 @@ const CreateElement = () => {
             });
     };
     useEffect(() => {
-        // BuildUserElementService.createUserFormElement(formId, parentObj)
-        // .then((response) => {
-        //     console.log(response.data);
-        //     // navigate("/user-form/" + formId);
-        // })
-        // .catch((error) => {
-        //     console.log(error);
-        // });
-        Elements.push(parentObj);
-        Elements.push(childObj);
-        console.log(Elements);
         DefaultFormElementService.getDefaultFormElementById(defaultId)
             .then((response) => {
                 setType(response.data.type);
@@ -76,9 +65,6 @@ const CreateElement = () => {
             titleType = "Hidden";
         }
         return titleType;
-    };
-    const createCard = () => {
-        return <ElementCard />;
     };
 
     return (
@@ -127,14 +113,6 @@ const CreateElement = () => {
                             <button type="submit" className="solid-button">
                                 Add Element
                             </button>
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setCards([...Cards, <ElementCard />]);
-                                }}
-                            >
-                                T
-                            </button>
                             <Link
                                 to={"/add-element/" + formId}
                                 className="secondary-action"
@@ -143,8 +121,40 @@ const CreateElement = () => {
                             </Link>
                         </div>
                     </form>
+                    <button
+                        type="button"
+                        className="solid-button"
+                        onClick={() => {
+                            setCards([...Cards, <ElementCard />]);
+                        }}
+                    >
+                        Add Hidden Element
+                    </button>
+                    <button
+                        type="button"
+                        className="solid-button"
+                        onClick={() => {
+                            const titles = document.querySelectorAll(".element-title");
+                            titles.forEach((titleField) => {
+                                console.log(titleField.value);
+                            })
+                            const types = document.querySelectorAll(".element-type")
+                            types.forEach((typeField) => {
+                                console.log(typeField.value)
+                            })
+                            const keys = document.querySelectorAll(".element-key")
+                            keys.forEach((keyField) => {
+                                console.log(keyField.value)
+                            })
+                            const reqs = document.querySelectorAll(".element-req")
+                            reqs.forEach((reqField) => {
+                                console.log(reqField.checked)
+                            })
+                        }}
+                    >
+                        Test get inputs{" "}
+                    </button>
                 </div>
-                
             </div>
             {Cards}
         </section>

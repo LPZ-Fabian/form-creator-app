@@ -53,7 +53,13 @@ const ElementCard = () => {
                 >
                     <div className="fields">
                         <label>Please pick an element type</label>
-                        <select onChange={() => getCardTitle()} id="type-drop" required name="element-type">
+                        <select
+                            onChange={() => getCardTitle()}
+                            className="element-type"
+                            id={"type-drop"}
+                            required
+                            name="element-type"
+                        >
                             <option value={""}>--Please pick a type--</option>
                             <option value={"Checkbox"}>Checkbox</option>
                             <option value={"Text Field"}>Text Field</option>
@@ -66,7 +72,7 @@ const ElementCard = () => {
                             required
                             type="text"
                             name="title"
-                            className="form-control"
+                            className="form-control element-title"
                             value={title}
                             onChange={(e) => {
                                 setTitle(e.target.value);
@@ -79,7 +85,7 @@ const ElementCard = () => {
                             required
                             type="text"
                             name="key"
-                            className="form-control"
+                            className="form-control element-key"
                             value={key}
                             onChange={(e) => setKey(e.target.value)}
                         ></input>
@@ -89,7 +95,7 @@ const ElementCard = () => {
                         <input
                             type="checkbox"
                             name="required"
-                            className="form-control"
+                            className="form-control element-req"
                             onChange={(e) => setRequired(e.target.checked)}
                         ></input>
                     </div>
