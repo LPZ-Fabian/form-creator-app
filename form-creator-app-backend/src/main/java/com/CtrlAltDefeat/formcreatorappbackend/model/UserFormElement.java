@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "user_elements")
@@ -32,23 +33,18 @@ public class UserFormElement {// extends AuditModel{
     @Column(name = "required")
     private String required;
 
+    @Column(name = "hasHidden")
+    private String hasHidden;
+
+    @Column(name = "hiddenById")
+    private long hiddenById;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private UserForm form;
 
-    /*
-     * public UserFormElement() {}
-     * 
-     * public UserFormElement(Long id, String title, String type, String key, String
-     * required, UserForm form) {
-     * this.element_id = id;
-     * this.title = title;
-     * this.type = type;
-     * this.key = key;
-     * this.required = required;
-     * this.form = form;
-     * }
-     */
+    public UserFormElement() {}
+
     public Long getId() {
         return element_id;
     }
@@ -95,5 +91,17 @@ public class UserFormElement {// extends AuditModel{
 
     public UserForm getForm() {
         return form;
+    }
+
+    public void setHasHidden(String hasHidden) {
+        this.hasHidden = hasHidden;
+    }
+
+    public String getHasHidden() {
+        return hasHidden;
+    }
+
+    public long getHiddenById() {
+        return hiddenById;
     }
 }

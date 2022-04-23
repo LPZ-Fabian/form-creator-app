@@ -8,10 +8,10 @@ const ElementCard = () => {
     const [type, setType] = useState("");
     const [key, setKey] = useState("");
     const [required, setRequired] = useState(false);
+    const [cardTitle, setCardTitle] = useState("Element");
     const navigate = useNavigate();
     const { defaultId } = useParams();
     const { formId } = useParams();
-
 
     const addElementToForm = (e) => {
         e.preventDefault();
@@ -35,30 +35,31 @@ const ElementCard = () => {
                 console.log(error);
             });
     }, []);
-    const pageTitle = () => {
-        let titleType;
-        if (defaultId == 1) {
-            titleType = "Checkbox";
-        } else if (defaultId == 2) {
-            titleType = "Text Field";
-        } else if (defaultId == 3) {
-            titleType = "Text Area";
-        } else {
-            titleType = "Hidden";
+    const getCardTitle = () => {
+        if (document.getElementById("type-drop").value !== null) {
+            setCardTitle(document.getElementById("type-drop").value);
         }
-        return titleType;
     };
 
     return (
         <div id="tester">
             <h1 className="overlay-heading">Create New Form Element</h1>
             <div className="overlay">
-                <h2 className="page-title">{pageTitle()}</h2>
+                <h2 className="page-title">{cardTitle}</h2>
                 <form
                     onSubmit={(e) => {
                         addElementToForm(e);
                     }}
                 >
+                    <div className="fields">
+                        <label>Please pick an element type</label>
+                        <select onChange={() => getCardTitle()} id="type-drop" required name="element-type">
+                            <option value={""}>--Please pick a type--</option>
+                            <option value={"Checkbox"}>Checkbox</option>
+                            <option value={"Text Field"}>Text Field</option>
+                            <option value={"Text Area"}>Text Area</option>
+                        </select>
+                    </div>
                     <div className="field">
                         <label className="form-label">Title:</label>
                         <input

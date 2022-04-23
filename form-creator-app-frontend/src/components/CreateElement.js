@@ -19,7 +19,8 @@ const CreateElement = () => {
         type: "check",
         key: "key",
         required: "req",
-        hasHidden: true
+        hasHidden: "true",
+        hiddenById: 0
     }
     const childObj = {
         title: "childObj",
@@ -33,9 +34,10 @@ const CreateElement = () => {
         e.preventDefault();
         const UserFormElement = { title, type, key, required };
 
-        BuildUserElementService.createUserFormElement(formId, UserFormElement)
+        BuildUserElementService.createUserFormElement(formId, parentObj)
             .then((response) => {
                 console.log(response.data);
+                // BuildUserElementService.setHiddenTest(response.data.id, true)
                 // navigate("/user-form/" + formId);
             })
             .catch((error) => {
@@ -43,6 +45,14 @@ const CreateElement = () => {
             });
     };
     useEffect(() => {
+        // BuildUserElementService.createUserFormElement(formId, parentObj)
+        // .then((response) => {
+        //     console.log(response.data);
+        //     // navigate("/user-form/" + formId);
+        // })
+        // .catch((error) => {
+        //     console.log(error);
+        // });
         Elements.push(parentObj);
         Elements.push(childObj);
         console.log(Elements);
