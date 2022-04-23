@@ -10,10 +10,10 @@ class BuildUserFormService {
     getAllFormElementsByFormId(formId) {
         return axios.get(USER_FORM_BASE_REST_API_URL + "/form/" + formId);
     }
-    createUserFormElement(formId, element, hiddenElements) {
+    createUserFormElement(formId, element) {
         return axios.post(
             USER_FORM_BASE_REST_API_URL + "/create/" + formId,
-            element, hiddenElements
+            element
         );
     }
     getUserFormElementByID(elementId) {

@@ -42,11 +42,12 @@ const ElementCard = () => {
     };
 
     return (
-        <div id="tester">
+        <div>
             <h1 className="overlay-heading">Create New Hidden Form Element</h1>
             <div className="overlay">
                 {/* <h2 className="page-title">{cardTitle}</h2> */}
                 <form
+                 className="hidden-cards"
                     onSubmit={(e) => {
                         addElementToForm(e);
                     }}

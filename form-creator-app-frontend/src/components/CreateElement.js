@@ -13,7 +13,7 @@ const CreateElement = () => {
     const { defaultId } = useParams();
     const { formId } = useParams();
     const [Cards, setCards] = useState([]);
-    const [Elements, setElements] = useState([]);
+    const [hiddenElementList, setHiddenElementList] = useState([]);
     const [hasHidden, setHasHidden] = useState(false);
 
     const parentObj = {
@@ -41,29 +41,47 @@ const CreateElement = () => {
                 required,
             };
             console.log(hiddenElement);
-            Elements.push(hiddenElement);
+            hiddenElementList.push(hiddenElement);
+            setHiddenElementList([...hiddenElementList, hiddenElement]);
         }
-        console.table(Elements);
+        console.table(hiddenElementList);
+    };
+
+    const checkHiddenCards = () => {
+        let valid = true;
+        const hiddenCards = document.querySelectorAll(".hidden-cards");
+        hiddenCards.forEach((card) => {
+            if (!card.checkValidity()) {
+                card.reportValidity();
+                valid = false;
+            }
+        });
+        return valid;
     };
 
     const addElementToForm = (e) => {
         e.preventDefault();
-        const UserFormElement = { title, type, key, required };
-        console.log(UserFormElement)
-        addHiddenElements();
-
-        BuildUserElementService.createUserFormElement(
-            formId,
-            UserFormElement,
-            Elements
-        )
-            .then((response) => {
-                console.log(response.data);
-                // navigate("/user-form/" + formId);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        if (checkHiddenCards()) {
+            const UserFormElement = {
+                title,
+                type,
+                key,
+                required,
+                hiddenElementList,
+            };
+            addHiddenElements();
+            BuildUserElementService.createUserFormElement(
+                formId,
+                UserFormElement
+            )
+                .then((response) => {
+                    console.log(response.data);
+                    // navigate("/user-form/" + formId);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     };
     useEffect(() => {
         DefaultFormElementService.getDefaultFormElementById(defaultId)
