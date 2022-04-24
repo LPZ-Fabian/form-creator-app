@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import BuildUserElementService from "../services/BuildUserElementService";
 import BuildFormService from "../services/BuildFormService";
 import FormSubmissionService from "../services/FormSubmissionService";
@@ -17,7 +17,6 @@ const CreateForm = () => {
     useEffect(() => {
         getAllUserFormElements();
         getFormTitleAndDescription();
-      //  getAllFormSubmissions();
     }, []);
     const getFormTitleAndDescription = () => {
         BuildFormService.getUserFormById(id).then((response) => {
@@ -100,114 +99,186 @@ const CreateForm = () => {
         }
     };
 
+    const renderElements = () => {
+        return (
+            <>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </>
+        );
+    };
+
     return (
         <div className="row">
-          <div className="column left">
-            <div className="inner-column">
-                <div className="form-info">
-                    <div className="field">
-                        <label>Form Name:</label>
-                        <input
-                            type="text"
-                            value={UserFormTitle}
-                            onChange={(e) => setUserFormTitle(e.target.value)}
-                            className="not-active"
-                            id="title"
-                        ></input>
-                    </div>
-                    <div className="field">
-                        <label>Description:</label>
-                        <textarea
-                            value={Description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            className="not-active"
-                            id="description"
-                            rows="3"
-                        ></textarea>
-                    </div>
-                    <Link
-                        to={"/add-element/" + id}
-                        className="solid-button"
-                        onClick={() => updateForm(false)}
-                    >
-                        + Add Element
-                    </Link>
-                </div>
-              </div>
-              <section className="list-form-elements">
-                <div className="form-table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Key</th>
-                                <th>Type</th>
-                                <th>Required</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {UserFormElements.map((form_element) => (
-                                <tr key={form_element.id}>
-                                    <td>{form_element.title}</td>
-                                    <td>{form_element.key}</td>
-                                    <td>{form_element.type}</td>
-                                    <td>{form_element.required}</td>
-                                    <td>
-                                        <Link
-                                            className="primary-action"
-                                            to={
-                                                "/update-form-element/" +
-                                                JSON.stringify(form_element.id)
-                                            }
-                                            onClick={() => updateForm(false)}
-                                        >
-                                            Update
-                                        </Link>
-                                        <button
-                                            className="secondary-action"
-                                            onClick={() =>
-                                                deleteUserFormElement(
-                                                    form_element.id
-                                                )
-                                            }
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div className="actions">
-                        <button
+            <div className="column left">
+                <div className="inner-column">
+                    <div className="form-info">
+                        <div className="field">
+                            <label>Form Name:</label>
+                            <input
+                                type="text"
+                                value={UserFormTitle}
+                                onChange={(e) =>
+                                    setUserFormTitle(e.target.value)
+                                }
+                                className="not-active"
+                                id="title"
+                            ></input>
+                        </div>
+                        <div className="field">
+                            <label>Description:</label>
+                            <textarea
+                                value={Description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                className="not-active"
+                                id="description"
+                                rows="3"
+                            ></textarea>
+                        </div>
+                        <Link
+                            to={"/add-element/" + id}
                             className="solid-button"
-                            onClick={() => updateForm(true)}
+                            onClick={() => updateForm(false)}
                         >
-                            {buttonType()}
-                        </button>
+                            + Add Element
+                        </Link>
                     </div>
                 </div>
-            </section>
-          </div>
-          <div className="column right">
-            <div className="inner-column">
-              <div className="preview-table">
-                    <h1 className="overlay-heading">{UserFormTitle} Preview</h1>
-                    <div className="preview-container overlay">
-                        <form className="form">
-                            {UserFormElements.map((element) =>
-                                createWebformElements(element)
-                            )}
-                            <button type="button" className="solid-button">Submit</button>
-                        </form>
+                <section className="list-form-elements">
+                    <div className="form-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Key</th>
+                                    <th>Type</th>
+                                    <th>Required</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {UserFormElements.map((element) => {
+                                    return (
+                                        <Fragment>
+                                            <tr key={element.id}>
+                                                <td>{element.title}</td>
+                                                <td>{element.key}</td>
+                                                <td>{element.type}</td>
+                                                <td>{element.required}</td>
+                                                <td>
+                                                    <Link
+                                                        className="primary-action"
+                                                        to={
+                                                            "/update-form-element/" +
+                                                            JSON.stringify(
+                                                                element.id
+                                                            )
+                                                        }
+                                                        onClick={() =>
+                                                            updateForm(false)
+                                                        }
+                                                    >
+                                                        Update
+                                                    </Link>
+                                                    <button
+                                                        className="secondary-action"
+                                                        onClick={() =>
+                                                            deleteUserFormElement(
+                                                                element.id
+                                                            )
+                                                        }
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <Fragment>
+                                                {element.hiddenElementList.map(
+                                                    (hidden) => {
+                                                        return (
+                                                        <tr key={hidden.id} className="hidden-row">
+                                                            <td>
+                                                                {hidden.title}
+                                                            </td>
+                                                            <td>
+                                                                {hidden.key}
+                                                            </td>
+                                                            <td>
+                                                                {hidden.type}
+                                                            </td>
+                                                            <td>
+                                                                {
+                                                                    hidden.required
+                                                                }
+                                                            </td>
+                                                            <td><Link
+                                                        className="primary-action"
+                                                        to={
+                                                            "/update-form-element/" +
+                                                            JSON.stringify(
+                                                                element.id
+                                                            )
+                                                        }
+                                                        onClick={() =>
+                                                            updateForm(false)
+                                                        }
+                                                    >
+                                                        Update
+                                                    </Link>
+                                                    <button
+                                                        className="secondary-action"
+                                                        onClick={() =>
+                                                            deleteUserFormElement(
+                                                                element.id
+                                                            )
+                                                        }
+                                                    >
+                                                        Delete
+                                                    </button></td>
+                                                        </tr>
+                                                        )
+                                                    }
+                                                )}
+                                            </Fragment>
+                                        </Fragment>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                        <div className="actions">
+                            <button
+                                className="solid-button"
+                                onClick={() => updateForm(true)}
+                            >
+                                {buttonType()}
+                            </button>
+                        </div>
                     </div>
-              </div>
+                </section>
             </div>
-          </div>
+            <div className="column right">
+                <div className="inner-column">
+                    <div className="preview-table">
+                        <h1 className="overlay-heading">
+                            {UserFormTitle} Preview
+                        </h1>
+                        <div className="preview-container overlay">
+                            <form className="form">
+                                {UserFormElements.map((element) =>
+                                    createWebformElements(element)
+                                )}
+                                <button type="button" className="solid-button">
+                                    Submit
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
