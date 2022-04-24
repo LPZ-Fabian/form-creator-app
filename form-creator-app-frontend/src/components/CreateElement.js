@@ -163,16 +163,20 @@ const CreateElement = () => {
                         type="button"
                         className="solid-button"
                         onClick={() => {
-                            setCards([...Cards, <ElementCard />]);
+                            setCards([
+                                ...Cards,
+                                <ElementCard
+                                    key={"hidden" + Cards.length + 1}
+                                    index={Cards.length + 1}
+                                />,
+                            ]);
                         }}
                     >
                         Add Hidden Element
                     </button>
                 </div>
             </div>
-            <div className="hidden-container">
-            {Cards}
-            </div>
+            <div className="hidden-container">{Cards}</div>
         </section>
     );
 };

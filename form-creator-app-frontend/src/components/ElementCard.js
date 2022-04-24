@@ -3,7 +3,7 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 import BuildUserElementService from "../services/BuildUserElementService";
 import DefaultFormElementService from "../services/DefaultFormElementService";
 
-const ElementCard = () => {
+const ElementCard = (index) => {
     const [title, setTitle] = useState("");
     const [type, setType] = useState("");
     const [key, setKey] = useState("");
@@ -27,6 +27,7 @@ const ElementCard = () => {
             });
     };
     useEffect(() => {
+        console.log(index)
         DefaultFormElementService.getDefaultFormElementById(defaultId)
             .then((response) => {
                 setType(response.data.type);
@@ -36,18 +37,18 @@ const ElementCard = () => {
             });
     }, []);
     const getCardTitle = () => {
-        if (document.getElementById("type-drop").value !== null) {
-            setCardTitle(document.getElementById("type-drop").value);
+        if (document.getElementById("type-drop" + index.index).value !== null) {
+            setCardTitle(document.getElementById("type-drop" + index.index).value);
         }
     };
 
     return (
-        <div className="card-container">
+        <div className="card-container" id={index}>
             <h1 className="overlay-heading">Create New Hidden Form Element</h1>
             <div className="overlay">
-                {/* <h2 className="page-title">{cardTitle}</h2> */}
+                <h2 className="page-title">{cardTitle}</h2>
                 <form
-                 className="hidden-cards"
+                    className="hidden-cards"
                     onSubmit={(e) => {
                         addElementToForm(e);
                     }}
@@ -57,7 +58,7 @@ const ElementCard = () => {
                         <select
                             onChange={() => getCardTitle()}
                             className="element-type"
-                            id={"type-drop"}
+                            id={"type-drop" + index.index}
                             required
                             name="element-type"
                         >
@@ -100,17 +101,20 @@ const ElementCard = () => {
                             onChange={(e) => setRequired(e.target.checked)}
                         ></input>
                     </div>
-                    {/* <div className="form-actions">
-                        <button type="submit" className="solid-button">
-                            Add Element
-                        </button>
-                        <Link
-                            to={"/add-element/" + formId}
-                            className="secondary-action"
+                    <div className="form-actions">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                document
+                                    .querySelector(".hidden-container")
+                                    .removeChild(
+                                        document.getElementById(index)
+                                    );
+                            }}
                         >
-                            Cancel
-                        </Link>
-                    </div> */}
+                            Delete
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
