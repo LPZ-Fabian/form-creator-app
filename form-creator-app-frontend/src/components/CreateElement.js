@@ -14,7 +14,6 @@ const CreateElement = () => {
     const { formId } = useParams();
     const [Cards, setCards] = useState([]);
     const [hiddenElementList, setHiddenElementList] = useState([]);
-    const [hasHidden, setHasHidden] = useState(false);
 
     const parentObj = {
         title: "parentObj",
@@ -76,7 +75,7 @@ const CreateElement = () => {
             )
                 .then((response) => {
                     console.log(response.data);
-                    // navigate("/user-form/" + formId);
+                    navigate("/user-form/" + formId);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -164,7 +163,6 @@ const CreateElement = () => {
                         type="button"
                         className="solid-button"
                         onClick={() => {
-                            setHasHidden(true);
                             setCards([...Cards, <ElementCard />]);
                         }}
                     >
@@ -172,7 +170,9 @@ const CreateElement = () => {
                     </button>
                 </div>
             </div>
+            <div className="hidden-container">
             {Cards}
+            </div>
         </section>
     );
 };

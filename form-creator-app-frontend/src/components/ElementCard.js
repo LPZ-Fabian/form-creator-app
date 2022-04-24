@@ -42,7 +42,7 @@ const ElementCard = () => {
     };
 
     return (
-        <div>
+        <div className="card-container">
             <h1 className="overlay-heading">Create New Hidden Form Element</h1>
             <div className="overlay">
                 {/* <h2 className="page-title">{cardTitle}</h2> */}
@@ -52,7 +52,7 @@ const ElementCard = () => {
                         addElementToForm(e);
                     }}
                 >
-                    <div className="fields">
+                    <div className="field">
                         <label>Please pick an element type</label>
                         <select
                             onChange={() => getCardTitle()}
