@@ -14,7 +14,7 @@ const ViewSubmissions = () => {
     getAllUserFormElements();
     getFormTitle();
     getAllFormSubmissions();
-  });
+  }, []);
 
   const getFormTitle = () => {
     BuildFormService.getUserFormById(id).then((response) => {
