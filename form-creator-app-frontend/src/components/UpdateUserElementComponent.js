@@ -33,7 +33,7 @@ const UpdateUserElementComponent = () => {
                 setTitle(response.data.title);
                 setType(response.data.type);
                 setKey(response.data.key);
-                setRequired(response.data.required);
+                setRequired(JSON.parse(response.data.required));
             })
             .catch((error) => {
                 console.log(error);
@@ -48,47 +48,56 @@ const UpdateUserElementComponent = () => {
         let elementType = element.type;
         return elementType;
     };
-    const check = () => {
-        return (required == "true") ? true : false;
-    }
 
     return (
         <section className="update-element">
             <div className="inner-column">
                 <h1 className="overlay-heading">Update {setPageTitle()}</h1>
                 <div className="overlay">
-                    <form onSubmit={(e) => {UpdateUserFormElement(e)}}>
-                        <div className="field">
-                            <label className="form-label">Title:</label>
-                            <input
-                                required
-                                type="text"
-                                name="title"
-                                className="form-control"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                            ></input>
-                        </div>
-                        <div className="field">
-                            <label className="form-label">Key:</label>
-                            <input
-                                required
-                                type="text"
-                                name="key"
-                                className="form-control"
-                                value={key}
-                                onChange={(e) => setKey(e.target.value)}
-                            ></input>
-                        </div>
-                        <div className="field">
-                            <label className="form-label"> Required: </label>
-                            <input
-                                checked={check()}
-                                type="checkbox"
-                                name="required"
-                                className="form-control"
-                                onChange={(e) => setRequired(e.target.checked)}
-                            ></input>
+                    <form
+                        className="form-card"
+                        onSubmit={(e) => {
+                            UpdateUserFormElement(e);
+                        }}
+                    >
+                        <div className="card-inputs">
+                            <div className="field">
+                                <label className="form-label">Title:</label>
+                                <input
+                                    required
+                                    type="text"
+                                    name="title"
+                                    className="form-control"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                ></input>
+                            </div>
+                            <div className="field">
+                                <label className="form-label">Key:</label>
+                                <input
+                                    required
+                                    type="text"
+                                    name="key"
+                                    className="form-control"
+                                    value={key}
+                                    onChange={(e) => setKey(e.target.value)}
+                                ></input>
+                            </div>
+                            <div className="field">
+                                <label className="form-label">
+                                    {" "}
+                                    Required:{" "}
+                                </label>
+                                <input
+                                    checked={required}
+                                    type="checkbox"
+                                    name="required"
+                                    className="form-control"
+                                    onChange={(e) => {
+                                        setRequired(e.target.checked);
+                                    }}
+                                ></input>
+                            </div>
                         </div>
                         <div className="form-actions">
                             <Link to={-1} className="secondary-action">

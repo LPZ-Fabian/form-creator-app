@@ -374,7 +374,7 @@ table + .actions {
   margin-top: 30px;
 }
 
-.field + .form-actions {
+.field, .form-actions {
   margin-top: 20px;
 }
 
@@ -493,4 +493,17 @@ table + .actions {
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+.form-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.card-inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
 }
