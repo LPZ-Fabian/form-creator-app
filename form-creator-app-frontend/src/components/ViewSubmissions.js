@@ -5,91 +5,82 @@ import BuildFormService from "../services/BuildFormService";
 import FormSubmissionService from "../services/FormSubmissionService";
 
 const ViewSubmissions = () => {
-    const [UserFormElements, setUserFormElements] = useState([]);
-    const [UserFormTitle, setUserFormTitle] = useState("");
-    const [Submissions, setSubmissions] = useState([]);
-    const { id } = useParams();
+  const [UserFormElements, setUserFormElements] = useState([]);
+  const [UserFormTitle, setUserFormTitle] = useState("");
+  const [Submissions, setSubmissions] = useState([]);
+  const { id } = useParams();
 
-    useEffect(() => {
-        getAllUserFormElements();
-        getFormTitle();
+  useEffect(() => {
+    getAllUserFormElements();
+    getFormTitle();
+    getAllFormSubmissions();
+  });
+
+  const getFormTitle = () => {
+    BuildFormService.getUserFormById(id).then((response) => {
+      setUserFormTitle(response.data.title);
+    });
+  };
+
+  const getAllUserFormElements = () => {
+    BuildUserElementService.getAllFormElementsByFormId(id)
+      .then((response) => {
+        setUserFormElements(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //console.log(UserFormElements)
+  };
+
+  const getAllFormSubmissions = () => {
+    FormSubmissionService.getSubmissionsByFormID(id)
+      .then((response) => {
+        setSubmissions(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const deleteFormSubmission = (submissionId) => {
+    FormSubmissionService.deleteFormSubmission(submissionId)
+      .then((response) => {
+        console.log(response.data);
         getAllFormSubmissions();
-    })
-
-    const getFormTitle = () => {
-        BuildFormService.getUserFormById(id).then((response) => {
-            setUserFormTitle(response.data.title);
-        });
-    };
-
-    const getAllUserFormElements = () => {
-        BuildUserElementService.getAllFormElementsByFormId(id)
-            .then((response) => {
-                setUserFormElements(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        //console.log(UserFormElements)
-    };
-
-    const getAllFormSubmissions = () => {
-        FormSubmissionService.getSubmissionsByFormID(id)
-            .then((response) => {
-                setSubmissions(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-    const deleteFormSubmission = (submissionId) => {
-        FormSubmissionService.deleteFormSubmission(submissionId)
-            .then((response) => {
-                console.log(response.data);
-                getAllFormSubmissions();
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-    return (
-    <div>
-        <div className="inner column">
-            <h1>{UserFormTitle} Form Responses</h1>
-            <table>
-                <thead>
-                    <tr>
-                        {UserFormElements.map((element) => (
-                            <th key={element.id}>{element.title}</th>
-                        ))}
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Submissions.map((submission) => (
-                        <tr key={submission.id}>
-                            {submission.formResponses.map((response) => (
-                                <td key={response.responseId}>
-                                    {response.response}
-                                </td>
-                            ))}
-                            <td>
-                                <button
-                                    onClick={() =>
-                                        deleteFormSubmission(submission.id)
-                                    }
-                                >
-                                    {" "}
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  return (
+    <section>
+      <div className="inner-column">
+        <h1>{UserFormTitle} Form Responses</h1>
+        <table>
+          <thead>
+            <tr>
+              {UserFormElements.map((element) => (
+                <th key={element.id}>{element.title}</th>
+              ))}
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Submissions.map((submission) => (
+              <tr key={submission.id}>
+                {submission.formResponses.map((response) => (
+                  <td key={response.responseId}>{response.response}</td>
+                ))}
+                <td>
+                  <button onClick={() => deleteFormSubmission(submission.id)}> Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
 };
 
 export default ViewSubmissions;

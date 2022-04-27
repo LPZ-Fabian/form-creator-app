@@ -64,12 +64,9 @@
 }
 
 .preview-table {
-  max-width: 1000px;
-  width: 50%;
-  margin-top: 100px;
-  margin-bottom: auto;
-  margin-left: auto;
-  margin-right: auto;
+  padding-left: 70px;
+  padding-right: 70px;
+  width: 400px;
   background-color: #ffffff;
 }
 
@@ -105,11 +102,11 @@ section {
 }
 
 header {
-  display: flex;
   padding-top: 20px;
   padding-bottom: 20px;
   padding-left: 40px;
   box-shadow: 0 2px 4px 0 hsla(0, 0%, 0%, 0.2);
+  z-index: 2;
 }
 
 .site-link {
@@ -171,7 +168,7 @@ button.solid-button {
 }
 
 .field + .field {
-  margin-top: 15px;
+  margin-top: 24px;
 }
 
 .field input {
@@ -267,17 +264,29 @@ td svg {
   width: 140px;
 }
 
-tbody td:nth-child(1) {
-  word-wrap: break-word;
-  min-width: 200px;
-  display: flex;
-  align-items: center;
+.manage-form td:nth-child(1) {
+  width: 200px;
 }
 
-tbody td:nth-child(3) {
-  display: flex;
-  gap: 10px;
-  min-width: 180px;
+.manage-form td:nth-child(2) {
+  width: 50px;
+}
+
+.manage-form td:nth-child(3) {
+  width: 50px;
+}
+
+.form-table tbody td:nth-child(1) {
+  word-wrap: break-word;
+  min-width: 200px;
+}
+
+.form-table tbody td:nth-child(3) {
+  min-width: 80px;
+}
+
+.form-table tbody td:nth-child(5) {
+  min-width: 220px;
 }
 
 td {
@@ -295,8 +304,16 @@ td {
   padding: 8px 20px;
   font-weight: 700;
   border-radius: 20px;
-  -webkit-font-smoothing: antialiased;
+
+  border: 2px solid transparent;
 }
+
+.solid-button:hover {
+  color: #ffffff;
+  background-color: #195c8c;
+  border: 2px solid transparent;
+}
+
 .secondary-button {
   color: #4187ba;
   background-color: #f6f6f6;
@@ -374,7 +391,8 @@ table + .actions {
   margin-top: 30px;
 }
 
-.field, .form-actions {
+.field,
+.form-actions {
   margin-top: 20px;
 }
 
@@ -429,11 +447,6 @@ table + .actions {
 }
 
 .footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 40px;
-  text-align: center;
   padding-top: 20px;
   padding-bottom: 20px;
   background-color: #2b3945;
@@ -476,7 +489,8 @@ table + .actions {
   z-index: 1;
 }
 
-.dropdown-content a, .dropdown-content button {
+.dropdown-content a,
+.dropdown-content button {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
@@ -506,4 +520,94 @@ table + .actions {
   flex-direction: column;
   justify-content: center;
   width: 100%;
+}
+
+.form-builder {
+  max-width: 1400px;
+  gap: 20px;
+}
+
+.form-table {
+  padding-bottom: 140px;
+}
+
+.preview-table {
+  padding-top: 150px;
+  /* background-color: #ebedef; */
+  border-left: 5px solid #aab0b4;
+}
+
+.overlay {
+  background-color: #ffffff;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 1800px;
+  width: 96%;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 50px;
+}
+
+.view-form .inner-column {
+  max-width: 450px;
+}
+
+.field label {
+  display: inline-block;
+  margin-bottom: 0px;
+}
+
+.field input {
+  background-color: #f4f4f4;
+  border: 1px solid #cfcfcf;
+  padding: 8px;
+  width: 95%;
+  max-width: none;
+}
+
+.field input[type="checkbox"] {
+  width: auto;
+  max-width: none;
+  margin-left: 8px;
+  margin-top: 0px;
+}
+
+.field textarea {
+  display: block;
+  background-color: #f4f4f4;
+  border: 1px solid #cfcfcf;
+  padding: 8px;
+  width: 95%;
+  max-width: none;
+}
+
+label + input[type="checkbox"] {
+  display: inline;
+}
+
+label + input,
+label + textarea {
+  margin-top: 5px;
+}
+
+.form-info input {
+  background-color: #ffffff;
+  border: 1px solid #f4f4f4;
+}
+
+.form-info textarea {
+  background-color: #ffffff;
+  border: 1px solid #f4f4f4;
+}
+
+.form-info .field + .solid-button {
+  margin-top: 24px;
+}
+
+.overlay-heading {
+  margin-top: 64px;
 }
