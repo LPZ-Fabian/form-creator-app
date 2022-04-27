@@ -154,18 +154,19 @@ const CreateForm = () => {
                                     <td>{form_element.type}</td>
                                     <td>{form_element.required}</td>
                                     <td>
-                                        <Link
-                                            className="primary-action"
+                                        <button
+                                            className="secondary-button"
                                             to={
                                                 "/update-form-element/" +
                                                 JSON.stringify(form_element.id)
                                             }
-                                            onClick={() => updateForm(false)}
+                                            onClick={() => {updateForm(false)
+                                             navigate("/update-form-element/" + JSON.stringify(form_element.id))}}
                                         >
                                             Update
-                                        </Link>
+                                        </button>
                                         <button
-                                            className="secondary-action"
+                                            className="danger-button"
                                             onClick={() =>
                                                 deleteUserFormElement(
                                                     form_element.id

@@ -126,8 +126,7 @@ const ViewForm = () => {
         createFormSubmission();
     };
     return (
-        <div>
-            <div className="row top">
+        <div className="row display-form">
                 <div className="final-form">
                     <h1 className="overlay-heading">{UserFormTitle}</h1>
                     <div className="preview-container overlay">
@@ -139,51 +138,10 @@ const ViewForm = () => {
                             {UserFormElements.map((element) =>
                                 createWebformElements(element)
                             )}
-                            <button>Submit Response</button>
+                            <button className="solid-button">Submit Response</button>
                         </form>
                     </div>
                 </div>
-            </div>
-            <div className="row bottom">
-                <div className="inner column">
-                    <h1>{UserFormTitle} Form Responses</h1>
-                    <table>
-                        <thead>
-                            <tr>
-                                {UserFormElements.map((element) => (
-                                    <th key={element.id}>{element.title}</th>
-                                ))}
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Submissions.map((submission) => (
-                                <tr key={submission.id}>
-                                    {submission.formResponses.map(
-                                        (response) => (
-                                            <td key={response.responseId}>
-                                                {response.response}
-                                            </td>
-                                        )
-                                    )}
-                                    <td>
-                                        <button
-                                            onClick={() =>
-                                                deleteFormSubmission(
-                                                    submission.id
-                                                )
-                                            }
-                                        >
-                                            {" "}
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </div>
     );
 };

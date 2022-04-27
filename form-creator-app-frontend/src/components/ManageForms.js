@@ -113,7 +113,7 @@ const ManageForms = () => {
                                 <td>
                                     <div className="dropdown">
                                         <button
-                                            className="solid-button"
+                                            className="secondary-button"
                                         >
                                             Edit
                                         </button>

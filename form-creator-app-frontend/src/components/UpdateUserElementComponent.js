@@ -91,12 +91,12 @@ const UpdateUserElementComponent = () => {
                             ></input>
                         </div>
                         <div className="form-actions">
-                            <button type="submit" className="solid-button">
-                                Update
-                            </button>
                             <Link to={-1} className="secondary-action">
                                 Cancel
                             </Link>
+                            <button type="submit" className="solid-button">
+                                Update
+                            </button>
                         </div>
                     </form>
                 </div>

@@ -75,7 +75,7 @@
 
 .preview-table .overlay-heading {
   margin-top: 0;
-  background-color: #4e8ab7ac;
+  background-color: #287bbbc5;
 }
 
 .form {
@@ -297,6 +297,29 @@ td {
   border-radius: 20px;
   -webkit-font-smoothing: antialiased;
 }
+.secondary-button {
+  color: #4187ba;
+  background-color: #f6f6f6;
+  border: solid 2px #4187ba;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 8px 20px;
+  font-weight: 700;
+  border-radius: 20px;
+  margin-right: 6px;
+  -webkit-font-smoothing: antialiased;
+}
+.danger-button {
+  color: #d0312d;
+  background-color: #f6f6f6;
+  border: solid 2px #d0312d;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 8px 20px;
+  font-weight: 700;
+  border-radius: 20px;
+  -webkit-font-smoothing: antialiased;
+}
 
 a {
   display: inline-block;
@@ -356,7 +379,7 @@ table + .actions {
 }
 
 .overlay-heading {
-  background-color: #c4c4c4;
+  background-color: #4e8ab7da;
   padding: 10px 20px;
   color: #ffffff;
   font-weight: 700;
@@ -436,7 +459,7 @@ table + .actions {
 }
 .final-form .overlay-heading {
   margin-top: 0;
-  background-color: #4e8ab7ac;
+  background-color: #4e8ab7f2;
 }
 
 .dropdown {
