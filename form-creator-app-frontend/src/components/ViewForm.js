@@ -66,6 +66,18 @@ const ViewForm = () => {
                 console.log(error);
             });
     };
+    const createHidden = (element) => {
+        if (element.hiddenElementList === undefined) {
+            return;
+        }
+        return (
+            <div className="hidden-input" id={"hidden-input" + element.id}>
+                {element.hiddenElementList.map((hidden) => {
+                    return createWebformElements(hidden);
+                })}
+            </div>
+        );
+    };
     const createWebformElements = (element) => {
         const placeHolder = element.title;
         const required = JSON.parse(element.required);
@@ -74,7 +86,17 @@ const ViewForm = () => {
             return (
                 <div className="inputs" key={element.id}>
                     <label>{element.title}</label>
-                    <input id={id} required={required} type="checkbox" />
+                    <input
+                        id={id}
+                        required={required}
+                        type="checkbox"
+                        onChange={() => {
+                            document
+                                .getElementById("hidden-input" + element.id)
+                                .classList.toggle("hidden-input");
+                        }}
+                    />
+                    {createHidden(element)}
                 </div>
             );
         }
