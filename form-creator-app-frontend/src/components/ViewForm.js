@@ -32,7 +32,6 @@ const ViewForm = () => {
             .catch((error) => {
                 console.log(error);
             });
-        //console.log(UserFormElements)
     };
     const getAllFormSubmissions = () => {
         FormSubmissionService.getSubmissionsByFormID(id)
@@ -141,23 +140,24 @@ const ViewForm = () => {
                 resp = document.getElementById(element.key).value;
             }
             Responses.push({
-              response: resp,
-          });
+                response: resp,
+            });
             element.hiddenElementList.map((hidden) => {
                 let hiddenResp;
-                console.log(hidden)
                 if (hidden.type == "Checkbox") {
                     hiddenResp = document.getElementById(hidden.key).checked;
                 } else {
                     hiddenResp = document.getElementById(hidden.key).value;
                 }
+                if (document.getElementById(element.key).checked == false) {
+                    hiddenResp = "N/A";
+                }
                 Responses.push({
-                  response: hiddenResp
-                })
+                    response: hiddenResp,
+                });
             });
         });
-        console.log(Responses)
-        console.table(Submissions);
+        console.log(Responses);
         createFormSubmission();
     };
     return (
