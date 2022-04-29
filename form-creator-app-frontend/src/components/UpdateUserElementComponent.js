@@ -76,7 +76,7 @@ const UpdateUserElementComponent = () => {
                 setTitle(response.data.title);
                 setType(response.data.type);
                 setKey(response.data.key);
-                setRequired(response.data.required);
+                setRequired(JSON.parse(response.data.required));
                 setHiddenElementList(response.data.hiddenElementList);
             })
             .catch((error) => {
@@ -108,10 +108,6 @@ const UpdateUserElementComponent = () => {
         let elementType = element.type;
         return elementType;
     };
-    const check = () => {
-        return required == "true" ? true : false;
-    };
-
     return (
         <section className="update-element">
             <div className="inner-column">
@@ -149,7 +145,7 @@ const UpdateUserElementComponent = () => {
                         <div className="field">
                             <label className="form-label"> Required: </label>
                             <input
-                                checked={check()}
+                                checked={required}
                                 type="checkbox"
                                 name="required"
                                 className="form-control"
