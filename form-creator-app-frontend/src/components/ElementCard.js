@@ -3,60 +3,44 @@ import { useNavigate, Link, useParams } from "react-router-dom";
 import BuildUserElementService from "../services/BuildUserElementService";
 import DefaultFormElementService from "../services/DefaultFormElementService";
 
-const ElementCard = (index) => {
+const ElementCard = (index, element) => {
     const [title, setTitle] = useState("");
     const [type, setType] = useState("");
     const [key, setKey] = useState("");
     const [required, setRequired] = useState(false);
     const [cardTitle, setCardTitle] = useState("Element");
     const navigate = useNavigate();
-    const { defaultId } = useParams();
-    const { formId } = useParams();
+    const [Cards, setCards] = useState([]);
+    const { id } = useParams();
+    const pathName = window.location.pathname;
 
-    const addElementToForm = (e) => {
-        e.preventDefault();
-        const UserFormElement = { title, type, key, required };
-
-        BuildUserElementService.createUserFormElement(formId, UserFormElement)
-            .then((response) => {
-                console.log(response.data);
-                // navigate("/user-form/" + formId);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
     useEffect(() => {
-        console.log(index)
-        DefaultFormElementService.getDefaultFormElementById(defaultId)
-            .then((response) => {
-                setType(response.data.type);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        console.log(index);
+        try{
+            setTitle(index.element.title);
+            setType(index.element.type);
+            setKey(index.element.key);
+            setRequired(index.element.required);
+        } catch (e) {}
     }, []);
-    const getCardTitle = () => {
+    const getTitleText = () => {
         if (document.getElementById("type-drop" + index.index).value !== null) {
-            setCardTitle(document.getElementById("type-drop" + index.index).value);
+            setCardTitle(
+                document.getElementById("type-drop" + index.index).value
+            );
         }
     };
 
     return (
-        <div className="card-container" id={index}>
+        <div className="card-container" id={index.index}>
             <h1 className="overlay-heading">Create New Hidden Form Element</h1>
             <div className="overlay">
                 <h2 className="page-title">{cardTitle}</h2>
-                <form
-                    className="hidden-cards"
-                    onSubmit={(e) => {
-                        addElementToForm(e);
-                    }}
-                >
+                <form className="hidden-cards">
                     <div className="field">
                         <label>Please pick an element type</label>
                         <select
-                            onChange={() => getCardTitle()}
+                            onChange={() => getTitleText()}
                             className="element-type"
                             id={"type-drop" + index.index}
                             required
@@ -108,7 +92,7 @@ const ElementCard = (index) => {
                                 document
                                     .querySelector(".hidden-container")
                                     .removeChild(
-                                        document.getElementById(index)
+                                        document.getElementById(index.index)
                                     );
                             }}
                         >

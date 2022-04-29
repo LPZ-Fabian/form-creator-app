@@ -488,3 +488,7 @@ table + .actions {
 .card-container {
   min-width: 450px;
 }
+
+.hidden-input {
+  display: none;
+}

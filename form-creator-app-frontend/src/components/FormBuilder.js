@@ -8,7 +8,6 @@ const CreateForm = () => {
     const [UserFormElements, setUserFormElements] = useState([]);
     const [UserFormTitle, setUserFormTitle] = useState("");
     const [Description, setDescription] = useState("");
-    const [Submissions, setSubmissions] = useState([]);
     const { id } = useParams();
     const navigate = useNavigate();
     const pathName = window.location.pathname;

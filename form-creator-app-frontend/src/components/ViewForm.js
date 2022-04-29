@@ -141,9 +141,22 @@ const ViewForm = () => {
                 resp = document.getElementById(element.key).value;
             }
             Responses.push({
-                response: resp,
+              response: resp,
+          });
+            element.hiddenElementList.map((hidden) => {
+                let hiddenResp;
+                console.log(hidden)
+                if (hidden.type == "Checkbox") {
+                    hiddenResp = document.getElementById(hidden.key).checked;
+                } else {
+                    hiddenResp = document.getElementById(hidden.key).value;
+                }
+                Responses.push({
+                  response: hiddenResp
+                })
             });
         });
+        console.log(Responses)
         console.table(Submissions);
         createFormSubmission();
     };

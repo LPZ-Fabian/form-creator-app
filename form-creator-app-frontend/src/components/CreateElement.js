@@ -15,14 +15,6 @@ const CreateElement = () => {
     const [Cards, setCards] = useState([]);
     const [hiddenElementList, setHiddenElementList] = useState([]);
 
-    const parentObj = {
-        title: "parentObj",
-        type: "check",
-        key: "key",
-        required: "req",
-        hasHidden: "true",
-        hiddenById: 0,
-    };
     const addHiddenElements = () => {
         const titles = document.querySelectorAll(".element-title");
         const types = document.querySelectorAll(".element-type");
@@ -41,7 +33,6 @@ const CreateElement = () => {
             };
             console.log(hiddenElement);
             hiddenElementList.push(hiddenElement);
-            setHiddenElementList([...hiddenElementList, hiddenElement]);
         }
         console.table(hiddenElementList);
     };
