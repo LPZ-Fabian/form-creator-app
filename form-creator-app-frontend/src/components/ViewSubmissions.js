@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import BuildUserElementService from "../services/BuildUserElementService";
 import BuildFormService from "../services/BuildFormService";
@@ -51,6 +51,21 @@ const ViewSubmissions = () => {
                 console.log(error);
             });
     };
+    const getHiddenHeader = (list) => {
+        if (list !== undefined) {
+            return (
+                <>
+                    {list.map((hidden) => {
+                        return (
+                            <th key={hidden.id}>
+                                {hidden.title + " (hidden)"}
+                            </th>
+                        );
+                    })}
+                </>
+            );
+        }
+    };
     return (
         <div>
             <div className="inner column">
@@ -59,7 +74,10 @@ const ViewSubmissions = () => {
                     <thead>
                         <tr>
                             {UserFormElements.map((element) => (
-                                <th key={element.id}>{element.title}</th>
+                                <>
+                                    <th key={element.id}>{element.title}</th>
+                                    {getHiddenHeader(element.hiddenElementList)}
+                                </>
                             ))}
                             <th>Actions</th>
                         </tr>
@@ -74,6 +92,7 @@ const ViewSubmissions = () => {
                                 ))}
                                 <td>
                                     <button
+                                        className="danger-button"
                                         onClick={() =>
                                             deleteFormSubmission(submission.id)
                                         }
