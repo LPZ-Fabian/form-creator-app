@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.CtrlAltDefeat.formcreatorappbackend.exception.ResourceNotFoundException;
 import com.CtrlAltDefeat.formcreatorappbackend.model.UserForm;
+import com.CtrlAltDefeat.formcreatorappbackend.repository.UserFormHiddenElementsRepository;
 import com.CtrlAltDefeat.formcreatorappbackend.repository.UserFormsRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class UserFormController {
 
     @Autowired
     private UserFormsRepository userFormRepository;
+
+    @Autowired
+    private UserFormHiddenElementsRepository userFormHiddenElementsRepository;
 
     // GET method to return all of a user's forms
     @GetMapping()

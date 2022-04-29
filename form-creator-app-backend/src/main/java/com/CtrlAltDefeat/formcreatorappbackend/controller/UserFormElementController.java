@@ -94,7 +94,8 @@ public class UserFormElementController {
         // updateUserElement.setType(userElementDetails.getType());
         updateUserElement.setKey(userElementDetails.getKey());
         updateUserElement.setRequired(userElementDetails.getRequired());
-
+        updateUserElement.setHiddenElementList((userElementDetails
+                .getHiddenElementList()));
         userElementsRepository.save(updateUserElement);
         return ResponseEntity.ok(updateUserElement);
     }
