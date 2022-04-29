@@ -14,8 +14,7 @@ const ViewSubmissions = () => {
         getAllUserFormElements();
         getFormTitle();
         getAllFormSubmissions();
-    }, [])
-
+    }, []);
     const getFormTitle = () => {
         BuildFormService.getUserFormById(id).then((response) => {
             setUserFormTitle(response.data.title);
@@ -53,42 +52,42 @@ const ViewSubmissions = () => {
             });
     };
     return (
-    <div>
-        <div className="inner column">
-            <h1>{UserFormTitle} Form Responses</h1>
-            <table>
-                <thead>
-                    <tr>
-                        {UserFormElements.map((element) => (
-                            <th key={element.id}>{element.title}</th>
-                        ))}
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Submissions.map((submission) => (
-                        <tr key={submission.id}>
-                            {submission.formResponses.map((response) => (
-                                <td key={response.responseId}>
-                                    {response.response}
-                                </td>
+        <div>
+            <div className="inner column">
+                <h1>{UserFormTitle} Form Responses</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            {UserFormElements.map((element) => (
+                                <th key={element.id}>{element.title}</th>
                             ))}
-                            <td>
-                                <button
-                                    onClick={() =>
-                                        deleteFormSubmission(submission.id)
-                                    }
-                                >
-                                    {" "}
-                                    Delete
-                                </button>
-                            </td>
+                            <th>Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {Submissions.map((submission) => (
+                            <tr key={submission.id}>
+                                {submission.formResponses.map((response) => (
+                                    <td key={response.responseId}>
+                                        {response.response}
+                                    </td>
+                                ))}
+                                <td>
+                                    <button
+                                        onClick={() =>
+                                            deleteFormSubmission(submission.id)
+                                        }
+                                    >
+                                        {" "}
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
     );
 };
 

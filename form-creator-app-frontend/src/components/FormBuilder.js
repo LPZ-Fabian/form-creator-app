@@ -12,8 +12,30 @@ const CreateForm = () => {
     const navigate = useNavigate();
     const pathName = window.location.pathname;
 
-    //create const to store title
-    useEffect(() => {
+  //create const to store title
+  useEffect(() => {
+    getAllUserFormElements();
+    getFormTitleAndDescription();
+    //  getAllFormSubmissions();
+  }, []);
+  const getFormTitleAndDescription = () => {
+    BuildFormService.getUserFormById(id).then((response) => {
+      setUserFormTitle(response.data.title);
+      setDescription(response.data.description);
+    });
+  };
+  const getAllUserFormElements = () => {
+    BuildUserElementService.getAllFormElementsByFormId(id)
+      .then((response) => {
+        setUserFormElements(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const deleteUserFormElement = (elementId) => {
+    BuildUserElementService.deleteUserFormElement(elementId)
+      .then((response) => {
         getAllUserFormElements();
         getFormTitleAndDescription();
     }, []);
@@ -21,82 +43,68 @@ const CreateForm = () => {
         BuildFormService.getUserFormById(id).then((response) => {
             setUserFormTitle(response.data.title);
             setDescription(response.data.description);
+        })
+        .catch((error) => {
+          console.log(error);
         });
+    }
+  };
+  const buttonType = () => {
+    if (pathName.includes("/user-form")) {
+      return "Create Form";
+    } else {
+      return "Update Form";
+    }
+  };
+  const updateForm = (redirect) => {
+    const form = {
+      title: UserFormTitle,
+      description: Description,
     };
-    const getAllUserFormElements = () => {
-        BuildUserElementService.getAllFormElementsByFormId(id)
-            .then((response) => {
-                setUserFormElements(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-    const deleteUserFormElement = (elementId) => {
-        BuildUserElementService.deleteUserFormElement(elementId)
-            .then((response) => {
-                getAllUserFormElements();
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-    const buttonType = () => {
-        if (pathName.includes("/user-form")) {
-            return "Create Form";
-        } else {
-            return "Update Form";
+    BuildFormService.updateUserForm(id, form)
+      .then((response) => {
+        if (redirect) {
+          navigate("/manage-forms");
         }
-    };
-    const updateForm = (redirect) => {
-        const form = {
-            title: UserFormTitle,
-            description: Description,
-        };
-        BuildFormService.updateUserForm(id, form)
-            .then((response) => {
-                if (redirect) {
-                    navigate("/manage-forms");
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-    const createWebformElements = (element) => {
-        if (element.type == "Checkbox") {
-            return (
-                <div className="inputs" key={element.id}>
-                    <div>{element.title}</div>
-                    <input type="checkbox" />
-                </div>
-            );
-        }
-        if (element.type == "Text Field") {
-            return (
-                <div className="inputs" key={element.id}>
-                    <div>{element.title}</div>
-                    <input type="text" />
-                </div>
-            );
-        }
-        if (element.type == "Text Area") {
-            return (
-                <div className="inputs" key={element.id}>
-                    <div>{element.title}</div>
-                    <textarea />
-                </div>
-            );
-        }
-        if (element.type == "Text Field") {
-            return (
-                <div className="inputs" key={element.id}>
-                    <div>{element.title}</div>
-                    <input type="text" />
-                </div>
-            );
-        }
-    };
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const createWebformElements = (element) => {
+    if (element.type == "Checkbox") {
+      return (
+        <div className="inputs" key={element.id}>
+          <div>{element.title}</div>
+          <input type="checkbox" />
+        </div>
+      );
+    }
+    if (element.type == "Text Field") {
+      return (
+        <div className="inputs" key={element.id}>
+          <div>{element.title}</div>
+          <input type="text" />
+        </div>
+      );
+    }
+    if (element.type == "Text Area") {
+      return (
+        <div className="inputs" key={element.id}>
+          <div>{element.title}</div>
+          <textarea />
+        </div>
+      );
+    }
+    if (element.type == "Text Field") {
+      return (
+        <div className="inputs" key={element.id}>
+          <div>{element.title}</div>
+          <input type="text" />
+        </div>
+      );
+    }
+  };
 
     const renderElements = () => {
         return (
@@ -279,7 +287,23 @@ const CreateForm = () => {
                 </div>
             </div>
         </div>
-    );
+      </div>
+
+      <div className="preview-table">
+        <div className="inner-column">
+          <h2 className="overlay-heading">{UserFormTitle} Preview</h2>
+          <div className="preview-container overlay">
+            <form className="form">
+              {UserFormElements.map((element) => createWebformElements(element))}
+              <button type="button" className="solid-button">
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default CreateForm;
