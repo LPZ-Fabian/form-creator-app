@@ -9,18 +9,17 @@ const ElementCard = (index, element) => {
     const [key, setKey] = useState("");
     const [required, setRequired] = useState(false);
     const [cardTitle, setCardTitle] = useState("Element");
-    const navigate = useNavigate();
-    const [Cards, setCards] = useState([]);
-    const { id } = useParams();
     const pathName = window.location.pathname;
 
     useEffect(() => {
         console.log(index);
         try{
             setTitle(index.element.title);
+            setCardTitle(index.element.type)
             setType(index.element.type);
             setKey(index.element.key);
-            setRequired(index.element.required);
+            setRequired(JSON.parse(index.element.required));
+            getTitle()
         } catch (e) {}
     }, []);
     const getTitleText = () => {
@@ -30,14 +29,26 @@ const ElementCard = (index, element) => {
             );
         }
     };
+    const getTitle = () => {
+        if (pathName.includes("/update")) {
+            const updateCards = document.querySelectorAll(".dropdown-title")
+            updateCards.forEach((card) => {
+                card.hidden = true;
+            })
+            const types = document.querySelectorAll(".element-type") 
+            types.forEach((type) => {
+                type.required = false; 
+            })
+        }
+    }
 
     return (
         <div className="card-container" id={index.index}>
             <h1 className="overlay-heading">Create New Hidden Form Element</h1>
             <div className="overlay">
-                <h2 className="page-title">{cardTitle}</h2>
+                <h2 className="page-title element-title">{cardTitle}</h2>
                 <form className="hidden-cards">
-                    <div className="field">
+                    <div className="field dropdown-title">
                         <label>Please pick an element type</label>
                         <select
                             onChange={() => getTitleText()}
@@ -79,6 +90,7 @@ const ElementCard = (index, element) => {
                     <div className="field">
                         <label className="form-label"> Required:</label>
                         <input
+                        checked={required}
                             type="checkbox"
                             name="required"
                             className="form-control element-req"

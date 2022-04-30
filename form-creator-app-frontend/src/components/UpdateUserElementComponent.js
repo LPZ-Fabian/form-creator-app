@@ -16,7 +16,7 @@ const UpdateUserElementComponent = () => {
 
     const updateHiddenElements = () => {
         const titles = document.querySelectorAll(".element-title");
-        const types = document.querySelectorAll(".element-type");
+        const types = document.querySelectorAll(".element-title");
         const keys = document.querySelectorAll(".element-key");
         const reqs = document.querySelectorAll(".element-req");
         for (let i = 0; i < titles.length; i++) {
@@ -51,24 +51,27 @@ const UpdateUserElementComponent = () => {
     const UpdateUserFormElement = (e) => {
         e.preventDefault();
         if (checkHiddenCards()) {
-        const UserFormElement = {
-            title,
-            type,
-            key,
-            required,
-            hiddenElementList,
-        };
-        updateHiddenElements();
-        if (id) {
-            BuildUserElementService.updateUserFormElement(id, UserFormElement)
-                .then((response) => {
-                    navigate(-1);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            const UserFormElement = {
+                title,
+                type,
+                key,
+                required,
+                hiddenElementList,
+            };
+            updateHiddenElements();
+            if (id) {
+                BuildUserElementService.updateUserFormElement(
+                    id,
+                    UserFormElement
+                )
+                    .then((response) => {
+                        navigate(-1);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
         }
-    }
     };
     useEffect(() => {
         BuildUserElementService.getUserFormElementByID(id)
@@ -78,16 +81,17 @@ const UpdateUserElementComponent = () => {
                 setKey(response.data.key);
                 setRequired(JSON.parse(response.data.required));
                 setHiddenElementList(response.data.hiddenElementList);
+                createHiddenCards(response.data.hiddenElementList);
             })
             .catch((error) => {
                 console.log(error);
             });
         setPageTitle();
     }, []);
-    const createHiddenCards = () => {
+    const createHiddenCards = (list) => {
         console.log(hiddenElementList);
         let tempArray = [];
-        hiddenElementList.forEach((element) => {
+        list.forEach((element) => {
             tempArray.push([
                 ...Cards,
                 <ElementCard
@@ -120,38 +124,43 @@ const UpdateUserElementComponent = () => {
                         }}
                     >
                         <div className="card-inputs">
-                        <div className="field">
-                            <label className="form-label">Title:</label>
-                            <input
-                                required
-                                type="text"
-                                name="title"
-                                className="form-control"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                            ></input>
-                        </div>
-                        <div className="field">
-                            <label className="form-label">Key:</label>
-                            <input
-                                required
-                                type="text"
-                                name="key"
-                                className="form-control"
-                                value={key}
-                                onChange={(e) => setKey(e.target.value)}
-                            ></input>
-                        </div>
-                        <div className="field">
-                            <label className="form-label"> Required: </label>
-                            <input
-                                checked={required}
-                                type="checkbox"
-                                name="required"
-                                className="form-control"
-                                onChange={(e) => setRequired(e.target.checked)}
-                            ></input>
-                        </div>
+                            <div className="field">
+                                <label className="form-label">Title:</label>
+                                <input
+                                    required
+                                    type="text"
+                                    name="title"
+                                    className="form-control"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                ></input>
+                            </div>
+                            <div className="field">
+                                <label className="form-label">Key:</label>
+                                <input
+                                    required
+                                    type="text"
+                                    name="key"
+                                    className="form-control"
+                                    value={key}
+                                    onChange={(e) => setKey(e.target.value)}
+                                ></input>
+                            </div>
+                            <div className="field">
+                                <label className="form-label">
+                                    {" "}
+                                    Required:{" "}
+                                </label>
+                                <input
+                                    checked={required}
+                                    type="checkbox"
+                                    name="required"
+                                    className="form-control"
+                                    onChange={(e) =>
+                                        setRequired(e.target.checked)
+                                    }
+                                ></input>
+                            </div>
                         </div>
                         <div className="form-actions">
                             <Link to={-1} className="secondary-action">
@@ -159,10 +168,14 @@ const UpdateUserElementComponent = () => {
                             </Link>
                             <button type="submit" className="solid-button">
                                 Update
-                                </button>
+                            </button>
                             <button
                                 type="button"
-                                onClick={() => createHiddenCards()}
+                                onClick={() =>
+                                    document
+                                        .querySelector(".hidden-container")
+                                        .classList.toggle("hide")
+                                }
                             >
                                 View Hidden Elements
                             </button>
@@ -170,7 +183,7 @@ const UpdateUserElementComponent = () => {
                     </form>
                 </div>
             </div>
-            <div className="hidden-container">{Cards}</div>
+            <div className="hidden-container hide">{Cards}</div>
         </section>
     );
 };

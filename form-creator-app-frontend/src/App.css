@@ -526,7 +526,7 @@ table + .actions {
   min-width: 450px;
 }
 
-.hidden-input {
+.hidden-input, .hide {
   display: none;
 }
 .form-card {
