@@ -12,7 +12,7 @@ const ElementCard = (index, element) => {
     const pathName = window.location.pathname;
 
     useEffect(() => {
-        console.log(index);
+        // console.log(index);
         try{
             setTitle(index.element.title);
             setCardTitle(index.element.type)
@@ -46,7 +46,7 @@ const ElementCard = (index, element) => {
         <div className="card-container" id={index.index}>
             <h1 className="overlay-heading">Create New Hidden Form Element</h1>
             <div className="overlay">
-                <h2 className="page-title element-title">{cardTitle}</h2>
+                <h2 className="page-title card-title">{cardTitle}</h2>
                 <form className="hidden-cards">
                     <div className="field dropdown-title">
                         <label>Please pick an element type</label>

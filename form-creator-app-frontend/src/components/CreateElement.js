@@ -31,10 +31,10 @@ const CreateElement = () => {
                 key,
                 required,
             };
-            console.log(hiddenElement);
+            // console.log(hiddenElement);
             hiddenElementList.push(hiddenElement);
         }
-        console.table(hiddenElementList);
+        // console.table(hiddenElementList);
     };
 
     const checkHiddenCards = () => {
@@ -52,6 +52,9 @@ const CreateElement = () => {
     const addElementToForm = (e) => {
         e.preventDefault();
         if (checkHiddenCards()) {
+            console.log(hiddenElementList)
+            addHiddenElements();
+            console.log(hiddenElementList)
             const UserFormElement = {
                 title,
                 type,
@@ -59,7 +62,6 @@ const CreateElement = () => {
                 required,
                 hiddenElementList,
             };
-            addHiddenElements();
             BuildUserElementService.createUserFormElement(
                 formId,
                 UserFormElement
@@ -98,7 +100,7 @@ const CreateElement = () => {
 
     return (
         <section id="sectiontest" className="create-element">
-            <div className="inner-column">
+            <div className="card-container">
                 <h1 className="overlay-heading">Create New Form Element</h1>
                 <div className="overlay">
                     <h2 className="page-title">{pageTitle()}</h2>
