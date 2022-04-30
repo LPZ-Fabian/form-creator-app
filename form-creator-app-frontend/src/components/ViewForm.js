@@ -51,7 +51,7 @@ const ViewForm = () => {
                     setResponses([]);
                     const form = document.getElementById("form");
                     form.reset();
-                    const hiddenElements = document.querySelectorAll(".hide");
+                    const hiddenElements = document.querySelectorAll(".hide-input");
                     hiddenElements.forEach((hidden) => {
                         if (!hidden.classList.contains("hidden-input")) {
                             hidden.classList.toggle("hidden-input");
@@ -78,7 +78,7 @@ const ViewForm = () => {
             }
             return (
                 <div
-                    className="hidden-input hide"
+                    className="hidden-input hide-input"
                     id={"hidden-input" + element.id}
                 >
                     {element.hiddenElementList.map((hidden) => {

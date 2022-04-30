@@ -14,14 +14,30 @@ const UpdateUserElementComponent = () => {
     const [hiddenElementList, setHiddenElementList] = useState([]);
     const [Cards, setCards] = useState([]);
 
+    useEffect(() => {
+        BuildUserElementService.getUserFormElementByID(id)
+            .then((response) => {
+                setTitle(response.data.title);
+                setType(response.data.type);
+                setKey(response.data.key);
+                setRequired(JSON.parse(response.data.required));
+                setHiddenElementList(response.data.hiddenElementList);
+                createCurrentHiddenCards(response.data.hiddenElementList);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        setPageTitle();
+    }, []);
+
     const updateHiddenElements = () => {
         const titles = document.querySelectorAll(".element-title");
-        const types = document.querySelectorAll(".element-title");
+        const types = document.querySelectorAll(".card-title");
         const keys = document.querySelectorAll(".element-key");
         const reqs = document.querySelectorAll(".element-req");
         for (let i = 0; i < titles.length; i++) {
             const title = titles[i].value;
-            const type = types[i].value;
+            const type = types[i].textContent;
             const key = keys[i].value;
             const required = reqs[i].checked;
             const hiddenElement = {
@@ -30,10 +46,9 @@ const UpdateUserElementComponent = () => {
                 key,
                 required,
             };
-            console.log(hiddenElement);
             hiddenElementList.push(hiddenElement);
         }
-        console.table(hiddenElementList);
+        // console.table(hiddenElementList);
     };
 
     const checkHiddenCards = () => {
@@ -47,10 +62,16 @@ const UpdateUserElementComponent = () => {
         });
         return valid;
     };
+    const clearArray = () => {
+        setHiddenElementList([]);
+    };
 
     const UpdateUserFormElement = (e) => {
         e.preventDefault();
         if (checkHiddenCards()) {
+            clearArray();
+            console.table(hiddenElementList);
+            updateHiddenElements();
             const UserFormElement = {
                 title,
                 type,
@@ -58,7 +79,6 @@ const UpdateUserElementComponent = () => {
                 required,
                 hiddenElementList,
             };
-            updateHiddenElements();
             if (id) {
                 BuildUserElementService.updateUserFormElement(
                     id,
@@ -73,23 +93,7 @@ const UpdateUserElementComponent = () => {
             }
         }
     };
-    useEffect(() => {
-        BuildUserElementService.getUserFormElementByID(id)
-            .then((response) => {
-                setTitle(response.data.title);
-                setType(response.data.type);
-                setKey(response.data.key);
-                setRequired(JSON.parse(response.data.required));
-                setHiddenElementList(response.data.hiddenElementList);
-                createHiddenCards(response.data.hiddenElementList);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        setPageTitle();
-    }, []);
-    const createHiddenCards = (list) => {
-        console.log(hiddenElementList);
+    const createCurrentHiddenCards = (list) => {
         let tempArray = [];
         list.forEach((element) => {
             tempArray.push([
@@ -102,7 +106,7 @@ const UpdateUserElementComponent = () => {
             ]);
         });
         setCards(tempArray);
-        console.log(Cards);
+        setHiddenElementList([]);
     };
     const setPageTitle = () => {
         const element = {
@@ -171,16 +175,35 @@ const UpdateUserElementComponent = () => {
                             </button>
                             <button
                                 type="button"
-                                onClick={() =>
+                                onClick={() => {
+                                    console.log(hiddenElementList);
                                     document
                                         .querySelector(".hidden-container")
-                                        .classList.toggle("hide")
-                                }
+                                        .classList.toggle("hide");
+                                }}
                             >
                                 View Hidden Elements
                             </button>
                         </div>
                     </form>
+                    <button
+                        type="button"
+                        className="solid-button"
+                        onClick={() => {
+                            document
+                                .querySelector(".hidden-container")
+                                .classList.toggle("hide");
+                            setCards([
+                                ...Cards,
+                                <ElementCard
+                                    key={"hidden" + Cards.length + 1}
+                                    index={Cards.length + 1}
+                                />,
+                            ]);
+                        }}
+                    >
+                        Add Hidden Element
+                    </button>
                 </div>
             </div>
             <div className="hidden-container hide">{Cards}</div>
