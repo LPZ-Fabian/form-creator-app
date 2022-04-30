@@ -54,7 +54,7 @@ const ManageForms = () => {
               <th className="table-actions">Operations</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="manage-form">
             {UserForms.map((form) => (
               <tr key={form.id}>
                 <td>
@@ -70,15 +70,37 @@ const ManageForms = () => {
                 </td>
                 <td>{form.description}</td>
                 <td>
-                  <Link className="primary-action" to={"/update-form/" + JSON.stringify(form.id)}>
-                    Update
-                  </Link>
-                  <button className="secondary-action" onClick={() => deleteUserForm(form.id)}>
-                    Delete
-                  </button>
-                  <Link className="secondary-action" to={"/view-form/" + JSON.stringify(form.id)}>
-                    View
-                  </Link>
+                  <div className="dropdown">
+                    <button className="secondary-button">Edit</button>
+                    <div className="dropdown-content">
+                      <Link
+                        className="secondary-action"
+                        to={"/update-form/" + JSON.stringify(form.id)}
+                      >
+                        Update
+                      </Link>
+                      <button className="secondary-action" onClick={() => deleteUserForm(form.id)}>
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                  <div className="dropdown">
+                    <button className="solid-button">View</button>
+                    <div className="dropdown-content">
+                      <Link
+                        className="secondary-action"
+                        to={"/view-form/" + JSON.stringify(form.id)}
+                      >
+                        View Form
+                      </Link>
+                      <Link
+                        className="secondary-action"
+                        to={"/view-submissions/" + JSON.stringify(form.id)}
+                      >
+                        View Responses
+                      </Link>
+                    </div>
+                  </div>
                 </td>
               </tr>
             ))}

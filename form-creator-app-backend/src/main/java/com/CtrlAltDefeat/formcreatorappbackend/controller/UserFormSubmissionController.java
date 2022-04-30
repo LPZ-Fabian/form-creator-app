@@ -48,11 +48,22 @@ public class UserFormSubmissionController {
         List<UserFormResponse> formResponses = responses;
         submission.setForm(form);
         userFormSubmissionRepository.save(submission);
-        for (int i = 0; i < formResponses.size(); i++) {
-            var response = responses.get(i);
-            formResponses.get(i).setUserFormSubmission(submission);
-            formResponses.get(i).setKey(form.getUserElements().get(i).getKey());
+        int counter = 0;
+        for (int i = 0; i < form.getUserElements().size(); i++) {
+            var response = responses.get(counter);
+            formResponses.get(counter).setUserFormSubmission(submission);
+            formResponses.get(counter).setKey(form.getUserElements().get(i).getKey());
             userResponsesRepository.save(response);
+            counter++;
+            if (form.getUserElements().get(i).getHiddenElementList().size() != 0) {
+                for (int j = 0; j < form.getUserElements().get(i).getHiddenElementList().size(); j++) {
+                    formResponses.get(counter).setUserFormSubmission(submission);
+                    formResponses.get(counter).setKey(form.getUserElements()
+                            .get(i).getHiddenElementList().get(j).getKey());
+                    userResponsesRepository.save(responses.get(counter));
+                    counter++;
+                }
+            }
         }
         submission.setFormResponses(formResponses);
         return submission;

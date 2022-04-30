@@ -1,12 +1,15 @@
 package com.CtrlAltDefeat.formcreatorappbackend.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.CtrlAltDefeat.formcreatorappbackend.exception.ResourceNotFoundException;
 import com.CtrlAltDefeat.formcreatorappbackend.model.UserForm;
 import com.CtrlAltDefeat.formcreatorappbackend.model.UserFormElement;
+import com.CtrlAltDefeat.formcreatorappbackend.model.UserFormHiddenElement;
 import com.CtrlAltDefeat.formcreatorappbackend.repository.UserElementsRepository;
+import com.CtrlAltDefeat.formcreatorappbackend.repository.UserFormHiddenElementsRepository;
 import com.CtrlAltDefeat.formcreatorappbackend.repository.UserFormsRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,9 @@ public class UserFormElementController {
 
     @Autowired
     private UserFormsRepository userFormsRepository;
+
+    @Autowired
+    private UserFormHiddenElementsRepository userFormHiddenElementsRepository;
 
     // GET method to return all user form elements
     @GetMapping
@@ -60,7 +66,9 @@ public class UserFormElementController {
     // POST method used to create a new user element
     @PostMapping("/create/{formId}")
     public UserFormElement createUserFormElement(@PathVariable Long formId, @RequestBody UserFormElement element) {
-        if (userFormsRepository.existsById(formId)) {
+        List<UserFormHiddenElement> hiddenElementList = element.getHiddenElementList();
+        List<UserFormHiddenElement> tempList = new ArrayList<>();
+         if (userFormsRepository.existsById(formId)) {
             UserForm testForm = new UserForm();
             Optional<UserForm> form = userFormsRepository.findById(formId);
             testForm = form.get();
@@ -68,33 +76,52 @@ public class UserFormElementController {
             testForm.addUserFormElement(element);
             userElementsRepository.save(element);
         }
+        if (hiddenElementList != null) {
+            for (int i = 0; i < hiddenElementList.size(); i++) {
+                element.getHiddenElementList().get(i).setHiddenBy(element);
+                userFormHiddenElementsRepository.save(element.getHiddenElementList().get(i));
+            }
+            userElementsRepository.save(element);
+        }
         return element;
     }
 
-    // POST method used to update a form element
+    // PUT method used to update a form element
     @PutMapping("{id}")
     public ResponseEntity<UserFormElement> updateUserFormElement(@PathVariable long id,
             @RequestBody UserFormElement userElementDetails) {
         UserFormElement updateUserElement = userElementsRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User form element does not exist with id:" + id));
-
         updateUserElement.setTitle(userElementDetails.getTitle());
-        // updateUserElement.setType(userElementDetails.getType());
         updateUserElement.setKey(userElementDetails.getKey());
         updateUserElement.setRequired(userElementDetails.getRequired());
 
+        List<UserFormHiddenElement> hiddenElements = userElementDetails.getHiddenElementList();
+        List<UserFormHiddenElement> existingHiddenElements = updateUserElement.getHiddenElementList();
+
+        for (UserFormHiddenElement hiddenElement : existingHiddenElements) {
+            UserFormHiddenElement test = userFormHiddenElementsRepository.findById(hiddenElement.getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("User form element does not exist with id: " + hiddenElement.getId()));
+            userFormHiddenElementsRepository.delete(test);
+        }
+        updateUserElement.deleteHiddenElements();
+        userElementsRepository.save(updateUserElement);
+        for (UserFormHiddenElement hiddenElement : hiddenElements) {
+                updateUserElement.getHiddenElementList().add(hiddenElement);
+                hiddenElement.setHiddenBy(updateUserElement);
+                userFormHiddenElementsRepository.save(hiddenElement);
+        }
+//        updateUserElement.setHiddenElementList(userElementDetails.getHiddenElementList());
         userElementsRepository.save(updateUserElement);
         return ResponseEntity.ok(updateUserElement);
     }
 
     // DELETE method used to delete a user element
     @DeleteMapping("{id}")
-    public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable long id) {
+    public ResponseEntity<HttpStatus> deleteUserFormElement(@PathVariable long id) {
         UserFormElement element = userElementsRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User form element does not exist with id: " + id));
-
         userElementsRepository.delete(element);
-
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
