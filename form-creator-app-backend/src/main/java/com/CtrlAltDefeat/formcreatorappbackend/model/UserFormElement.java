@@ -5,6 +5,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,8 +33,8 @@ public class UserFormElement {// extends AuditModel{
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private UserForm form;
 
-    @OneToMany(mappedBy = "hiddenBy", cascade = CascadeType.ALL)
-    private List<UserFormHiddenElement> hiddenElementList;
+    @OneToMany(mappedBy = "hiddenBy", orphanRemoval = true)
+    private List<UserFormHiddenElement> hiddenElementList = new ArrayList<>();
 
     public UserFormElement() {}
 
@@ -91,5 +92,9 @@ public class UserFormElement {// extends AuditModel{
 
     public List<UserFormHiddenElement> getHiddenElementList() {
         return hiddenElementList;
+    }
+
+    public void deleteHiddenElements () {
+        hiddenElementList.clear();
     }
 }
