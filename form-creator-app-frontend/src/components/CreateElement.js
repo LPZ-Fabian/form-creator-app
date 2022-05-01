@@ -10,19 +10,13 @@ const CreateElement = () => {
     const [key, setKey] = useState("");
     const [required, setRequired] = useState(false);
     const navigate = useNavigate();
-    const { defaultId } = useParams();
+    const { elementType } = useParams();
     const { formId } = useParams();
     const [Cards, setCards] = useState([]);
     const [hiddenElementList, setHiddenElementList] = useState([]);
 
     useEffect(() => {
-        DefaultFormElementService.getDefaultFormElementById(defaultId)
-            .then((response) => {
-                setType(response.data.type);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        setType(elementType.replace(/([a-z])([A-Z])/g, "$1 $2"));
         document.querySelector(".overall-hidden").style.display = "none";
     }, []);
 
@@ -86,26 +80,13 @@ const CreateElement = () => {
                 });
         }
     };
-    const pageTitle = () => {
-        let titleType;
-        if (defaultId == 1) {
-            titleType = "Checkbox";
-        } else if (defaultId == 2) {
-            titleType = "Text Field";
-        } else if (defaultId == 3) {
-            titleType = "Text Area";
-        } else {
-            titleType = "Hidden";
-        }
-        return titleType;
-    };
 
     return (
         <section id="sectiontest" className="create-element">
             <div className="card-container">
                 <h1 className="overlay-heading">Create New Form Element</h1>
                 <div className="overlay">
-                    <h2 className="page-title">{pageTitle()}</h2>
+                    <h2 className="page-title">{type}</h2>
                     <form
                         className="form-card"
                         onSubmit={(e) => {
