@@ -12,14 +12,13 @@ const ElementCard = (index, element) => {
     const pathName = window.location.pathname;
 
     useEffect(() => {
-        // console.log(index);
-        try{
+        try {
             setTitle(index.element.title);
-            setCardTitle(index.element.type)
+            setCardTitle(index.element.type);
             setType(index.element.type);
             setKey(index.element.key);
             setRequired(JSON.parse(index.element.required));
-            getTitle()
+            getTitle();
         } catch (e) {}
     }, []);
     const getTitleText = () => {
@@ -31,16 +30,24 @@ const ElementCard = (index, element) => {
     };
     const getTitle = () => {
         if (pathName.includes("/update")) {
-            const updateCards = document.querySelectorAll(".dropdown-title")
+            const updateCards = document.querySelectorAll(".dropdown-title");
             updateCards.forEach((card) => {
                 card.hidden = true;
-            })
-            const types = document.querySelectorAll(".element-type") 
+            });
+            const types = document.querySelectorAll(".element-type");
             types.forEach((type) => {
-                type.required = false; 
-            })
+                type.required = false;
+            });
         }
-    }
+    };
+    const deleteCard = () => {
+        let hiddenContainer = document.querySelector(".hidden-container");
+        hiddenContainer.removeChild(document.getElementById(index.index));
+        console.log(hiddenContainer.childElementCount);
+        if (hiddenContainer.childElementCount == 0) {
+            document.querySelector(".overall-hidden").style.display = "none";
+        }
+    };
 
     return (
         <div className="card-container" id={index.index}>
@@ -90,7 +97,7 @@ const ElementCard = (index, element) => {
                     <div className="field">
                         <label className="form-label"> Required:</label>
                         <input
-                        checked={required}
+                            checked={required}
                             type="checkbox"
                             name="required"
                             className="form-control element-req"
@@ -101,11 +108,7 @@ const ElementCard = (index, element) => {
                         <button
                             type="button"
                             onClick={() => {
-                                document
-                                    .querySelector(".hidden-container")
-                                    .removeChild(
-                                        document.getElementById(index.index)
-                                    );
+                                deleteCard();
                             }}
                         >
                             Delete

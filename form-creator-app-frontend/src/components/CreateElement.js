@@ -15,6 +15,17 @@ const CreateElement = () => {
     const [Cards, setCards] = useState([]);
     const [hiddenElementList, setHiddenElementList] = useState([]);
 
+    useEffect(() => {
+        DefaultFormElementService.getDefaultFormElementById(defaultId)
+            .then((response) => {
+                setType(response.data.type);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        document.querySelector(".overall-hidden").style.display = "none";
+    }, []);
+
     const addHiddenElements = () => {
         const titles = document.querySelectorAll(".element-title");
         const types = document.querySelectorAll(".element-type");
@@ -52,9 +63,9 @@ const CreateElement = () => {
     const addElementToForm = (e) => {
         e.preventDefault();
         if (checkHiddenCards()) {
-            console.log(hiddenElementList)
+            console.log(hiddenElementList);
             addHiddenElements();
-            console.log(hiddenElementList)
+            console.log(hiddenElementList);
             const UserFormElement = {
                 title,
                 type,
@@ -75,15 +86,6 @@ const CreateElement = () => {
                 });
         }
     };
-    useEffect(() => {
-        DefaultFormElementService.getDefaultFormElementById(defaultId)
-            .then((response) => {
-                setType(response.data.type);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
     const pageTitle = () => {
         let titleType;
         if (defaultId == 1) {
@@ -168,13 +170,18 @@ const CreateElement = () => {
                                     index={Cards.length + 1}
                                 />,
                             ]);
+                            document.querySelector(
+                                ".overall-hidden"
+                            ).style.display = "flex";
                         }}
                     >
                         Add Hidden Element
                     </button>
                 </div>
             </div>
-            <div className="hidden-container">{Cards}</div>
+            <div className="overall-hidden">
+                <div className="hidden-container">{Cards}</div>
+            </div>
         </section>
     );
 };

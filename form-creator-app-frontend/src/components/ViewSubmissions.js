@@ -67,7 +67,7 @@ const ViewSubmissions = () => {
         }
     };
     return (
-        <div>
+        <section>
             <div className="inner column">
                 <h1>{UserFormTitle} Form Responses</h1>
                 <table>
@@ -106,7 +106,7 @@ const ViewSubmissions = () => {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </section>
     );
 };
 
