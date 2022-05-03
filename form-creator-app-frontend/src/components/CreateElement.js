@@ -17,8 +17,15 @@ const CreateElement = () => {
 
     useEffect(() => {
         setType(elementType.replace(/([a-z])([A-Z])/g, "$1 $2"));
-        document.querySelector(".overall-hidden").style.display = "none";
+        initialStyling();
     }, []);
+
+    const initialStyling = () => {
+        document.querySelector(".overall-hidden").style.display = "none";
+        if (elementType.toLowerCase() === "checkbox") {
+            document.getElementById("checkbox-field").classList.add("hide");
+        }
+    };
 
     const addHiddenElements = () => {
         const titles = document.querySelectorAll(".element-title");
@@ -36,10 +43,8 @@ const CreateElement = () => {
                 key,
                 required,
             };
-            // console.log(hiddenElement);
             hiddenElementList.push(hiddenElement);
         }
-        // console.table(hiddenElementList);
     };
 
     const checkHiddenCards = () => {
@@ -116,7 +121,7 @@ const CreateElement = () => {
                                     onChange={(e) => setKey(e.target.value)}
                                 ></input>
                             </div>
-                            <div className="field">
+                            <div id="checkbox-field" className="field">
                                 <label className="form-label"> Required:</label>
                                 <input
                                     type="checkbox"
@@ -129,35 +134,37 @@ const CreateElement = () => {
                             </div>
                         </div>
                         <div className="form-actions">
-                            <button type="submit" className="solid-button">
-                                Add Element
-                            </button>
-                            <Link
-                                to={"/add-element/" + formId}
-                                className="secondary-action"
+                            <button
+                                type="button"
+                                className="solid-button"
+                                onClick={() => {
+                                    setCards([
+                                        ...Cards,
+                                        <ElementCard
+                                            key={"hidden" + Cards.length + 1}
+                                            index={Cards.length + 1}
+                                        />,
+                                    ]);
+                                    document.querySelector(
+                                        ".overall-hidden"
+                                    ).style.display = "flex";
+                                }}
                             >
-                                Cancel
-                            </Link>
+                                Add Hidden Element
+                            </button>
+                            <div className="form-buttons">
+                                <button type="submit" className="solid-button">
+                                    Create Element
+                                </button>
+                                <Link
+                                    to={"/add-element/" + formId}
+                                    className="secondary-action"
+                                >
+                                    Cancel
+                                </Link>
+                            </div>
                         </div>
                     </form>
-                    <button
-                        type="button"
-                        className="solid-button"
-                        onClick={() => {
-                            setCards([
-                                ...Cards,
-                                <ElementCard
-                                    key={"hidden" + Cards.length + 1}
-                                    index={Cards.length + 1}
-                                />,
-                            ]);
-                            document.querySelector(
-                                ".overall-hidden"
-                            ).style.display = "flex";
-                        }}
-                    >
-                        Add Hidden Element
-                    </button>
                 </div>
             </div>
             <div className="overall-hidden">

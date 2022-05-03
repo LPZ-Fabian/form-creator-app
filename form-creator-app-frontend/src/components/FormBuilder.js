@@ -87,7 +87,7 @@ const CreateForm = () => {
             return (
                 <div className="inputs" key={element.id}>
                     <div>{element.title}</div>
-                    <input type="text" />
+                    <input placeholder={element.title} type="text" />
                 </div>
             );
         }
@@ -95,35 +95,14 @@ const CreateForm = () => {
             return (
                 <div className="inputs" key={element.id}>
                     <div>{element.title}</div>
-                    <textarea />
+                    <textarea placeholder={element.title} />
                 </div>
             );
         }
-        if (element.type == "Text Field") {
-            return (
-                <div className="inputs" key={element.id}>
-                    <div>{element.title}</div>
-                    <input type="text" />
-                </div>
-            );
-        }
-    };
-
-    const renderElements = () => {
-        return (
-            <>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </>
-        );
     };
 
     return (
-        <div className="container">
+        <section className="container">
             <div className="form-builder">
                 <div className="inner-column">
                     <div className="entire-form">
@@ -239,34 +218,7 @@ const CreateForm = () => {
                                                                             hidden.required
                                                                         }
                                                                     </td>
-                                                                    <td>
-                                                                        {/* <Link
-                                                                            className="primary-action"
-                                                                            to={
-                                                                                "/update-form-element/" +
-                                                                                JSON.stringify(
-                                                                                    element.id
-                                                                                )
-                                                                            }
-                                                                            onClick={() =>
-                                                                                updateForm(
-                                                                                    false
-                                                                                )
-                                                                            }
-                                                                        >
-                                                                            Update
-                                                                        </Link>
-                                                                        <button
-                                                                            className="secondary-action"
-                                                                            onClick={() =>
-                                                                                deleteUserFormElement(
-                                                                                    element.id
-                                                                                )
-                                                                            }
-                                                                        >
-                                                                            Delete
-                                                                        </button> */}
-                                                                    </td>
+                                                                    <td></td>
                                                                 </tr>
                                                             );
                                                         }
@@ -275,6 +227,7 @@ const CreateForm = () => {
                                             </Fragment>
                                         );
                                     })}
+                                    <tr><td></td></tr>
                                 </tbody>
                             </table>
                             <div className="actions">
@@ -299,13 +252,13 @@ const CreateForm = () => {
                                 createWebformElements(element)
                             )}
                             <button type="button" className="solid-button">
-                                Submit
+                                Submit Response
                             </button>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

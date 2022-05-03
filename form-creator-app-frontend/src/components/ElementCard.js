@@ -18,7 +18,7 @@ const ElementCard = (index, element) => {
             setType(index.element.type);
             setKey(index.element.key);
             setRequired(JSON.parse(index.element.required));
-            getTitle();
+            getTitle(index.element.type);
         } catch (e) {}
     }, []);
     const getTitleText = () => {
@@ -28,7 +28,7 @@ const ElementCard = (index, element) => {
             );
         }
     };
-    const getTitle = () => {
+    const getTitle = (type) => {
         if (pathName.includes("/update")) {
             const updateCards = document.querySelectorAll(".dropdown-title");
             updateCards.forEach((card) => {
@@ -38,6 +38,12 @@ const ElementCard = (index, element) => {
             types.forEach((type) => {
                 type.required = false;
             });
+        }
+        if (type === "Checkbox") {
+            console.log("T");
+            document
+                .getElementById("checkbox-field" + index.index)
+                .classList.add("hide");
         }
     };
     const deleteCard = () => {
@@ -94,7 +100,7 @@ const ElementCard = (index, element) => {
                             onChange={(e) => setKey(e.target.value)}
                         ></input>
                     </div>
-                    <div className="field">
+                    <div id={"checkbox-field" + index.index} className="field">
                         <label className="form-label"> Required:</label>
                         <input
                             checked={required}
@@ -106,6 +112,7 @@ const ElementCard = (index, element) => {
                     </div>
                     <div className="form-actions">
                         <button
+                            className="danger-button"
                             type="button"
                             onClick={() => {
                                 deleteCard();

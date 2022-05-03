@@ -417,7 +417,6 @@ table + .actions {
 .create-element, .update-element {
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
 }
 
 .create-element form {
@@ -454,6 +453,13 @@ table + .actions {
 }
 
 .form-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.form-buttons {
   display: flex;
   align-items: center;
   gap: 15px;
@@ -544,6 +550,7 @@ table + .actions {
 .hidden-input, .hide {
   display: none;
 }
+
 .form-card {
   display: flex;
   flex-direction: column;
@@ -643,7 +650,6 @@ label + textarea {
 
 .overall-hidden {
   display: flex;
-  align-items: center;
-  min-height: 809px;
+  max-height: 809px;
   border-left: 5px solid #aab0b4;
 }
