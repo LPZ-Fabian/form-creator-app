@@ -27,6 +27,14 @@ const ElementCard = (index, element) => {
                 document.getElementById("type-drop" + index.index).value
             );
         }
+        if (
+            document.getElementById("type-drop" + index.index).value ===
+            "Checkbox"
+        ) {
+            document
+                .getElementById("checkbox-field" + index.index)
+                .classList.add("hide");
+        }
     };
     const getTitle = (type) => {
         if (pathName.includes("/update")) {
@@ -40,7 +48,6 @@ const ElementCard = (index, element) => {
             });
         }
         if (type === "Checkbox") {
-            console.log("T");
             document
                 .getElementById("checkbox-field" + index.index)
                 .classList.add("hide");
