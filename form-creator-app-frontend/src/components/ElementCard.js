@@ -34,6 +34,10 @@ const ElementCard = (index, element) => {
             document
                 .getElementById("checkbox-field" + index.index)
                 .classList.add("hide");
+        } else {
+            document
+                .getElementById("checkbox-field" + index.index)
+                .classList.remove("hide");
         }
     };
     const getTitle = (type) => {
