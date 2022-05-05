@@ -183,6 +183,9 @@ const UpdateElement = () => {
                                 type="button"
                                 className="secondary-button add-hidden"
                                 onClick={() => {
+                                    document.querySelector(
+                                        ".overall-hidden"
+                                    ).style.display = "flex";
                                     setCards([
                                         ...Cards,
                                         <ElementCard
@@ -195,12 +198,12 @@ const UpdateElement = () => {
                                 Add New Hidden Element
                             </button>
                             <div className="form-buttons">
-                                <button type="submit" className="solid-button">
-                                    Update
-                                </button>
                                 <Link to={-1} className="secondary-action">
                                     Cancel
                                 </Link>
+                                <button type="submit" className="solid-button">
+                                    Update
+                                </button>
                             </div>
                         </div>
                     </form>
