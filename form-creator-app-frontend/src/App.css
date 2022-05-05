@@ -276,7 +276,7 @@ td svg {
 }
 
 .manage-form td:nth-child(2) {
-  width: 50px;
+  width: 160px;
 }
 
 .manage-form td:nth-child(3) {
@@ -425,6 +425,17 @@ table + .actions {
 .create-element, .update-element {
   display: flex;
   justify-content: space-evenly;
+}
+
+.create-element {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 1300px;
+  width: 96%;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 50px;
 }
 
 .create-element form {
@@ -657,4 +668,5 @@ label + textarea {
   display: flex;
   max-height: 809px;
   border-left: 5px solid #aab0b4;
+  background-color: #ebedef;
 }
