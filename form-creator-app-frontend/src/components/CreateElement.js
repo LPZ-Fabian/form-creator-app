@@ -133,7 +133,7 @@ const CreateElement = () => {
                     ...Cards,
                     <ElementCard key={'hidden' + Cards.length + 1} index={Cards.length + 1} />,
                   ]);
-                  document.querySelector('.overall-hidden').style.display = 'flex';
+                  document.querySelector('.overall-hidden').style.display = 'inline-block';
                 }}>
                 Add Hidden Element
               </button>
