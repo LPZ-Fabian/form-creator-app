@@ -32,7 +32,6 @@ const ViewForm = () => {
             .catch((error) => {
                 console.log(error);
             });
-        //console.log(UserFormElements)
     };
     const getAllFormSubmissions = () => {
         FormSubmissionService.getSubmissionsByFormID(id)
@@ -46,27 +45,8 @@ const ViewForm = () => {
     const createFormSubmission = () => {
         FormSubmissionService.createFormSubmission(id, Responses)
             .then((response) => {
-                console.log(response.data);
                 getAllFormSubmissions();
                 setResponses([]);
-                const form = document.getElementById("form");
-                form.reset();
-                const hiddenElements = document.querySelectorAll(".hide-input");
-                hiddenElements.forEach((hidden) => {
-                    if (!hidden.classList.contains("hidden-input")) {
-                        hidden.classList.toggle("hidden-input");
-                    }
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-    const deleteFormSubmission = (submissionId) => {
-        FormSubmissionService.deleteFormSubmission(submissionId)
-            .then((response) => {
-                console.log(response.data);
-                getAllFormSubmissions();
             })
             .catch((error) => {
                 console.log(error);
@@ -82,15 +62,17 @@ const ViewForm = () => {
                 id={"hidden-input" + element.id}
             >
                 {element.hiddenElementList.map((hidden) => {
-                    return createWebformElements(hidden);
+                    return createWebformElements(hidden, "hidden");
                 })}
             </div>
         );
     };
-    const createWebformElements = (element) => {
+    const createWebformElements = (element, name) => {
         const placeHolder = element.title;
         const required = JSON.parse(element.required);
-        const id = element.key;
+        /* Generate unique id for each input element based on element keyname
+         type of element (regular or hidden) and corresponding id. */
+        const id = `${element.key}-${name}-${element.id}`;
         if (element.type == "Checkbox") {
             return (
                 <div className="inputs" key={element.id}>
@@ -143,8 +125,14 @@ const ViewForm = () => {
     const clearHidden = () => {
         UserFormElements.map((element) => {
             element.hiddenElementList.map((hidden) => {
-                if (document.getElementById(element.key).checked === false) {
-                    document.getElementById(hidden.key).required = false;
+                if (
+                    document.getElementById(
+                        `${element.key}-regular-${element.id}`
+                    ).checked === false
+                ) {
+                    document.getElementById(
+                        `${hidden.key}-hidden-${hidden.id}`
+                    ).required = false;
                 }
             });
         });
@@ -160,9 +148,13 @@ const ViewForm = () => {
         let resp;
         UserFormElements.map((element) => {
             if (element.type == "Checkbox") {
-                resp = document.getElementById(element.key).checked;
+                resp = document.getElementById(
+                    `${element.key}-regular-${element.id}`
+                ).checked;
             } else {
-                resp = document.getElementById(element.key).value;
+                resp = document.getElementById(
+                    `${element.key}-regular-${element.id}`
+                ).value;
             }
             Responses.push({
                 response: resp,
@@ -170,11 +162,19 @@ const ViewForm = () => {
             element.hiddenElementList.map((hidden) => {
                 let hiddenResp;
                 if (hidden.type == "Checkbox") {
-                    hiddenResp = document.getElementById(hidden.key).checked;
+                    hiddenResp = document.getElementById(
+                        `${hidden.key}-hidden-${hidden.id}`
+                    ).checked;
                 } else {
-                    hiddenResp = document.getElementById(hidden.key).value;
+                    hiddenResp = document.getElementById(
+                        `${hidden.key}-hidden-${hidden.id}`
+                    ).value;
                 }
-                if (document.getElementById(element.key).checked == false) {
+                if (
+                    document.getElementById(
+                        `${element.key}-regular-${element.id}`
+                    ).checked == false
+                ) {
                     hiddenResp = "N/A";
                 }
                 Responses.push({
@@ -197,7 +197,7 @@ const ViewForm = () => {
                     >
                         <div className="card-inputs">
                             {UserFormElements.map((element) =>
-                                createWebformElements(element)
+                                createWebformElements(element, "regular")
                             )}
                         </div>
 
