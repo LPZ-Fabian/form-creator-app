@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CreateForm from "./components/FormBuilder";
 import SelectElements from "./components/SelectElements";
-import UpdateUserElementComponent from "./components/UpdateUserElementComponent";
+import UpdateElement from "./components/UpdateElement";
 import CreateElement from "./components/CreateElement";
 import ManageForms from "./components/ManageForms";
 import ViewForm from "./components/ViewForm";
@@ -23,7 +23,7 @@ function App() {
         ></Route>
         <Route exact path="/manage-forms/" element={<ManageForms />}></Route>
         <Route path="/add-element/:id" element={<SelectElements />}></Route>
-        <Route path="/update-form-element/:id" element={<UpdateUserElementComponent />}></Route>
+        <Route path="/update-form-element/:id" element={<UpdateElement />}></Route>
         <Route path="/build-element/:elementType/:formId" element={<CreateElement />}></Route>
         <Route path="/update-form/:id" element={<CreateForm />}></Route>
         <Route path="/user-form/:id" element={<CreateForm />}></Route>
