@@ -67,7 +67,8 @@
   padding-left: 70px;
   padding-right: 70px;
   width: 400px;
-  background-color: #ffffff;
+  background-color: #eaedef;
+
   padding-top: 150px;
   border-left: 5px solid #aab0b4;
 }
@@ -77,13 +78,9 @@
   background-color: #287bbbc5;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  padding-left: 10%;
-  align-items: left;
-  max-width: 80%;
-}
+
+
+
 
 .inputs {
   display: flex;
@@ -175,6 +172,10 @@ button.solid-button {
 
 .field + .field {
   margin-top: 24px;
+}
+
+.field + .solid-button {
+  margin-top: 20px;
 }
 
 .field input {
@@ -320,6 +321,12 @@ td {
   border: 2px solid transparent;
 }
 
+.secondary-button:hover {
+  color: #f6f6f6;
+  background-color: #4187ba;
+  border: solid 2px #4187ba;
+}
+
 .secondary-button {
   color: #4187ba;
   background-color: #f6f6f6;
@@ -332,6 +339,7 @@ td {
   margin-right: 6px;
   -webkit-font-smoothing: antialiased;
 }
+
 .danger-button {
   color: #d0312d;
   background-color: #f6f6f6;
@@ -399,7 +407,7 @@ table + .actions {
 
 .field,
 .form-actions {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .overlay-heading {
@@ -452,18 +460,19 @@ table + .actions {
   box-shadow: 0 4px 20px 0 hsla(0, 0%, 0%, 0.2);
 }
 
-.form-actions {
+
+.form-buttons {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
   gap: 15px;
 }
 
-.form-buttons {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+.secondary-button + .form-buttons {
+  margin-top: 20px;
 }
+
+
 
 .footer {
   padding-top: 20px;
@@ -551,11 +560,7 @@ table + .actions {
   display: none;
 }
 
-.form-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
+
 
 .card-inputs {
   display: flex;
