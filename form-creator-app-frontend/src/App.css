@@ -3,6 +3,9 @@
   --primary-dark: #003756;
   --primary-light: #90bcdb;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+
 .row {
   display: flex;
   height: 100%;
@@ -44,6 +47,11 @@
   font-size: 48px;
   color: #4e89b7;
   font-weight: 400;
+}
+
+.manage-title {
+  text-shadow: 2px 2px 3px rgb(231, 231, 231);
+  font-family: 'Kanit', sans-serif;
 }
 
 .inner-column {
