@@ -28,21 +28,22 @@ const ElementCard = (index) => {
         }
     }
     const getTitleText = () => {
-        if (document.getElementById("type-drop" + index.index).value !== null) {
+        if (document.getElementById("type-drop-" + cardId).value !== null) {
             setCardTitle(
-                document.getElementById("type-drop" + index.index).value
+                document.getElementById("type-drop-" + cardId).value
             );
+            console.log(document.getElementById("type-drop-" + cardId).value)
         }
         if (
-            document.getElementById("type-drop" + index.index).value ===
+            document.getElementById("type-drop-" + cardId).value ===
             "Checkbox"
         ) {
             document
-                .getElementById("checkbox-field" + index.index)
+                .getElementById("checkbox-field-" + cardId)
                 .classList.add("hide");
         } else {
             document
-                .getElementById("checkbox-field" + index.index)
+                .getElementById("checkbox-field-" + cardId)
                 .classList.remove("hide");
         }
     };
@@ -63,7 +64,7 @@ const ElementCard = (index) => {
         }
         if (type === "Checkbox") {
             document
-                .getElementById("checkbox-field" + index.index)
+                .getElementById("checkbox-field-" + cardId)
                 .classList.add("hide");
         }
     };
@@ -87,7 +88,7 @@ const ElementCard = (index) => {
                         <select
                             onChange={() => getTitleText()}
                             className="element-type"
-                            id={"type-drop" + index.index}
+                            id={"type-drop-" + cardId}
                             required
                             name="element-type"
                         >
@@ -121,7 +122,7 @@ const ElementCard = (index) => {
                             onChange={(e) => setKey(e.target.value)}
                         ></input>
                     </div>
-                    <div id={"checkbox-field" + index.index} className="field">
+                    <div id={"checkbox-field-" + cardId} className="field">
                         <label className="form-label"> Required:</label>
                         <input
                             checked={required}
