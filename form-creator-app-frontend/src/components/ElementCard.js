@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
-import BuildUserElementService from "../services/BuildUserElementService";
-import DefaultFormElementService from "../services/DefaultFormElementService";
 
-const ElementCard = (index, element) => {
+const ElementCard = (index) => {
     const [title, setTitle] = useState("");
     const [type, setType] = useState("");
     const [key, setKey] = useState("");
     const [required, setRequired] = useState(false);
     const [cardTitle, setCardTitle] = useState("Element");
+    const [cardId, setCardId] = useState("");
     const pathName = window.location.pathname;
 
     useEffect(() => {
@@ -20,7 +18,15 @@ const ElementCard = (index, element) => {
             setRequired(JSON.parse(index.element.required));
             getTitle(index.element.type);
         } catch (e) {}
+        initialStyling()
     }, []);
+    const initialStyling = () => {
+        if (index.element === undefined) {
+            setCardId("new-card-" + index.index)
+        } else {
+            setCardId("existing-card-" + index.index)
+        }
+    }
     const getTitleText = () => {
         if (document.getElementById("type-drop" + index.index).value !== null) {
             setCardTitle(
@@ -51,6 +57,10 @@ const ElementCard = (index, element) => {
                 type.required = false;
             });
         }
+        if (index.element === null) {
+            setCardId("new-card-" + index.index)
+            console.log("new-card-" + index.index)
+        }
         if (type === "Checkbox") {
             document
                 .getElementById("checkbox-field" + index.index)
@@ -59,7 +69,7 @@ const ElementCard = (index, element) => {
     };
     const deleteCard = () => {
         let hiddenContainer = document.querySelector(".hidden-container");
-        hiddenContainer.removeChild(document.getElementById(index.index));
+        hiddenContainer.removeChild(document.getElementById(cardId));
         console.log(hiddenContainer.childElementCount);
         if (hiddenContainer.childElementCount == 0) {
             document.querySelector(".overall-hidden").style.display = "none";
@@ -67,7 +77,7 @@ const ElementCard = (index, element) => {
     };
 
     return (
-        <div className="card-container" id={index.index}>
+        <div className="card-container" id={cardId}>
             <h1 className="overlay-heading">Create New Hidden Form Element</h1>
             <div className="overlay">
                 <h2 className="page-title card-title">{cardTitle}</h2>
