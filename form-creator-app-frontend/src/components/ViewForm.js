@@ -82,9 +82,11 @@ const ViewForm = () => {
                         required={required}
                         type="checkbox"
                         onChange={() => {
-                            document
-                                .getElementById("hidden-input" + element.id)
-                                .classList.toggle("hidden-input");
+                            if (name === "regular") {
+                                document
+                                    .getElementById("hidden-input" + element.id)
+                                    .classList.toggle("hidden-input");
+                            }
                         }}
                     />
                     {createHidden(element)}

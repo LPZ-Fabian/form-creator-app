@@ -75,21 +75,21 @@ const CreateForm = () => {
             });
     };
     const createHidden = (element) => {
-      if (element.hiddenElementList === undefined) {
-          return;
-      }
-      return (
-          <div
-              className="hidden-input hide-input"
-              id={"hidden-input" + element.id}
-          >
-              {element.hiddenElementList.map((hidden) => {
-                  return createWebformElements(hidden, "hidden");
-              })}
-          </div>
-      );
-  };
-    const createWebformElements = (element) => {
+        if (element.hiddenElementList === undefined) {
+            return;
+        }
+        return (
+            <div
+                className="hidden-input hide-input"
+                id={"hidden-input" + element.id}
+            >
+                {element.hiddenElementList.map((hidden) => {
+                    return createWebformElements(hidden, "hidden");
+                })}
+            </div>
+        );
+    };
+    const createWebformElements = (element, name) => {
         if (element.type == "Checkbox") {
             return (
                 <div className="field" key={element.id}>
@@ -97,9 +97,11 @@ const CreateForm = () => {
                     <input
                         type="checkbox"
                         onChange={() => {
-                            document
-                                .getElementById("hidden-input" + element.id)
-                                .classList.toggle("hidden-input");
+                            if (name === "regular") {
+                                document
+                                    .getElementById("hidden-input" + element.id)
+                                    .classList.toggle("hidden-input");
+                            }
                         }}
                     />
                     {createHidden(element)}
@@ -274,7 +276,7 @@ const CreateForm = () => {
                     <div className="preview-container overlay">
                         <form className="form">
                             {UserFormElements.map((element) =>
-                                createWebformElements(element)
+                                createWebformElements(element, "regular")
                             )}
                             <button type="button" className="solid-button">
                                 Submit Response
