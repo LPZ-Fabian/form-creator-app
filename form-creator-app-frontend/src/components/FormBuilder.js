@@ -4,7 +4,7 @@ import BuildFormService from "../services/BuildFormService";
 import FormSubmissionService from "../services/FormSubmissionService";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
-const CreateForm = () => {
+const FormBuilder = () => {
     const [UserFormElements, setUserFormElements] = useState([]);
     const [UserFormTitle, setUserFormTitle] = useState("");
     const [Description, setDescription] = useState("");
@@ -82,6 +82,7 @@ const CreateForm = () => {
             <div
                 className="hidden-input hide-input"
                 id={"hidden-input" + element.id}
+                key={"hidden-input" + element.id}
             >
                 {element.hiddenElementList.map((hidden) => {
                     return createWebformElements(hidden, "hidden");
@@ -219,7 +220,7 @@ const CreateForm = () => {
                                                             return (
                                                                 <tr
                                                                     key={
-                                                                        hidden.id
+                                                                        "hidden-" + hidden.id
                                                                     }
                                                                     className="hidden-row"
                                                                 >
@@ -289,4 +290,4 @@ const CreateForm = () => {
     );
 };
 
-export default CreateForm;
+export default FormBuilder;
