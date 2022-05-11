@@ -179,8 +179,8 @@ const FormBuilder = () => {
                                 <tbody>
                                     {UserFormElements.map((element) => {
                                         return (
-                                            <Fragment>
-                                                <tr key={element.id}>
+                                            <Fragment key={"regular-" + element.id}>
+                                                <tr>
                                                     <td>{element.title}</td>
                                                     <td>{element.key}</td>
                                                     <td>{element.type}</td>

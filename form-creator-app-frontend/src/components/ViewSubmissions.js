@@ -56,7 +56,7 @@ const ViewSubmissions = () => {
       return (
         <>
           {list.map((hidden) => {
-            return <th key={hidden.id}>{hidden.title + ' (hidden)'}</th>;
+            return <th key={"hidden-header-" + hidden.id}>{hidden.title + ' (hidden)'}</th>;
           })}
         </>
       );
@@ -70,19 +70,19 @@ const ViewSubmissions = () => {
           <thead>
             <tr>
               {UserFormElements.map((element) => (
-                <>
-                  <th key={element.id}>{element.title}</th>
+                <Fragment key={"header-" + element.id}>
+                  <th>{element.title}</th>
                   {getHiddenHeader(element.hiddenElementList)}
-                </>
+                </Fragment>
               ))}
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {Submissions.map((submission) => (
-              <tr key={submission.id}>
+              <tr key={"submission-" + submission.id}>
                 {submission.formResponses.map((response) => (
-                  <td key={response.responseId}>{response.response}</td>
+                  <td key={"response-" + response.responseId}>{response.response}</td>
                 ))}
                 <td>
                   <button
