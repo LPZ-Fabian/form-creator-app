@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
-import BuildUserElementService from "../services/BuildUserElementService";
-import DefaultFormElementService from "../services/DefaultFormElementService";
 
-const ElementCard = (index, element) => {
+const ElementCard = (index) => {
     const [title, setTitle] = useState("");
     const [type, setType] = useState("");
     const [key, setKey] = useState("");
     const [required, setRequired] = useState(false);
     const [cardTitle, setCardTitle] = useState("Element");
+    const [cardId, setCardId] = useState("");
     const pathName = window.location.pathname;
 
     useEffect(() => {
@@ -20,23 +18,32 @@ const ElementCard = (index, element) => {
             setRequired(JSON.parse(index.element.required));
             getTitle(index.element.type);
         } catch (e) {}
+        initialStyling()
     }, []);
+    const initialStyling = () => {
+        if (index.element === undefined) {
+            setCardId("new-card-" + index.index)
+        } else {
+            setCardId("existing-card-" + index.index)
+        }
+    }
     const getTitleText = () => {
-        if (document.getElementById("type-drop" + index.index).value !== null) {
+        if (document.getElementById("type-drop-" + cardId).value !== null) {
             setCardTitle(
-                document.getElementById("type-drop" + index.index).value
+                document.getElementById("type-drop-" + cardId).value
             );
+            console.log(document.getElementById("type-drop-" + cardId).value)
         }
         if (
-            document.getElementById("type-drop" + index.index).value ===
+            document.getElementById("type-drop-" + cardId).value ===
             "Checkbox"
         ) {
             document
-                .getElementById("checkbox-field" + index.index)
+                .getElementById("checkbox-field-" + cardId)
                 .classList.add("hide");
         } else {
             document
-                .getElementById("checkbox-field" + index.index)
+                .getElementById("checkbox-field-" + cardId)
                 .classList.remove("hide");
         }
     };
@@ -51,15 +58,19 @@ const ElementCard = (index, element) => {
                 type.required = false;
             });
         }
+        if (index.element === null) {
+            setCardId("new-card-" + index.index)
+            console.log("new-card-" + index.index)
+        }
         if (type === "Checkbox") {
             document
-                .getElementById("checkbox-field" + index.index)
+                .getElementById("checkbox-field-" + cardId)
                 .classList.add("hide");
         }
     };
     const deleteCard = () => {
         let hiddenContainer = document.querySelector(".hidden-container");
-        hiddenContainer.removeChild(document.getElementById(index.index));
+        hiddenContainer.removeChild(document.getElementById(cardId));
         console.log(hiddenContainer.childElementCount);
         if (hiddenContainer.childElementCount == 0) {
             document.querySelector(".overall-hidden").style.display = "none";
@@ -67,7 +78,7 @@ const ElementCard = (index, element) => {
     };
 
     return (
-        <div className="card-container" id={index.index}>
+        <div className="card-container" id={cardId}>
             <h1 className="overlay-heading">Create New Hidden Form Element</h1>
             <div className="overlay">
                 <h2 className="page-title card-title">{cardTitle}</h2>
@@ -77,7 +88,7 @@ const ElementCard = (index, element) => {
                         <select
                             onChange={() => getTitleText()}
                             className="element-type"
-                            id={"type-drop" + index.index}
+                            id={"type-drop-" + cardId}
                             required
                             name="element-type"
                         >
@@ -111,7 +122,7 @@ const ElementCard = (index, element) => {
                             onChange={(e) => setKey(e.target.value)}
                         ></input>
                     </div>
-                    <div id={"checkbox-field" + index.index} className="field">
+                    <div id={"checkbox-field-" + cardId} className="field">
                         <label className="form-label"> Required:</label>
                         <input
                             checked={required}

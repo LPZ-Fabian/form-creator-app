@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import BuildUserElementService from "../services/BuildUserElementService";
 import BuildFormService from "../services/BuildFormService";
 import FormSubmissionService from "../services/FormSubmissionService";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 //import FormSubmissionService from "../services/FormSubmissionService";
 
 const ViewForm = () => {
@@ -75,16 +75,18 @@ const ViewForm = () => {
         const id = `${element.key}-${name}-${element.id}`;
         if (element.type == "Checkbox") {
             return (
-                <div className="inputs" key={element.id}>
+                <div className="inputs field" key={element.id}>
                     <label>{element.title}</label>
                     <input
                         id={id}
                         required={required}
                         type="checkbox"
                         onChange={() => {
-                            document
-                                .getElementById("hidden-input" + element.id)
-                                .classList.toggle("hidden-input");
+                            if (name === "regular") {
+                                document
+                                    .getElementById("hidden-input" + element.id)
+                                    .classList.toggle("hidden-input");
+                            }
                         }}
                     />
                     {createHidden(element)}
@@ -93,7 +95,7 @@ const ViewForm = () => {
         }
         if (element.type == "Text Field") {
             return (
-                <div className="inputs" key={element.id}>
+                <div className="inputs field" key={element.id}>
                     <label>{element.title}</label>
 
                     <input
@@ -107,24 +109,16 @@ const ViewForm = () => {
         }
         if (element.type == "Text Area") {
             return (
-                <div className="inputs" key={element.id}>
+                <div className="inputs field" key={element.id}>
                     <label>{element.title}</label>
                     <textarea id={id} required={required} />
                 </div>
             );
         }
-        if (element.type == "Text Field") {
-            return (
-                <div className="inputs" key={element.id}>
-                    <label>{element.title}</label>
-                    <input id={id} type="text" />
-                </div>
-            );
-        }
     };
     const clearHidden = () => {
-        UserFormElements.map((element) => {
-            element.hiddenElementList.map((hidden) => {
+        UserFormElements.forEach((element) => {
+            element.hiddenElementList.forEach((hidden) => {
                 if (
                     document.getElementById(
                         `${element.key}-regular-${element.id}`
@@ -146,7 +140,7 @@ const ViewForm = () => {
             return;
         }
         let resp;
-        UserFormElements.map((element) => {
+        UserFormElements.forEach((element) => {
             if (element.type == "Checkbox") {
                 resp = document.getElementById(
                     `${element.key}-regular-${element.id}`
@@ -159,7 +153,7 @@ const ViewForm = () => {
             Responses.push({
                 response: resp,
             });
-            element.hiddenElementList.map((hidden) => {
+            element.hiddenElementList.forEach((hidden) => {
                 let hiddenResp;
                 if (hidden.type == "Checkbox") {
                     hiddenResp = document.getElementById(
