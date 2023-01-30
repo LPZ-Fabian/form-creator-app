@@ -1,0 +1,11 @@
+plugins {
+    id 'org.siouan.frontend-jdk11'
+}
+
+frontend {
+    nodeDistributionProvided = true
+    nodeVersion = '17.2.0'
+    assembleScript = 'run build'
+//  cleanScript = 'run clean'
+//  checkScript = 'run check'
+}
